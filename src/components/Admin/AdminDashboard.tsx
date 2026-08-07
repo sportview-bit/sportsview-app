@@ -1,6 +1,6 @@
 // src/components/Admin/AdminDashboard.tsx
 import React, { useState } from 'react';
-import { CalendarPlus, Trash2, Building2 } from 'lucide-react';
+import { CalendarPlus, Trash2, Building2, ShieldCheck, Radio } from 'lucide-react';
 import type { Match, Room } from '../../types';
 
 interface AdminProps {
@@ -49,17 +49,34 @@ export const AdminDashboard: React.FC<AdminProps> = ({ matches, setMatches, room
   const deleteRoom = (id: string) => setRooms(rooms.filter(r => r.id !== id));
 
   const totalMoney = rooms.reduce((sum, room) => sum + room.todayRevenue, 0);
+  const totalEntries = rooms.reduce((sum, room) => sum + room.todayEntries, 0);
 
   return (
-    <div className="p-6 bg-slate-950 text-white min-h-screen">
-      <div className="mb-8 border-b border-slate-800 pb-4 flex justify-between items-end">
+    <div className="min-h-screen bg-[#0B0F14] text-[#F3F6F9] p-6">
+      {/* Header */}
+      <div className="mb-8 border-b border-[#232D3A] pb-5 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-blue-400">Admin Dashboard</h1>
-          <p className="text-slate-400 mt-1">Manage everything on your platform</p>
+          <p className="text-xs uppercase tracking-[0.25em] text-[#F2B705] flex items-center gap-2 mb-1">
+            <ShieldCheck className="w-4 h-4" /> Super Admin
+          </p>
+          <h1 className="text-3xl font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Admin Dashboard</h1>
+          <p className="text-[#8B98A8] mt-1 text-sm">Everything on the platform, in one place</p>
         </div>
-        <div className="text-right">
-          <p className="text-slate-400 text-sm">Total Money Collected Today</p>
-          <h2 className="text-2xl font-bold text-emerald-400">{totalMoney.toLocaleString()} TZS</h2>
+
+        {/* Live scoreboard strip */}
+        <div className="flex gap-3">
+          <div className="bg-[#121821] border border-[#232D3A] rounded-xl px-5 py-3 text-center">
+            <p className="text-[10px] text-[#8B98A8] uppercase tracking-wider">Rooms</p>
+            <p className="text-xl font-bold font-mono">{rooms.length}</p>
+          </div>
+          <div className="bg-[#121821] border border-[#232D3A] rounded-xl px-5 py-3 text-center">
+            <p className="text-[10px] text-[#8B98A8] uppercase tracking-wider">Entries Today</p>
+            <p className="text-xl font-bold font-mono">{totalEntries}</p>
+          </div>
+          <div className="bg-[#121821] border border-[#232D3A] rounded-xl px-5 py-3 text-center">
+            <p className="text-[10px] text-[#8B98A8] uppercase tracking-wider">Revenue Today</p>
+            <p className="text-xl font-bold font-mono text-[#34D399]">{totalMoney.toLocaleString()} TZS</p>
+          </div>
         </div>
       </div>
 
@@ -67,29 +84,38 @@ export const AdminDashboard: React.FC<AdminProps> = ({ matches, setMatches, room
 
         {/* ADD MATCH SECTION */}
         <div className="space-y-6">
-          <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl">
-            <h2 className="text-lg font-bold mb-4 flex items-center gap-2 text-blue-400"><CalendarPlus className="w-5 h-5" /> Add a Match</h2>
+          <div className="bg-[#121821] border border-[#232D3A] p-6 rounded-2xl">
+            <h2 className="text-lg font-bold mb-4 flex items-center gap-2 text-[#F2B705]">
+              <CalendarPlus className="w-5 h-5" /> Add a Match
+            </h2>
             <form onSubmit={handlePostMatch} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <input type="text" placeholder="Home Team" required value={homeTeam} onChange={e => setHomeTeam(e.target.value)} className="bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-white outline-none focus:border-blue-500" />
-                <input type="text" placeholder="Away Team" required value={awayTeam} onChange={e => setAwayTeam(e.target.value)} className="bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-white outline-none focus:border-blue-500" />
+                <input type="text" placeholder="Home Team" required value={homeTeam} onChange={e => setHomeTeam(e.target.value)}
+                  className="bg-[#0B0F14] border border-[#232D3A] rounded-lg px-4 py-2 text-white outline-none focus:border-[#F2B705] transition" />
+                <input type="text" placeholder="Away Team" required value={awayTeam} onChange={e => setAwayTeam(e.target.value)}
+                  className="bg-[#0B0F14] border border-[#232D3A] rounded-lg px-4 py-2 text-white outline-none focus:border-[#F2B705] transition" />
               </div>
-              <input type="text" placeholder="Time (e.g. Sat, 16:00)" required value={matchTime} onChange={e => setMatchTime(e.target.value)} className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-white outline-none focus:border-blue-500" />
-              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-500 font-bold py-2 rounded-lg">Post Match to Users</button>
+              <input type="text" placeholder="Time (e.g. Sat, 16:00)" required value={matchTime} onChange={e => setMatchTime(e.target.value)}
+                className="w-full bg-[#0B0F14] border border-[#232D3A] rounded-lg px-4 py-2 text-white outline-none focus:border-[#F2B705] transition" />
+              <button type="submit" className="w-full bg-[#F2B705] hover:brightness-110 text-[#0B0F14] font-bold py-2.5 rounded-lg transition">
+                Post Match to Users
+              </button>
             </form>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl">
-            <h2 className="text-lg font-bold mb-4 text-white">Live Matches</h2>
-            <div className="space-y-2">
-              {matches.length === 0 && <p className="text-slate-500 text-sm">No matches added yet.</p>}
+          <div className="bg-[#121821] border border-[#232D3A] p-6 rounded-2xl">
+            <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
+              <Radio className="w-4 h-4 text-[#FF5468]" /> Live Matches
+            </h2>
+            <div className="space-y-2 max-h-[360px] overflow-y-auto pr-1">
+              {matches.length === 0 && <p className="text-[#8B98A8] text-sm">No matches added yet.</p>}
               {matches.map(m => (
-                <div key={m.id} className="flex justify-between items-center bg-slate-950 p-3 rounded-lg border border-slate-800">
+                <div key={m.id} className="flex justify-between items-center bg-[#0B0F14] p-3 rounded-lg border border-[#232D3A]">
                   <div>
                     <span className="font-bold">{m.homeTeam} vs {m.awayTeam}</span>
-                    <div className="text-xs text-slate-400">{m.matchTime} • Fee: {m.entryFee} TZS</div>
+                    <div className="text-xs text-[#8B98A8]">{m.matchTime} • Fee: {m.entryFee} TZS</div>
                   </div>
-                  <button onClick={() => deleteMatch(m.id)} className="p-2 text-red-400 hover:bg-red-400/10 rounded-lg transition">
+                  <button onClick={() => deleteMatch(m.id)} className="p-2 text-[#FF5468] hover:bg-[#FF5468]/10 rounded-lg transition">
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
@@ -100,26 +126,35 @@ export const AdminDashboard: React.FC<AdminProps> = ({ matches, setMatches, room
 
         {/* ADD ROOM MANAGER SECTION */}
         <div className="space-y-6">
-          <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl">
-            <h2 className="text-lg font-bold mb-4 flex items-center gap-2 text-emerald-400"><Building2 className="w-5 h-5" /> Add Room & Manager</h2>
+          <div className="bg-[#121821] border border-[#232D3A] p-6 rounded-2xl">
+            <h2 className="text-lg font-bold mb-4 flex items-center gap-2 text-[#34D399]">
+              <Building2 className="w-5 h-5" /> Add Room & Manager
+            </h2>
             <form onSubmit={handleCreateRoom} className="space-y-4">
-              <input type="text" placeholder="Room Name (e.g. VIP Area)" required value={roomName} onChange={e => setRoomName(e.target.value)} className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-white outline-none focus:border-emerald-500" />
-              <input type="text" placeholder="Manager Name" required value={managerName} onChange={e => setManagerName(e.target.value)} className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-white outline-none focus:border-emerald-500" />
-              <input type="text" placeholder="Location" required value={location} onChange={e => setLocation(e.target.value)} className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-white outline-none focus:border-emerald-500" />
-              <button type="submit" className="w-full bg-emerald-600 hover:bg-emerald-500 font-bold py-2 rounded-lg">Register Manager</button>
+              <input type="text" placeholder="Room Name (e.g. VIP Area)" required value={roomName} onChange={e => setRoomName(e.target.value)}
+                className="w-full bg-[#0B0F14] border border-[#232D3A] rounded-lg px-4 py-2 text-white outline-none focus:border-[#34D399] transition" />
+              <input type="text" placeholder="Manager Name" required value={managerName} onChange={e => setManagerName(e.target.value)}
+                className="w-full bg-[#0B0F14] border border-[#232D3A] rounded-lg px-4 py-2 text-white outline-none focus:border-[#34D399] transition" />
+              <input type="text" placeholder="Location" required value={location} onChange={e => setLocation(e.target.value)}
+                className="w-full bg-[#0B0F14] border border-[#232D3A] rounded-lg px-4 py-2 text-white outline-none focus:border-[#34D399] transition" />
+              <button type="submit" className="w-full bg-[#34D399] hover:brightness-110 text-[#0B0F14] font-bold py-2.5 rounded-lg transition">
+                Register Manager
+              </button>
             </form>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl">
-            <h2 className="text-lg font-bold mb-4 text-white">All Rooms & Managers</h2>
-            <div className="space-y-2">
+          <div className="bg-[#121821] border border-[#232D3A] p-6 rounded-2xl">
+            <h2 className="text-lg font-bold mb-4">All Rooms & Managers</h2>
+            <div className="space-y-2 max-h-[360px] overflow-y-auto pr-1">
+              {rooms.length === 0 && <p className="text-[#8B98A8] text-sm">No rooms registered yet.</p>}
               {rooms.map(r => (
-                <div key={r.id} className="flex justify-between items-center bg-slate-950 p-3 rounded-lg border border-slate-800">
+                <div key={r.id} className="flex justify-between items-center bg-[#0B0F14] p-3 rounded-lg border border-[#232D3A]">
                   <div>
-                    <span className="font-bold text-emerald-400">{r.roomName}</span>
-                    <div className="text-xs text-slate-400">Manager: {r.managerName} • {r.location}</div>
+                    <span className="font-bold text-[#34D399]">{r.roomName}</span>
+                    <div className="text-xs text-[#8B98A8]">Manager: {r.managerName} • {r.location}</div>
+                    <div className="text-xs font-mono text-[#8B98A8] mt-1">{r.todayEntries} entries • {r.todayRevenue.toLocaleString()} TZS today</div>
                   </div>
-                  <button onClick={() => deleteRoom(r.id)} className="p-2 text-red-400 hover:bg-red-400/10 rounded-lg transition">
+                  <button onClick={() => deleteRoom(r.id)} className="p-2 text-[#FF5468] hover:bg-[#FF5468]/10 rounded-lg transition">
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
