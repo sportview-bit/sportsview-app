@@ -1,11 +1,15 @@
 // src/App.tsx
 import React, { useState } from 'react';
 import { ShieldCheck, Building2, Users, Handshake } from 'lucide-react';
+import { ThemeProvider } from './context/ThemeContext';
+import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { LoginScreen } from './components/Auth/LoginScreen';
 import { AdminDashboard } from './components/Admin/AdminDashboard';
 import { ManagerDashboard } from './components/Manager/ManagerDashboard';
 import { SponsorDashboard } from './components/Sponsor/SponsorDashboard';
 import { UserDashboard } from './components/User/UserDashboard';
+import { SettingsMenu } from './components/Shared/SettingsMenu';
+import { Brand } from './components/Shared/Brand';
 import type { Match, Room, Manager, Sponsor, User } from './types';
 
 type View = 'landing' | 'admin' | 'manager' | 'sponsor' | 'user';
@@ -16,7 +20,8 @@ type View = 'landing' | 'admin' | 'manager' | 'sponsor' | 'user';
 const ADMIN_USERNAME = 'admin';
 const ADMIN_PASSWORD = 'admin123';
 
-export const App: React.FC = () => {
+const Shell: React.FC = () => {
+  const { t } = useLanguage();
   const [view, setView] = useState<View>('landing');
 
   // All platform data lives here for now. In production this belongs in a database.
@@ -36,8 +41,8 @@ export const App: React.FC = () => {
     if (!isAdmin) {
       return (
         <LoginScreen
-          title="Super Admin Login"
-          subtitle="Full visibility and control across the whole platform."
+          title={t('adminLoginTitle')}
+          subtitle={t('adminLoginSubtitle')}
           accentColor="#F2B705"
           icon={<ShieldCheck className="w-8 h-8" />}
           onBack={goHome}
@@ -74,8 +79,8 @@ export const App: React.FC = () => {
     if (!activeManager) {
       return (
         <LoginScreen
-          title="Room Manager Login"
-          subtitle="You'll only ever see the room assigned to your account."
+          title={t('managerLoginTitle')}
+          subtitle={t('managerLoginSubtitle')}
           accentColor="#34D399"
           icon={<Building2 className="w-8 h-8" />}
           onBack={goHome}
@@ -109,8 +114,8 @@ export const App: React.FC = () => {
     if (!activeSponsor) {
       return (
         <LoginScreen
-          title="Sponsor Login"
-          subtitle="See your sponsorship and how the platform is performing."
+          title={t('sponsorLoginTitle')}
+          subtitle={t('sponsorLoginSubtitle')}
           accentColor="#A78BFA"
           icon={<Handshake className="w-8 h-8" />}
           onBack={goHome}
@@ -142,38 +147,47 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0B0F14] text-[#F3F6F9] flex items-center justify-center p-6">
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] flex items-center justify-center p-6 relative">
+      <div className="absolute top-6 right-6">
+        <SettingsMenu />
+      </div>
+
       <div className="max-w-4xl w-full text-center">
-        <p className="uppercase tracking-[0.3em] text-xs text-[#F2B705] mb-3">SportsView TZ</p>
-        <h1 className="text-4xl md:text-5xl font-bold mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-          Every match. Every room. One scoreboard.
-        </h1>
-        <p className="text-[#8B98A8] mb-10">Choose how you're entering the platform.</p>
+        <Brand size="lg" />
+        <p className="text-[var(--text-muted)] mb-10">{t('chooseAccess')}</p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <button onClick={() => setView('user')} className="bg-[#121821] border border-[#232D3A] rounded-2xl p-6 hover:border-white transition text-left">
+          <button onClick={() => setView('user')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-[var(--text)] transition text-left">
             <Users className="w-6 h-6 mb-3" />
-            <div className="font-bold">Fan</div>
-            <div className="text-sm text-[#8B98A8]">Get your stadium card</div>
+            <div className="font-bold">{t('fan')}</div>
+            <div className="text-sm text-[var(--text-muted)]">{t('fanDesc')}</div>
           </button>
-          <button onClick={() => setView('manager')} className="bg-[#121821] border border-[#232D3A] rounded-2xl p-6 hover:border-[#34D399] transition text-left">
+          <button onClick={() => setView('manager')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-[#34D399] transition text-left">
             <Building2 className="w-6 h-6 text-[#34D399] mb-3" />
-            <div className="font-bold">Room Manager</div>
-            <div className="text-sm text-[#8B98A8]">Track your room live</div>
+            <div className="font-bold">{t('manager')}</div>
+            <div className="text-sm text-[var(--text-muted)]">{t('managerDesc')}</div>
           </button>
-          <button onClick={() => setView('sponsor')} className="bg-[#121821] border border-[#232D3A] rounded-2xl p-6 hover:border-[#A78BFA] transition text-left">
+          <button onClick={() => setView('sponsor')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-[#A78BFA] transition text-left">
             <Handshake className="w-6 h-6 text-[#A78BFA] mb-3" />
-            <div className="font-bold">Sponsor</div>
-            <div className="text-sm text-[#8B98A8]">See sponsorship & profit</div>
+            <div className="font-bold">{t('sponsor')}</div>
+            <div className="text-sm text-[var(--text-muted)]">{t('sponsorDesc')}</div>
           </button>
-          <button onClick={() => setView('admin')} className="bg-[#121821] border border-[#232D3A] rounded-2xl p-6 hover:border-[#F2B705] transition text-left">
+          <button onClick={() => setView('admin')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-[#F2B705] transition text-left">
             <ShieldCheck className="w-6 h-6 text-[#F2B705] mb-3" />
-            <div className="font-bold">Super Admin</div>
-            <div className="text-sm text-[#8B98A8]">Run the whole platform</div>
+            <div className="font-bold">{t('admin')}</div>
+            <div className="text-sm text-[var(--text-muted)]">{t('adminDesc')}</div>
           </button>
         </div>
       </div>
     </div>
   );
 };
+
+export const App: React.FC = () => (
+  <ThemeProvider>
+    <LanguageProvider>
+      <Shell />
+    </LanguageProvider>
+  </ThemeProvider>
+);
 
 export default App;
