@@ -12,9 +12,11 @@ interface LoginScreenProps {
   onBack: () => void;
   /** Return an error message string to reject the attempt, or null to accept it. */
   onSubmit: (username: string, password: string) => string | null;
+  /** Optional extra content rendered below the form, e.g. a "register" link. */
+  footer?: React.ReactNode;
 }
 
-export const LoginScreen: React.FC<LoginScreenProps> = ({ title, subtitle, accentColor, icon, onBack, onSubmit }) => {
+export const LoginScreen: React.FC<LoginScreenProps> = ({ title, subtitle, accentColor, icon, onBack, onSubmit, footer }) => {
   const { t } = useLanguage();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -66,6 +68,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ title, subtitle, accen
               {t('signIn')}
             </button>
           </form>
+          {footer && <div className="mt-5 text-center">{footer}</div>}
         </div>
       </div>
     </div>
