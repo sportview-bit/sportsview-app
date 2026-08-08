@@ -16,18 +16,11 @@ import type { Match, Room, Manager, Sponsor, User } from './types';
 type View = 'landing' | 'staff' | 'admin' | 'manager' | 'sponsor' | 'user';
 type ManagerScreen = 'login' | 'register';
 
-// Mock-only superadmin credentials. There's only ever one Super Admin account,
-// so unlike Manager/Sponsor it isn't stored in a list — swap this for real
-// auth before this touches real money.
 const ADMIN_USERNAME = 'admin';
 const ADMIN_PASSWORD = 'admin123';
 
 const STAFF_HASH = '#staff';
 
-// Staff tools (Manager/Sponsor/Admin) only ever surface on the internal Render
-// URL. The public sportsviewtz.com domain is fan-only — no staff link, and
-// #staff does nothing there either. localhost is always treated as staff so
-// development isn't blocked.
 const isStaffDomain = () => {
   const host = window.location.hostname;
   return host.includes('onrender.com') || host === 'localhost' || host === '127.0.0.1';
@@ -38,7 +31,6 @@ const Shell: React.FC = () => {
   const [view, setView] = useState<View>(() => (isStaffDomain() && window.location.hash === STAFF_HASH ? 'staff' : 'landing'));
   const [managerScreen, setManagerScreen] = useState<ManagerScreen>('login');
 
-  // All platform data lives here for now. In production this belongs in a database.
   const [matches, setMatches] = useState<Match[]>([]);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [managers, setManagers] = useState<Manager[]>([]);
@@ -202,8 +194,6 @@ const Shell: React.FC = () => {
     return <UserDashboard matches={matches} user={user} setUser={setUser} onBack={goHome} />;
   }
 
-  // Staff/partner access — only reachable on the internal domain (or
-  // localhost). On sportsviewtz.com this view is never set, hash included.
   if (view === 'staff' && isStaffDomain()) {
     return (
       <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col p-6">
@@ -244,18 +234,29 @@ const Shell: React.FC = () => {
     );
   }
 
-  // Landing — fan-only entry point. The "Staff & Partner Access" link only
-  // renders on the internal domain; on sportsviewtz.com it never appears.
+  // Landing — full-bleed stadium photo behind a centered welcome card.
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col p-6">
-      <div className="flex items-center justify-between mb-16">
+    <div className="min-h-screen relative flex flex-col p-6 overflow-hidden">
+      {/* Background photo */}
+      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/background.jpg')" }} />
+      {/* Dark scrim so text and the card stay readable over any photo */}
+      <div className="absolute inset-0 bg-[var(--bg)]/80" />
+
+      <div className="relative z-10 flex items-center justify-between mb-16">
         <Brand size="sm" />
         <SettingsMenu />
       </div>
 
-      <div className="flex-1 flex items-center justify-center">
-        <div className="max-w-md w-full text-center">
+      <div className="relative z-10 flex-1 flex items-center justify-center">
+        <div className="max-w-md w-full text-center bg-[var(--surface)]/90 backdrop-blur border border-[var(--border)] rounded-3xl p-8">
+          <div className="w-16 h-16 mx-auto mb-5 rounded-2xl bg-[#F2B705] flex items-center justify-center">
+            <Users className="w-8 h-8 text-[#0B0F14]" />
+          </div>
+          <h1 className="text-2xl font-bold mb-2" style={{ fontFamily: 'var(--font-display)' }}>
+            {t('welcome')} <span className="text-[#F2B705]">SPORTSVIEWTZ</span>
+          </h1>
           <p className="text-[var(--text-muted)] mb-8">{t('chooseAccess')}</p>
+
           <button
             onClick={() => setView('user')}
             className="w-full bg-[#F2B705] hover:brightness-110 text-[#0B0F14] font-bold py-4 rounded-2xl transition flex items-center justify-center gap-2 text-lg"
@@ -269,7 +270,7 @@ const Shell: React.FC = () => {
       {isStaffDomain() && (
         <button
           onClick={() => setView('staff')}
-          className="mt-16 mx-auto text-xs text-[var(--text-muted)] hover:text-[var(--text)] transition flex items-center gap-1.5"
+          className="relative z-10 mt-16 mx-auto text-xs text-[var(--text-muted)] hover:text-[var(--text)] transition flex items-center gap-1.5"
         >
           <Lock className="w-3 h-3" /> {t('staffLink')}
         </button>

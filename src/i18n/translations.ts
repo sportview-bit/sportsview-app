@@ -2,6 +2,7 @@ export type Language = 'sw' | 'en';
 
 export const translations: Record<Language, Record<string, string>> = {
   sw: {
+    welcome: 'Karibu',
     tagline: 'Kila mechi. Kila chumba. Skoreboard moja.',
     chooseAccess: 'Chagua jinsi unavyoingia kwenye mfumo.',
     fan: 'Shabiki',
@@ -52,6 +53,7 @@ export const translations: Record<Language, Record<string, string>> = {
     alreadySignIn: 'Una akaunti tayari? Ingia',
   },
   en: {
+    welcome: 'Welcome to',
     tagline: 'Every match. Every room. One scoreboard.',
     chooseAccess: "Choose how you're entering the platform.",
     fan: 'Fan',
