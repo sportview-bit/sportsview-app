@@ -23,16 +23,14 @@ export const SponsorDashboard: React.FC<SponsorProps> = ({ sponsor, rooms, onExi
 
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] p-6">
-      <div className="flex justify-between items-center mb-8 border-b border-[var(--border)] pb-5">
-        <div className="flex items-center gap-4">
+      <div className="flex justify-between items-start mb-8 border-b border-[var(--border)] pb-5 gap-4">
+        <div>
           <Brand size="sm" />
-          <div className="border-l border-[var(--border)] pl-4">
-            <p className="text-xs uppercase tracking-[0.25em] text-[#A78BFA] flex items-center gap-2 mb-1">
-              <Handshake className="w-4 h-4" /> Sponsor
-            </p>
-            <h1 className="text-3xl font-bold" style={{ fontFamily: 'var(--font-display)' }}>{sponsor.name}</h1>
-            <p className="text-[var(--text-muted)] mt-1 text-sm">Here's how the platform is performing.</p>
-          </div>
+          <p className="text-xs uppercase tracking-[0.25em] text-[#A78BFA] flex items-center gap-2 mt-2 mb-1">
+            <Handshake className="w-4 h-4" /> Sponsor
+          </p>
+          <h1 className="text-2xl sm:text-3xl font-bold" style={{ fontFamily: 'var(--font-display)' }}>{sponsor.name}</h1>
+          <p className="text-[var(--text-muted)] mt-1 text-sm">Here's how the platform is performing.</p>
         </div>
         <div className="flex items-center gap-3">
           <SettingsMenu />

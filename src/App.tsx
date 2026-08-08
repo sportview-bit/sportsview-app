@@ -1,6 +1,6 @@
 // src/App.tsx
 import React, { useState } from 'react';
-import { ShieldCheck, Building2, Users, Handshake } from 'lucide-react';
+import { ShieldCheck, Building2, Users, Handshake, ArrowLeft, Lock } from 'lucide-react';
 import { ThemeProvider } from './context/ThemeContext';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { LoginScreen } from './components/Auth/LoginScreen';
@@ -12,7 +12,7 @@ import { SettingsMenu } from './components/Shared/SettingsMenu';
 import { Brand } from './components/Shared/Brand';
 import type { Match, Room, Manager, Sponsor, User } from './types';
 
-type View = 'landing' | 'admin' | 'manager' | 'sponsor' | 'user';
+type View = 'landing' | 'staff' | 'admin' | 'manager' | 'sponsor' | 'user';
 
 // Mock-only superadmin credentials. There's only ever one Super Admin account,
 // so unlike Manager/Sponsor it isn't stored in a list — swap this for real
@@ -146,38 +146,70 @@ const Shell: React.FC = () => {
     return <UserDashboard matches={matches} user={user} setUser={setUser} onBack={goHome} />;
   }
 
+  // Staff/partner access — deliberately not on the main landing page. Reached
+  // only through the small "Staff & Partner Access" link, the way a real
+  // company keeps its internal tools off the public-facing homepage.
+  if (view === 'staff') {
+    return (
+      <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] flex items-center justify-center p-6 relative">
+        <div className="absolute top-6 right-6">
+          <SettingsMenu />
+        </div>
+        <div className="max-w-3xl w-full text-center">
+          <button onClick={goHome} className="flex items-center gap-2 text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition mx-auto mb-8">
+            <ArrowLeft className="w-4 h-4" /> {t('back')}
+          </button>
+          <p className="uppercase tracking-[0.25em] text-xs text-[var(--text-muted)] mb-2 flex items-center justify-center gap-2">
+            <Lock className="w-3.5 h-3.5" /> {t('staffPortal')}
+          </p>
+          <h2 className="text-2xl font-bold mb-8" style={{ fontFamily: 'var(--font-display)' }}>{t('staffPortalDesc')}</h2>
+          <div className="grid sm:grid-cols-3 gap-4">
+            <button onClick={() => setView('manager')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-[#34D399] transition text-left">
+              <Building2 className="w-6 h-6 text-[#34D399] mb-3" />
+              <div className="font-bold">{t('manager')}</div>
+              <div className="text-sm text-[var(--text-muted)]">{t('managerDesc')}</div>
+            </button>
+            <button onClick={() => setView('sponsor')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-[#A78BFA] transition text-left">
+              <Handshake className="w-6 h-6 text-[#A78BFA] mb-3" />
+              <div className="font-bold">{t('sponsor')}</div>
+              <div className="text-sm text-[var(--text-muted)]">{t('sponsorDesc')}</div>
+            </button>
+            <button onClick={() => setView('admin')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-[#F2B705] transition text-left">
+              <ShieldCheck className="w-6 h-6 text-[#F2B705] mb-3" />
+              <div className="font-bold">{t('admin')}</div>
+              <div className="text-sm text-[var(--text-muted)]">{t('adminDesc')}</div>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] flex items-center justify-center p-6 relative">
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col items-center justify-center p-6 relative">
       <div className="absolute top-6 right-6">
         <SettingsMenu />
       </div>
 
-      <div className="max-w-4xl w-full text-center">
+      <div className="max-w-md w-full text-center">
         <Brand size="lg" />
-        <p className="text-[var(--text-muted)] mb-10">{t('chooseAccess')}</p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <button onClick={() => setView('user')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-[var(--text)] transition text-left">
-            <Users className="w-6 h-6 mb-3" />
-            <div className="font-bold">{t('fan')}</div>
-            <div className="text-sm text-[var(--text-muted)]">{t('fanDesc')}</div>
-          </button>
-          <button onClick={() => setView('manager')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-[#34D399] transition text-left">
-            <Building2 className="w-6 h-6 text-[#34D399] mb-3" />
-            <div className="font-bold">{t('manager')}</div>
-            <div className="text-sm text-[var(--text-muted)]">{t('managerDesc')}</div>
-          </button>
-          <button onClick={() => setView('sponsor')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-[#A78BFA] transition text-left">
-            <Handshake className="w-6 h-6 text-[#A78BFA] mb-3" />
-            <div className="font-bold">{t('sponsor')}</div>
-            <div className="text-sm text-[var(--text-muted)]">{t('sponsorDesc')}</div>
-          </button>
-          <button onClick={() => setView('admin')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-[#F2B705] transition text-left">
-            <ShieldCheck className="w-6 h-6 text-[#F2B705] mb-3" />
-            <div className="font-bold">{t('admin')}</div>
-            <div className="text-sm text-[var(--text-muted)]">{t('adminDesc')}</div>
-          </button>
-        </div>
+        <p className="text-[var(--text-muted)] mb-8">{t('chooseAccess')}</p>
+
+        <button
+          onClick={() => setView('user')}
+          className="w-full bg-[#F2B705] hover:brightness-110 text-[#0B0F14] font-bold py-4 rounded-2xl transition flex items-center justify-center gap-2 text-lg"
+        >
+          <Users className="w-5 h-5" /> {t('fan')}
+        </button>
+        <p className="text-sm text-[var(--text-muted)] mt-3">{t('fanDesc')}</p>
       </div>
+
+      <button
+        onClick={() => setView('staff')}
+        className="mt-16 text-xs text-[var(--text-muted)] hover:text-[var(--text)] transition flex items-center gap-1.5"
+      >
+        <Lock className="w-3 h-3" /> {t('staffLink')}
+      </button>
     </div>
   );
 };

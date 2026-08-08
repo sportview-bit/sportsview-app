@@ -42,13 +42,11 @@ export const ManagerDashboard: React.FC<ManagerProps> = ({ manager, room, setRoo
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] p-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b border-[var(--border)] pb-5 gap-4">
-        <div className="flex items-center gap-4">
+        <div>
           <Brand size="sm" />
-          <div className="border-l border-[var(--border)] pl-4">
-            <p className="text-xs uppercase tracking-[0.25em] text-[#34D399] mb-1">Room Manager • {manager.name}</p>
-            <h1 className="text-3xl font-bold" style={{ fontFamily: 'var(--font-display)' }}>{room.roomName}</h1>
-            <p className="text-[var(--text-muted)] mt-1 text-sm">{room.location}</p>
-          </div>
+          <p className="text-xs uppercase tracking-[0.25em] text-[#34D399] mt-2 mb-1">Room Manager • {manager.name}</p>
+          <h1 className="text-2xl sm:text-3xl font-bold" style={{ fontFamily: 'var(--font-display)' }}>{room.roomName}</h1>
+          <p className="text-[var(--text-muted)] mt-1 text-sm">{room.location}</p>
         </div>
         <div className="flex items-center gap-3">
           <SettingsMenu />

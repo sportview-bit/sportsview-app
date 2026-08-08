@@ -118,14 +118,12 @@ export const AdminDashboard: React.FC<AdminProps> = ({
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
       <header className="border-b border-[var(--border)] px-6 py-4 flex items-center justify-between sticky top-0 bg-[var(--bg)]/90 backdrop-blur z-10">
-        <div className="flex items-center gap-4">
+        <div>
           <Brand size="sm" />
-          <div className="border-l border-[var(--border)] pl-4">
-            <p className="text-xs uppercase tracking-[0.25em] text-[#F2B705] flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4" /> Super Admin
-            </p>
-            <h1 className="text-xl font-bold" style={{ fontFamily: 'var(--font-display)' }}>Admin Dashboard</h1>
-          </div>
+          <p className="text-xs uppercase tracking-[0.25em] text-[#F2B705] flex items-center gap-2 mt-2">
+            <ShieldCheck className="w-4 h-4" /> Super Admin
+          </p>
+          <h1 className="text-xl font-bold" style={{ fontFamily: 'var(--font-display)' }}>Admin Dashboard</h1>
         </div>
         <div className="flex items-center gap-3">
           <SettingsMenu />

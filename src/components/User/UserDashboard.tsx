@@ -80,16 +80,17 @@ export const UserDashboard: React.FC<UserProps> = ({ matches, user, setUser, onB
 
   return (
     <div className="p-6 bg-[var(--bg)] text-[var(--text)] min-h-screen">
-      <div className="flex justify-between items-center mb-8 border-b border-[var(--border)] pb-4">
-        <div className="flex items-center gap-4">
-          <Brand size="sm" />
-          <div className="border-l border-[var(--border)] pl-4">
-            <p className="text-xs uppercase tracking-[0.25em] text-[#F2B705] mb-1">Fan</p>
-            <h1 className="text-2xl font-bold" style={{ fontFamily: 'var(--font-display)' }}>Welcome, {user.name}</h1>
-            <p className="text-[var(--text-muted)] text-sm">Digital ID: {user.id}</p>
+      <div className="flex justify-between items-start mb-8 border-b border-[var(--border)] pb-4 gap-4">
+        <div>
+          <div className="mb-2">
+            <Brand size="sm" />
           </div>
+          <h1 className="text-2xl sm:text-3xl font-bold leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
+            Welcome, {user.name}
+          </h1>
+          <p className="text-[var(--text-muted)] text-sm mt-1">Digital ID: {user.id}</p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 shrink-0">
           <SettingsMenu />
           <button onClick={onBack} className="text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition">Exit</button>
         </div>
