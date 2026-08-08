@@ -13,6 +13,16 @@ interface UserProps {
   onBack: () => void;
 }
 
+// Shared background layer — the photo shows through the gaps between cards,
+// never behind actual content (every card below has its own solid surface
+// color, so text stays fully readable regardless of what's behind it).
+const PageBackground: React.FC = () => (
+  <>
+    <div className="fixed inset-0 bg-cover bg-center -z-10" style={{ backgroundImage: "url('/background.jpg')" }} />
+    <div className="fixed inset-0 bg-[var(--bg)]/85 -z-10" />
+  </>
+);
+
 export const UserDashboard: React.FC<UserProps> = ({ matches, user, setUser, onBack }) => {
   const [regName, setRegName] = useState('');
   const [regPhone, setRegPhone] = useState('');
@@ -45,7 +55,8 @@ export const UserDashboard: React.FC<UserProps> = ({ matches, user, setUser, onB
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center p-6">
+      <div className="min-h-screen relative flex items-center justify-center p-6">
+        <PageBackground />
         <div className="w-full max-w-md">
           <div className="flex items-center justify-between mb-6">
             <button onClick={onBack} className="flex items-center gap-2 text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition">
@@ -55,7 +66,7 @@ export const UserDashboard: React.FC<UserProps> = ({ matches, user, setUser, onB
           </div>
           <Brand size="sm" />
           <div className="bg-[var(--surface)] border border-[var(--border)] p-8 rounded-2xl mt-6">
-            <h2 className="text-2xl font-bold text-[var(--text)] mb-2" style={{ fontFamily: 'var(--font-display)' }}>Join SportsView</h2>
+            <h2 className="text-2xl font-bold mb-2" style={{ fontFamily: 'var(--font-display)' }}>Join SportsView</h2>
             <p className="text-[var(--text-muted)] text-sm mb-6">Create your account to get your digital stadium card.</p>
             <form onSubmit={handleRegister} className="space-y-4">
               <div>
@@ -79,7 +90,9 @@ export const UserDashboard: React.FC<UserProps> = ({ matches, user, setUser, onB
   }
 
   return (
-    <div className="p-6 bg-[var(--bg)] text-[var(--text)] min-h-screen">
+    <div className="relative min-h-screen p-6">
+      <PageBackground />
+
       <div className="flex justify-between items-start mb-8 border-b border-[var(--border)] pb-4 gap-4">
         <div>
           <div className="mb-2">
@@ -116,8 +129,8 @@ export const UserDashboard: React.FC<UserProps> = ({ matches, user, setUser, onB
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-[var(--surface)] to-[var(--surface-2)] border border-[var(--border)] p-6 rounded-2xl flex flex-col items-center justify-center">
-          <h3 className="font-bold mb-2 flex items-center gap-2"><ScanLine className="w-5 h-5 text-[var(--text)]" /> Your Access Card</h3>
+        <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl flex flex-col items-center justify-center">
+          <h3 className="font-bold mb-2 flex items-center gap-2"><ScanLine className="w-5 h-5" /> Your Access Card</h3>
           <p className="text-xs text-[var(--text-muted)] mb-6 text-center">Scan at the door. Entry costs 1,000 TZS.</p>
           <div className="bg-white p-3 rounded-xl">
             <QRCodeSVG value={JSON.stringify({ uid: user.id, card: user.cardHash })} size={180} level="H" />
