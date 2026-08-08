@@ -1,40 +1,20 @@
-// src/components/Shared/Brand.tsx
-import React from 'react';
-
-interface BrandProps {
-  /** 'lg' = landing page hero. 'sm' = compact icon+text, used in dashboard headers. */
-  size?: 'lg' | 'sm';
-}
-
-export const Brand: React.FC<BrandProps> = ({ size = 'lg' }) => {
-  if (size === 'sm') {
-    return (
-      <div className="flex items-center gap-2">
-        <img src="/logo.jpg" alt="SportsViewTZ" className="w-6 h-6 rounded-md object-cover border border-[var(--border)]" />
-        <span
-          className="text-[var(--text-muted)] leading-none"
-          style={{ fontFamily: 'var(--font-brand)', fontSize: '0.95rem', letterSpacing: '0.03em' }}
-        >
-          SPORTSVIEWTZ
-        </span>
-      </div>
-    );
-  }
-
+export function Brand() {
   return (
-    <div className="flex flex-col items-center mb-6 px-4">
+    <div className="flex items-center gap-2">
+      {/* Small Logo like YouTube/Instagram (32x32) */}
       <img
         src="/logo.jpg"
-        alt="SportsViewTZ"
-        className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover mb-3"
-        style={{ boxShadow: '0 0 40px rgba(242, 183, 5, 0.22)' }}
+        alt="Logo"
+        className="w-8 h-8 object-cover rounded-full border border-amber-500/50 shadow-sm"
       />
+
+      {/* Fantastic, neat font for the title */}
       <h1
-        className="text-2xl sm:text-3xl md:text-4xl text-[var(--text)] leading-none text-center"
-        style={{ fontFamily: 'var(--font-brand)', letterSpacing: '0.05em' }}
+        className="text-xl tracking-wide bg-gradient-to-r from-amber-300 via-amber-500 to-yellow-600 bg-clip-text text-transparent drop-shadow-sm"
+        style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 900 }}
       >
         SPORTSVIEWTZ
       </h1>
     </div>
   );
-};
+}
