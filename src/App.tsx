@@ -186,12 +186,17 @@ const Shell: React.FC = () => {
     );
   }
 
+  // Landing — background photo behind everything, dark scrim on top, cards stay opaque.
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col p-6">
+    <div className="min-h-screen relative flex flex-col p-6">
+      <div className="fixed inset-0 bg-cover bg-center -z-10" style={{ backgroundImage: "url('/background.jpg')" }} />
+      <div className="fixed inset-0 bg-[var(--bg)]/85 -z-10" />
+
       <div className="flex items-center justify-between mb-16">
         <Brand size="sm" />
         <SettingsMenu />
       </div>
+
       <div className="flex-1 flex items-center justify-center">
         <div className="max-w-md w-full text-center">
           <p className="text-[var(--text-muted)] mb-8">{t('chooseAccess')}</p>
@@ -204,8 +209,12 @@ const Shell: React.FC = () => {
           <p className="text-sm text-[var(--text-muted)] mt-3">{t('fanDesc')}</p>
         </div>
       </div>
+
       {isStaffDomain() && (
-        <button onClick={() => setView('staff')} className="mt-16 mx-auto text-xs text-[var(--text-muted)] hover:text-[var(--text)] transition flex items-center gap-1.5">
+        <button
+          onClick={() => setView('staff')}
+          className="mt-16 mx-auto text-xs text-[var(--text-muted)] hover:text-[var(--text)] transition flex items-center gap-1.5"
+        >
           <Lock className="w-3 h-3" /> {t('staffLink')}
         </button>
       )}
