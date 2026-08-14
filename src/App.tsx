@@ -185,7 +185,6 @@ const Shell: React.FC = () => {
       </div>
     );
   }
-
   // Landing — background photo behind everything, dark scrim on top, cards stay opaque.
   return (
     <div className="min-h-screen relative flex flex-col p-6">
@@ -198,8 +197,15 @@ const Shell: React.FC = () => {
       </div>
 
       <div className="flex-1 flex items-center justify-center">
-        <div className="max-w-md w-full text-center">
+        <div className="max-w-md w-full text-center bg-[var(--surface)]/90 backdrop-blur border border-[var(--border)] rounded-3xl p-8">
+          <div className="w-16 h-16 mx-auto mb-5 rounded-2xl bg-[#F2B705] flex items-center justify-center">
+            <Users className="w-8 h-8 text-[#0B0F14]" />
+          </div>
+          <h1 className="text-2xl font-bold mb-2" style={{ fontFamily: 'var(--font-display)' }}>
+            {t('welcome')} <span className="text-[#F2B705]">SPORTSVIEWTZ</span>
+          </h1>
           <p className="text-[var(--text-muted)] mb-8">{t('chooseAccess')}</p>
+
           <button
             onClick={() => setView('user')}
             className="w-full bg-[#F2B705] hover:brightness-110 text-[#0B0F14] font-bold py-4 rounded-2xl transition flex items-center justify-center gap-2 text-lg"
