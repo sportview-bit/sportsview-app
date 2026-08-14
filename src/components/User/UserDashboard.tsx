@@ -1,21 +1,18 @@
 // src/components/User/UserDashboard.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Wallet, Smartphone, CalendarDays, ScanLine, ArrowLeft } from 'lucide-react';
 import type { Match, User } from '../../types';
+import { api } from '../../services/api';
 import { SettingsMenu } from '../Shared/SettingsMenu';
 import { Brand } from '../Shared/Brand';
 
 interface UserProps {
-  matches: Match[];
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   onBack: () => void;
 }
 
-// Shared background layer — the photo shows through the gaps between cards,
-// never behind actual content (every card below has its own solid surface
-// color, so text stays fully readable regardless of what's behind it).
 const PageBackground: React.FC = () => (
   <>
     <div className="fixed inset-0 bg-cover bg-center -z-10" style={{ backgroundImage: "url('/background.jpg')" }} />
@@ -23,34 +20,40 @@ const PageBackground: React.FC = () => (
   </>
 );
 
-export const UserDashboard: React.FC<UserProps> = ({ matches, user, setUser, onBack }) => {
+export const UserDashboard: React.FC<UserProps> = ({ user, setUser, onBack }) => {
+  const [matches, setMatches] = useState<Match[]>([]);
   const [regName, setRegName] = useState('');
   const [regPhone, setRegPhone] = useState('');
   const [topupAmount, setTopupAmount] = useState('');
-  const [paying, setPaying] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleRegister = (e: React.FormEvent) => {
+  useEffect(() => { api.getMatches().then(setMatches).catch(() => {}); }, []);
+
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newUser: User = {
-      id: `USR-${Math.floor(1000 + Math.random() * 9000)}`,
-      name: regName,
-      phone: regPhone,
-      cardHash: `PHYSICAL-CARD-${Math.random().toString(36).substring(2, 10).toUpperCase()}`,
-      balance: 0,
-    };
-    setUser(newUser);
+    setBusy(true); setError('');
+    try {
+      const newUser = await api.registerUser(regName, regPhone);
+      setUser(newUser);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not create your card');
+    } finally {
+      setBusy(false);
+    }
   };
 
-  const handleTopUp = (e: React.FormEvent) => {
+  const handleTopUp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!topupAmount || !user) return;
-    setPaying(true);
-    setTimeout(() => {
-      setUser({ ...user, balance: user.balance + parseInt(topupAmount) });
+    setBusy(true);
+    try {
+      const updated = await api.topUp(user.id, parseInt(topupAmount, 10));
+      setUser(updated);
       setTopupAmount('');
-      setPaying(false);
-      alert('USSD Payment Successful via MalipoPay!');
-    }, 1500);
+    } finally {
+      setBusy(false);
+    }
   };
 
   if (!user) {
@@ -79,8 +82,9 @@ export const UserDashboard: React.FC<UserProps> = ({ matches, user, setUser, onB
                 <input type="tel" required value={regPhone} onChange={e => setRegPhone(e.target.value)}
                   className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3 mt-1 text-[var(--text)] focus:border-[#F2B705] outline-none transition" placeholder="07XX XXX XXX" />
               </div>
-              <button type="submit" className="w-full bg-[#F2B705] hover:brightness-110 text-[#0B0F14] font-bold py-3 rounded-lg transition mt-4">
-                Create Account & Get Card
+              {error && <p className="text-sm text-[#FF5468]">{error}</p>}
+              <button disabled={busy} type="submit" className="w-full bg-[#F2B705] hover:brightness-110 text-[#0B0F14] font-bold py-3 rounded-lg transition mt-4 disabled:opacity-50">
+                {busy ? 'Creating…' : 'Create Account & Get Card'}
               </button>
             </form>
           </div>
@@ -92,15 +96,10 @@ export const UserDashboard: React.FC<UserProps> = ({ matches, user, setUser, onB
   return (
     <div className="relative min-h-screen p-6">
       <PageBackground />
-
       <div className="flex justify-between items-start mb-8 border-b border-[var(--border)] pb-4 gap-4">
         <div>
-          <div className="mb-2">
-            <Brand size="sm" />
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
-            Welcome, {user.name}
-          </h1>
+          <div className="mb-2"><Brand size="sm" /></div>
+          <h1 className="text-2xl sm:text-3xl font-bold leading-tight" style={{ fontFamily: 'var(--font-display)' }}>Welcome, {user.name}</h1>
           <p className="text-[var(--text-muted)] text-sm mt-1">Digital ID: {user.id}</p>
         </div>
         <div className="flex items-center gap-3 shrink-0">
@@ -116,14 +115,13 @@ export const UserDashboard: React.FC<UserProps> = ({ matches, user, setUser, onB
             <p className="text-sm font-semibold text-[var(--text-muted)]">Available Balance</p>
             <h3 className="text-4xl font-bold text-[#F2B705] mt-2 font-mono">{user.balance.toLocaleString()} TZS</h3>
           </div>
-
           <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl">
             <h3 className="font-bold mb-4 flex items-center gap-2"><Smartphone className="w-5 h-5 text-[#34D399]" /> Add Money</h3>
             <form onSubmit={handleTopUp} className="flex gap-2">
               <input type="number" required value={topupAmount} onChange={e => setTopupAmount(e.target.value)} placeholder="Amount (TZS)"
-                className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 outline-none focus:border-[#34D399] transition" />
-              <button type="submit" disabled={paying} className="bg-[#34D399] hover:brightness-110 disabled:opacity-50 px-4 py-2 rounded-lg font-bold text-[#0B0F14] transition">
-                {paying ? '...' : 'Pay'}
+                className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 outline-none focus:border-[#34D399] transition text-[var(--text)]" />
+              <button type="submit" disabled={busy} className="bg-[#34D399] hover:brightness-110 disabled:opacity-50 px-4 py-2 rounded-lg font-bold text-[#0B0F14] transition">
+                {busy ? '...' : 'Pay'}
               </button>
             </form>
           </div>
