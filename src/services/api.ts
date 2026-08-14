@@ -22,7 +22,7 @@ export const api = {
     request('/auth/admin/login', { method: 'POST', body: JSON.stringify({ username, password }) }),
   managerLogin: (username: string, password: string) =>
     request('/auth/manager/login', { method: 'POST', body: JSON.stringify({ username, password }) }),
-  managerRegister: (data: Record<string, unknown>) =>
+  managerRegister: (data: object) =>
     request('/auth/manager/register', { method: 'POST', body: JSON.stringify(data) }),
   sponsorLogin: (username: string, password: string) =>
     request('/auth/sponsor/login', { method: 'POST', body: JSON.stringify({ username, password }) }),
@@ -34,7 +34,7 @@ export const api = {
   deleteMatch: (token: string, id: string) => request(`/admin/matches/${id}`, { method: 'DELETE' }, token),
 
   getRooms: (token: string) => request('/admin/rooms', {}, token),
-  createRoom: (token: string, data: Record<string, unknown>) =>
+  createRoom: (token: string, data: object) =>
     request('/admin/rooms', { method: 'POST', body: JSON.stringify(data) }, token),
   deleteRoom: (token: string, id: string) => request(`/admin/rooms/${id}`, { method: 'DELETE' }, token),
 
@@ -43,7 +43,7 @@ export const api = {
   rejectManager: (token: string, id: string) => request(`/admin/managers/${id}`, { method: 'DELETE' }, token),
 
   getSponsors: (token: string) => request('/admin/sponsors', {}, token),
-  createSponsor: (token: string, data: Record<string, unknown>) =>
+  createSponsor: (token: string, data: object) =>
     request('/admin/sponsors', { method: 'POST', body: JSON.stringify(data) }, token),
   deleteSponsor: (token: string, id: string) => request(`/admin/sponsors/${id}`, { method: 'DELETE' }, token),
 
