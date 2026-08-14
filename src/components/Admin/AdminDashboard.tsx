@@ -6,6 +6,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { api } from '../../services/api';
 import { SettingsMenu } from '../Shared/SettingsMenu';
 import { Brand } from '../Shared/Brand';
+import { PasswordInput } from '../Shared/PasswordInput';
 import type { Match, Room } from '../../types';
 
 interface Overview {
@@ -293,7 +294,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                   <div className="grid grid-cols-2 gap-3">
                     <input type="text" placeholder="Username" required value={managerUsername} onChange={e => setManagerUsername(e.target.value)}
                       className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#34D399] transition" />
-                    <input type="password" placeholder="Temporary password" required value={managerPassword} onChange={e => setManagerPassword(e.target.value)}
+                    <PasswordInput placeholder="Temporary password" required value={managerPassword} onChange={e => setManagerPassword(e.target.value)}
                       className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#34D399] transition" />
                   </div>
                   {roomFormError && <p className="text-sm text-[#FF5468]">{roomFormError}</p>}
@@ -341,7 +342,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                 <div className="grid grid-cols-2 gap-3">
                   <input type="text" placeholder="Username" required value={sponsorUsername} onChange={e => setSponsorUsername(e.target.value)}
                     className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#A78BFA] transition" />
-                  <input type="password" placeholder="Temporary password" required value={sponsorPassword} onChange={e => setSponsorPassword(e.target.value)}
+                  <PasswordInput placeholder="Temporary password" required value={sponsorPassword} onChange={e => setSponsorPassword(e.target.value)}
                     className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#A78BFA] transition" />
                 </div>
                 {sponsorFormError && <p className="text-sm text-[#FF5468]">{sponsorFormError}</p>}

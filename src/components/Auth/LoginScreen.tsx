@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { SettingsMenu } from '../Shared/SettingsMenu';
+import { PasswordInput } from '../Shared/PasswordInput';
 
 interface LoginScreenProps {
   title: string;
@@ -55,9 +56,8 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ title, subtitle, accen
             </div>
             <div>
               <label className="text-xs text-[var(--text-muted)]">{t('password')}</label>
-              <input
+              <PasswordInput
                 required
-                type="password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3 mt-1 outline-none focus:border-current transition text-[var(--text)]"

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { ArrowLeft, Building2, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { SettingsMenu } from '../Shared/SettingsMenu';
+import { PasswordInput } from '../Shared/PasswordInput';
 
 export interface ManagerRegistrationInput {
   name: string;
@@ -83,7 +84,7 @@ export const ManagerRegisterScreen: React.FC<ManagerRegisterScreenProps> = ({ on
             <div className="grid grid-cols-2 gap-3">
               <input required placeholder={t('username')} value={form.username} onChange={e => update('username', e.target.value)}
                 className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2.5 outline-none focus:border-[#34D399] transition text-[var(--text)]" />
-              <input required type="password" placeholder={t('password')} value={form.password} onChange={e => update('password', e.target.value)}
+              <PasswordInput required placeholder={t('password')} value={form.password} onChange={e => update('password', e.target.value)}
                 className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2.5 outline-none focus:border-[#34D399] transition text-[var(--text)]" />
             </div>
             {error && <p className="text-sm text-[#FF5468]">{error}</p>}
