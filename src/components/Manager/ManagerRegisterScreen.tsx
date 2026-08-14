@@ -16,8 +16,7 @@ export interface ManagerRegistrationInput {
 
 interface ManagerRegisterScreenProps {
   onBack: () => void;
-  /** Return an error message string to reject the submission, or null to accept it. */
-  onSubmit: (data: ManagerRegistrationInput) => string | null;
+  onSubmit: (data: ManagerRegistrationInput) => Promise<string | null> | string | null;
 }
 
 export const ManagerRegisterScreen: React.FC<ManagerRegisterScreenProps> = ({ onBack, onSubmit }) => {
@@ -26,13 +25,16 @@ export const ManagerRegisterScreen: React.FC<ManagerRegisterScreenProps> = ({ on
     name: '', phone: '', email: '', roomName: '', location: '', username: '', password: '',
   });
   const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const update = (field: keyof ManagerRegistrationInput, value: string) => setForm(f => ({ ...f, [field]: value }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const err = onSubmit(form);
+    setSubmitting(true);
+    const err = await onSubmit(form);
+    setSubmitting(false);
     if (err) setError(err);
     else setSubmitted(true);
   };
@@ -85,8 +87,8 @@ export const ManagerRegisterScreen: React.FC<ManagerRegisterScreenProps> = ({ on
                 className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2.5 outline-none focus:border-[#34D399] transition text-[var(--text)]" />
             </div>
             {error && <p className="text-sm text-[#FF5468]">{error}</p>}
-            <button type="submit" className="w-full bg-[#34D399] hover:brightness-110 text-[#0B0F14] font-bold py-3 rounded-lg transition mt-2">
-              {t('submitApplication')}
+            <button disabled={submitting} type="submit" className="w-full bg-[#34D399] hover:brightness-110 disabled:opacity-50 text-[#0B0F14] font-bold py-3 rounded-lg transition mt-2">
+              {submitting ? '...' : t('submitApplication')}
             </button>
           </form>
         </div>

@@ -10,9 +10,7 @@ interface LoginScreenProps {
   accentColor: string;
   icon: React.ReactNode;
   onBack: () => void;
-  /** Return an error message string to reject the attempt, or null to accept it. */
-  onSubmit: (username: string, password: string) => string | null;
-  /** Optional extra content rendered below the form, e.g. a "register" link. */
+  onSubmit: (username: string, password: string) => Promise<string | null> | string | null;
   footer?: React.ReactNode;
 }
 
@@ -21,10 +19,13 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ title, subtitle, accen
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const err = onSubmit(username, password);
+    setLoading(true);
+    const err = await onSubmit(username, password);
+    setLoading(false);
     setError(err ?? '');
   };
 
@@ -64,8 +65,8 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ title, subtitle, accen
               />
             </div>
             {error && <p className="text-sm text-[#FF5468]">{error}</p>}
-            <button type="submit" className="w-full font-bold py-3 rounded-lg transition hover:brightness-110" style={{ background: accentColor, color: '#0B0F14' }}>
-              {t('signIn')}
+            <button disabled={loading} type="submit" className="w-full font-bold py-3 rounded-lg transition hover:brightness-110 disabled:opacity-50" style={{ background: accentColor, color: '#0B0F14' }}>
+              {loading ? t('signingIn') : t('signIn')}
             </button>
           </form>
           {footer && <div className="mt-5 text-center">{footer}</div>}

@@ -5,7 +5,7 @@ export interface AuthedRequest extends Request {
   auth?: TokenPayload;
 }
 
-export const requireRole = (role: 'admin' | 'manager') =>
+export const requireRole = (role: 'admin' | 'manager' | 'sponsor') =>
   (req: AuthedRequest, res: Response, next: NextFunction) => {
     const header = req.headers.authorization;
     if (!header?.startsWith('Bearer ')) return res.status(401).json({ error: 'Missing token' });

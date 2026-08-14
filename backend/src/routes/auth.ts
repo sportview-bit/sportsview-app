@@ -26,7 +26,6 @@ authRouter.post('/manager/login', async (req, res) => {
   res.json({ token: signToken({ id: manager.id, role: 'manager' }), name: manager.name, roomName: manager.room?.name });
 });
 
-// Public — self-registration, always starts as "pending"
 authRouter.post('/manager/register', async (req, res) => {
   const { name, phone, email, roomName, location, username, password } = req.body;
   if (!name || !phone || !email || !roomName || !location || !username || !password) {
@@ -43,4 +42,13 @@ authRouter.post('/manager/register', async (req, res) => {
     },
   });
   res.status(201).json({ ok: true });
+});
+
+authRouter.post('/sponsor/login', async (req, res) => {
+  const { username, password } = req.body;
+  const sponsor = await prisma.sponsor.findUnique({ where: { username } });
+  if (!sponsor || !(await bcrypt.compare(password, sponsor.passwordHash))) {
+    return res.status(401).json({ error: 'Invalid username or password' });
+  }
+  res.json({ token: signToken({ id: sponsor.id, role: 'sponsor' }), name: sponsor.name });
 });
