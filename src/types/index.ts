@@ -10,6 +10,7 @@ export interface Room {
   id: string;
   roomName: string;
   location: string;
+  managerId?: string;
   managerName?: string;
   todayEntries: number;
   todayRevenue: number;
@@ -19,6 +20,7 @@ export interface User {
   id: string;
   name: string;
   phone: string;
+  email: string;
   cardHash: string;
   balance: number;
 }

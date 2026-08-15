@@ -37,6 +37,8 @@ export const api = {
   createRoom: (token: string, data: object) =>
     request('/admin/rooms', { method: 'POST', body: JSON.stringify(data) }, token),
   deleteRoom: (token: string, id: string) => request(`/admin/rooms/${id}`, { method: 'DELETE' }, token),
+  resetManagerPassword: (token: string, id: string, password: string) =>
+    request(`/admin/managers/${id}/reset-password`, { method: 'POST', body: JSON.stringify({ password }) }, token),
 
   getPendingManagers: (token: string) => request('/admin/managers/pending', {}, token),
   approveManager: (token: string, id: string) => request(`/admin/managers/${id}/approve`, { method: 'POST' }, token),
@@ -46,6 +48,8 @@ export const api = {
   createSponsor: (token: string, data: object) =>
     request('/admin/sponsors', { method: 'POST', body: JSON.stringify(data) }, token),
   deleteSponsor: (token: string, id: string) => request(`/admin/sponsors/${id}`, { method: 'DELETE' }, token),
+  resetSponsorPassword: (token: string, id: string, password: string) =>
+    request(`/admin/sponsors/${id}/reset-password`, { method: 'POST', body: JSON.stringify({ password }) }, token),
 
   getMyRoom: (token: string) => request('/manager/room', {}, token),
   simulateScan: (token: string, cardHash: string, matchId: string) =>
@@ -53,9 +57,10 @@ export const api = {
 
   getSponsorMe: (token: string) => request('/sponsor/me', {}, token),
 
-  registerUser: (name: string, phone: string) =>
-    request('/users/register', { method: 'POST', body: JSON.stringify({ name, phone }) }),
-  getUser: (id: string) => request(`/users/${id}`),
+  registerUser: (name: string, phone: string, email: string) =>
+    request('/users/register', { method: 'POST', body: JSON.stringify({ name, phone, email }) }),
+  loginUser: (phone: string) =>
+    request('/users/login', { method: 'POST', body: JSON.stringify({ phone }) }),
   topUp: (userId: string, amount: number) =>
     request(`/users/${userId}/topup`, { method: 'POST', body: JSON.stringify({ amount }) }),
 };

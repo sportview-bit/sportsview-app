@@ -1,6 +1,6 @@
 // src/components/Admin/AdminDashboard.tsx
 import React, { useCallback, useEffect, useState } from 'react';
-import { CalendarPlus, Trash2, Building2, ShieldCheck, Radio, Handshake, Clock, Check, X } from 'lucide-react';
+import { CalendarPlus, Trash2, Building2, ShieldCheck, Radio, Handshake, Clock, Check, X, KeyRound } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { api } from '../../services/api';
@@ -54,6 +54,12 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
   const [sponsorAmount, setSponsorAmount] = useState('');
   const [sponsorShare, setSponsorShare] = useState('');
   const [sponsorFormError, setSponsorFormError] = useState('');
+
+  // password-reset UI state — which row (by manager/sponsor id) has its reset field open
+  const [resetTarget, setResetTarget] = useState<{ type: 'manager' | 'sponsor'; id: string } | null>(null);
+  const [resetValue, setResetValue] = useState('');
+  const [resetError, setResetError] = useState('');
+  const [resetBusy, setResetBusy] = useState(false);
 
   const refresh = useCallback(async () => {
     try {
@@ -118,6 +124,24 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
     }
   };
   const deleteSponsor = async (id: string) => { await api.deleteSponsor(token, id); refresh(); };
+
+  const openReset = (type: 'manager' | 'sponsor', id: string) => {
+    setResetTarget({ type, id }); setResetValue(''); setResetError('');
+  };
+  const submitReset = async () => {
+    if (!resetTarget) return;
+    if (resetValue.length < 4) { setResetError('At least 4 characters'); return; }
+    setResetBusy(true);
+    try {
+      if (resetTarget.type === 'manager') await api.resetManagerPassword(token, resetTarget.id, resetValue);
+      else await api.resetSponsorPassword(token, resetTarget.id, resetValue);
+      setResetTarget(null);
+    } catch (err) {
+      setResetError(err instanceof Error ? err.message : 'Could not reset password');
+    } finally {
+      setResetBusy(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
@@ -308,15 +332,35 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                 <div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
                   {rooms.length === 0 && <p className="text-[var(--text-muted)] text-sm">No rooms registered yet.</p>}
                   {rooms.map(r => (
-                    <div key={r.id} className="flex justify-between items-center bg-[var(--bg)] p-3 rounded-lg border border-[var(--border)]">
-                      <div>
-                        <span className="font-bold text-[#34D399]">{r.roomName}</span>
-                        <div className="text-xs text-[var(--text-muted)]">Manager: {r.managerName} • {r.location}</div>
-                        <div className="text-xs font-mono text-[var(--text-muted)] mt-1">{r.todayEntries} entries • {r.todayRevenue.toLocaleString()} TZS today</div>
+                    <div key={r.id} className="bg-[var(--bg)] p-3 rounded-lg border border-[var(--border)]">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <span className="font-bold text-[#34D399]">{r.roomName}</span>
+                          <div className="text-xs text-[var(--text-muted)]">Manager: {r.managerName} • {r.location}</div>
+                          <div className="text-xs font-mono text-[var(--text-muted)] mt-1">{r.todayEntries} entries • {r.todayRevenue.toLocaleString()} TZS today</div>
+                        </div>
+                        <div className="flex gap-1">
+                          {r.managerId && (
+                            <button onClick={() => openReset('manager', r.managerId!)} title="Reset manager password" className="p-2 text-[var(--text-muted)] hover:text-[#F2B705] hover:bg-[#F2B705]/10 rounded-lg transition">
+                              <KeyRound className="w-4 h-4" />
+                            </button>
+                          )}
+                          <button onClick={() => deleteRoom(r.id)} className="p-2 text-[#FF5468] hover:bg-[#FF5468]/10 rounded-lg transition">
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
                       </div>
-                      <button onClick={() => deleteRoom(r.id)} className="p-2 text-[#FF5468] hover:bg-[#FF5468]/10 rounded-lg transition">
-                        <Trash2 className="w-4 h-4" />
-                      </button>
+                      {resetTarget?.type === 'manager' && resetTarget.id === r.managerId && (
+                        <div className="mt-3 pt-3 border-t border-[var(--border)] flex gap-2">
+                          <PasswordInput placeholder="New password" value={resetValue} onChange={e => setResetValue(e.target.value)}
+                            className="flex-1 bg-[var(--surface)] border border-[var(--border)] rounded-lg px-3 py-2 text-sm text-[var(--text)] outline-none focus:border-[#F2B705]" />
+                          <button onClick={submitReset} disabled={resetBusy} className="bg-[#F2B705] text-[#0B0F14] font-bold text-sm px-4 rounded-lg disabled:opacity-50">Save</button>
+                          <button onClick={() => setResetTarget(null)} className="text-[var(--text-muted)] text-sm px-2">Cancel</button>
+                        </div>
+                      )}
+                      {resetTarget?.type === 'manager' && resetTarget.id === r.managerId && resetError && (
+                        <p className="text-xs text-[#FF5468] mt-1">{resetError}</p>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -356,15 +400,33 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
               <div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
                 {sponsors.length === 0 && <p className="text-[var(--text-muted)] text-sm">No sponsors registered yet.</p>}
                 {sponsors.map(s => (
-                  <div key={s.id} className="flex justify-between items-center bg-[var(--bg)] p-3 rounded-lg border border-[var(--border)]">
-                    <div>
-                      <span className="font-bold text-[#A78BFA]">{s.name}</span>
-                      <div className="text-xs text-[var(--text-muted)]">@{s.username} • {s.profitSharePercent}% profit share</div>
-                      <div className="text-xs font-mono text-[var(--text-muted)] mt-1">{s.amountSponsored.toLocaleString()} TZS sponsored</div>
+                  <div key={s.id} className="bg-[var(--bg)] p-3 rounded-lg border border-[var(--border)]">
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <span className="font-bold text-[#A78BFA]">{s.name}</span>
+                        <div className="text-xs text-[var(--text-muted)]">@{s.username} • {s.profitSharePercent}% profit share</div>
+                        <div className="text-xs font-mono text-[var(--text-muted)] mt-1">{s.amountSponsored.toLocaleString()} TZS sponsored</div>
+                      </div>
+                      <div className="flex gap-1">
+                        <button onClick={() => openReset('sponsor', s.id)} title="Reset sponsor password" className="p-2 text-[var(--text-muted)] hover:text-[#A78BFA] hover:bg-[#A78BFA]/10 rounded-lg transition">
+                          <KeyRound className="w-4 h-4" />
+                        </button>
+                        <button onClick={() => deleteSponsor(s.id)} className="p-2 text-[#FF5468] hover:bg-[#FF5468]/10 rounded-lg transition">
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
-                    <button onClick={() => deleteSponsor(s.id)} className="p-2 text-[#FF5468] hover:bg-[#FF5468]/10 rounded-lg transition">
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                    {resetTarget?.type === 'sponsor' && resetTarget.id === s.id && (
+                      <div className="mt-3 pt-3 border-t border-[var(--border)] flex gap-2">
+                        <PasswordInput placeholder="New password" value={resetValue} onChange={e => setResetValue(e.target.value)}
+                          className="flex-1 bg-[var(--surface)] border border-[var(--border)] rounded-lg px-3 py-2 text-sm text-[var(--text)] outline-none focus:border-[#A78BFA]" />
+                        <button onClick={submitReset} disabled={resetBusy} className="bg-[#A78BFA] text-[#0B0F14] font-bold text-sm px-4 rounded-lg disabled:opacity-50">Save</button>
+                        <button onClick={() => setResetTarget(null)} className="text-[var(--text-muted)] text-sm px-2">Cancel</button>
+                      </div>
+                    )}
+                    {resetTarget?.type === 'sponsor' && resetTarget.id === s.id && resetError && (
+                      <p className="text-xs text-[#FF5468] mt-1">{resetError}</p>
+                    )}
                   </div>
                 ))}
               </div>

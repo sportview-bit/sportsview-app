@@ -144,7 +144,14 @@ const Shell: React.FC = () => {
   }
 
   if (view === 'user') {
-    return <UserDashboard user={user} setUser={setUser} onBack={goHome} />;
+    return (
+      <UserDashboard
+        user={user}
+        setUser={setUser}
+        onBack={goHome}
+        onLogout={() => { setUser(null); goHome(); }}
+      />
+    );
   }
 
   if (view === 'staff' && isStaffDomain()) {
@@ -185,11 +192,13 @@ const Shell: React.FC = () => {
       </div>
     );
   }
-  // Landing — background photo behind everything, dark scrim on top, cards stay opaque.
+
+  // Landing — fixed dark scrim regardless of theme, so light mode changes the
+  // UI colors but never washes out the background photo.
   return (
     <div className="min-h-screen relative flex flex-col p-6">
       <div className="fixed inset-0 bg-cover bg-center -z-10" style={{ backgroundImage: "url('/background.jpg')" }} />
-      <div className="fixed inset-0 bg-[var(--bg)]/85 -z-10" />
+      <div className="fixed inset-0 -z-10" style={{ backgroundColor: 'rgba(0,0,0,0.7)' }} />
 
       <div className="flex items-center justify-between mb-16">
         <Brand size="sm" />

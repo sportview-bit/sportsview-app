@@ -1,7 +1,7 @@
 // src/components/User/UserDashboard.tsx
 import React, { useEffect, useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import { Wallet, Smartphone, CalendarDays, ScanLine, ArrowLeft } from 'lucide-react';
+import { Wallet, Smartphone, CalendarDays, ScanLine, ArrowLeft, LogOut } from 'lucide-react';
 import type { Match, User } from '../../types';
 import { api } from '../../services/api';
 import { SettingsMenu } from '../Shared/SettingsMenu';
@@ -11,19 +11,29 @@ interface UserProps {
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   onBack: () => void;
+  onLogout: () => void;
 }
 
+// Fixed dark scrim regardless of theme, so the background photo always
+// reads the same way — switching to light mode changes the UI, not the photo.
 const PageBackground: React.FC = () => (
   <>
     <div className="fixed inset-0 bg-cover bg-center -z-10" style={{ backgroundImage: "url('/background.jpg')" }} />
-    <div className="fixed inset-0 bg-[var(--bg)]/85 -z-10" />
+    <div className="fixed inset-0 -z-10" style={{ backgroundColor: 'rgba(0,0,0,0.7)' }} />
   </>
 );
 
-export const UserDashboard: React.FC<UserProps> = ({ user, setUser, onBack }) => {
+const PHONE_REGEX = /^\d{10}$/;
+
+export const UserDashboard: React.FC<UserProps> = ({ user, setUser, onBack, onLogout }) => {
   const [matches, setMatches] = useState<Match[]>([]);
+  const [mode, setMode] = useState<'login' | 'register'>('register');
+
   const [regName, setRegName] = useState('');
   const [regPhone, setRegPhone] = useState('');
+  const [regEmail, setRegEmail] = useState('');
+  const [loginPhone, setLoginPhone] = useState('');
+
   const [topupAmount, setTopupAmount] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -32,12 +42,35 @@ export const UserDashboard: React.FC<UserProps> = ({ user, setUser, onBack }) =>
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    setBusy(true); setError('');
+    setError('');
+    if (!PHONE_REGEX.test(regPhone)) {
+      setError('Phone number must be exactly 10 digits, e.g. 0712345678');
+      return;
+    }
+    setBusy(true);
     try {
-      const newUser = await api.registerUser(regName, regPhone);
+      const newUser = await api.registerUser(regName, regPhone, regEmail);
       setUser(newUser);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not create your card');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    if (!PHONE_REGEX.test(loginPhone)) {
+      setError('Phone number must be exactly 10 digits, e.g. 0712345678');
+      return;
+    }
+    setBusy(true);
+    try {
+      const found = await api.loginUser(loginPhone);
+      setUser(found);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Login failed');
     } finally {
       setBusy(false);
     }
@@ -68,25 +101,66 @@ export const UserDashboard: React.FC<UserProps> = ({ user, setUser, onBack }) =>
             <SettingsMenu />
           </div>
           <Brand size="sm" />
+
           <div className="bg-[var(--surface)] border border-[var(--border)] p-8 rounded-2xl mt-6">
-            <h2 className="text-2xl font-bold mb-2" style={{ fontFamily: 'var(--font-display)' }}>Join SportsView</h2>
-            <p className="text-[var(--text-muted)] text-sm mb-6">Create your account to get your digital stadium card.</p>
-            <form onSubmit={handleRegister} className="space-y-4">
-              <div>
-                <label className="text-sm text-[var(--text-muted)]">Full Name</label>
-                <input type="text" required value={regName} onChange={e => setRegName(e.target.value)}
-                  className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3 mt-1 text-[var(--text)] focus:border-[#F2B705] outline-none transition" placeholder="e.g. Juma Rashid" />
-              </div>
-              <div>
-                <label className="text-sm text-[var(--text-muted)]">Phone Number (For USSD)</label>
-                <input type="tel" required value={regPhone} onChange={e => setRegPhone(e.target.value)}
-                  className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3 mt-1 text-[var(--text)] focus:border-[#F2B705] outline-none transition" placeholder="07XX XXX XXX" />
-              </div>
-              {error && <p className="text-sm text-[#FF5468]">{error}</p>}
-              <button disabled={busy} type="submit" className="w-full bg-[#F2B705] hover:brightness-110 text-[#0B0F14] font-bold py-3 rounded-lg transition mt-4 disabled:opacity-50">
-                {busy ? 'Creating…' : 'Create Account & Get Card'}
+            <div className="flex gap-2 mb-6 border-b border-[var(--border)]">
+              <button
+                onClick={() => { setMode('register'); setError(''); }}
+                className={`px-4 py-2 text-sm font-semibold border-b-2 -mb-px transition ${mode === 'register' ? 'border-[#F2B705] text-[#F2B705]' : 'border-transparent text-[var(--text-muted)]'}`}
+              >
+                Join
               </button>
-            </form>
+              <button
+                onClick={() => { setMode('login'); setError(''); }}
+                className={`px-4 py-2 text-sm font-semibold border-b-2 -mb-px transition ${mode === 'login' ? 'border-[#F2B705] text-[#F2B705]' : 'border-transparent text-[var(--text-muted)]'}`}
+              >
+                Log In
+              </button>
+            </div>
+
+            {mode === 'register' ? (
+              <>
+                <h2 className="text-2xl font-bold mb-2" style={{ fontFamily: 'var(--font-display)' }}>Join SportsView</h2>
+                <p className="text-[var(--text-muted)] text-sm mb-6">Create your account to get your digital stadium card.</p>
+                <form onSubmit={handleRegister} className="space-y-4">
+                  <div>
+                    <label className="text-sm text-[var(--text-muted)]">Full Name</label>
+                    <input type="text" required value={regName} onChange={e => setRegName(e.target.value)}
+                      className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3 mt-1 text-[var(--text)] focus:border-[#F2B705] outline-none transition" placeholder="e.g. Juma Rashid" />
+                  </div>
+                  <div>
+                    <label className="text-sm text-[var(--text-muted)]">Phone Number (10 digits)</label>
+                    <input type="tel" required value={regPhone} onChange={e => setRegPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                      className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3 mt-1 text-[var(--text)] focus:border-[#F2B705] outline-none transition" placeholder="0712345678" />
+                  </div>
+                  <div>
+                    <label className="text-sm text-[var(--text-muted)]">Email</label>
+                    <input type="email" required value={regEmail} onChange={e => setRegEmail(e.target.value)}
+                      className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3 mt-1 text-[var(--text)] focus:border-[#F2B705] outline-none transition" placeholder="you@example.com" />
+                  </div>
+                  {error && <p className="text-sm text-[#FF5468]">{error}</p>}
+                  <button disabled={busy} type="submit" className="w-full bg-[#F2B705] hover:brightness-110 text-[#0B0F14] font-bold py-3 rounded-lg transition mt-4 disabled:opacity-50">
+                    {busy ? 'Creating…' : 'Create Account & Get Card'}
+                  </button>
+                </form>
+              </>
+            ) : (
+              <>
+                <h2 className="text-2xl font-bold mb-2" style={{ fontFamily: 'var(--font-display)' }}>Welcome back</h2>
+                <p className="text-[var(--text-muted)] text-sm mb-6">Enter your phone number to access your card.</p>
+                <form onSubmit={handleLogin} className="space-y-4">
+                  <div>
+                    <label className="text-sm text-[var(--text-muted)]">Phone Number (10 digits)</label>
+                    <input type="tel" required value={loginPhone} onChange={e => setLoginPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                      className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3 mt-1 text-[var(--text)] focus:border-[#F2B705] outline-none transition" placeholder="0712345678" />
+                  </div>
+                  {error && <p className="text-sm text-[#FF5468]">{error}</p>}
+                  <button disabled={busy} type="submit" className="w-full bg-[#F2B705] hover:brightness-110 text-[#0B0F14] font-bold py-3 rounded-lg transition mt-4 disabled:opacity-50">
+                    {busy ? 'Checking…' : 'Log In'}
+                  </button>
+                </form>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -104,7 +178,9 @@ export const UserDashboard: React.FC<UserProps> = ({ user, setUser, onBack }) =>
         </div>
         <div className="flex items-center gap-3 shrink-0">
           <SettingsMenu />
-          <button onClick={onBack} className="text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition">Exit</button>
+          <button onClick={onLogout} className="flex items-center gap-2 text-sm text-[var(--text-muted)] hover:text-[#FF5468] transition">
+            <LogOut className="w-4 h-4" /> Log out
+          </button>
         </div>
       </div>
 
