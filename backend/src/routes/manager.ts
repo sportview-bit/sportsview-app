@@ -5,23 +5,40 @@ import { AuthedRequest, requireRole } from '../middleware/auth';
 export const managerRouter = Router();
 managerRouter.use(requireRole('manager'));
 
-function startOfToday() {
-  const d = new Date(); d.setHours(0, 0, 0, 0); return d;
-}
+function startOfToday() { const d = new Date(); d.setHours(0, 0, 0, 0); return d; }
+function startOfMonth() { const d = new Date(); d.setDate(1); d.setHours(0, 0, 0, 0); return d; }
 
 managerRouter.get('/room', async (req: AuthedRequest, res) => {
   const since = startOfToday();
   const room = await prisma.room.findUnique({
     where: { managerId: req.auth!.id },
-    include: { entries: { where: { scannedAt: { gte: since } }, include: { user: true, match: true }, orderBy: { scannedAt: 'desc' } } },
+    include: {
+      entries: { where: { scannedAt: { gte: since } }, include: { user: true, match: true }, orderBy: { scannedAt: 'desc' } },
+    },
   });
   if (!room) return res.status(404).json({ error: 'Room not found' });
+
+  // Owner's monthly total is derived from this — sum every scan this
+  // calendar month, independent of today's entries list above.
+  const monthlyEntries = await prisma.entry.findMany({
+    where: { roomId: room.id, scannedAt: { gte: startOfMonth() } },
+    select: { amount: true },
+  });
+  const monthlyRevenue = monthlyEntries.reduce((s, e) => s + e.amount, 0);
+
   res.json({
-    id: room.id, roomName: room.name, location: room.location,
+    id: room.id,
+    roomName: room.name,
+    location: room.location,
     todayEntries: room.entries.length,
     todayRevenue: room.entries.reduce((s, e) => s + e.amount, 0),
+    monthlyRevenue,
     recentEntries: room.entries.slice(0, 30).map(e => ({
-      id: e.id, userName: e.user.name, amount: e.amount, match: `${e.match.homeTeam} vs ${e.match.awayTeam}`, scannedAt: e.scannedAt,
+      id: e.id,
+      userName: e.user.name,
+      amount: e.amount,
+      match: `${e.match.homeTeam} vs ${e.match.awayTeam}`,
+      scannedAt: e.scannedAt,
     })),
   });
 });
