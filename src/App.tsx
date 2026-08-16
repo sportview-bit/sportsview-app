@@ -193,8 +193,11 @@ const Shell: React.FC = () => {
     );
   }
 
-  // Landing — fixed dark scrim regardless of theme, so light mode changes the
-  // UI colors but never washes out the background photo.
+  // Landing — on the internal/staff domain, "Staff" is the primary door and
+  // Fan becomes the small secondary link. On the public domain, it's the
+  // reverse: Fan is primary, and staff access doesn't appear at all.
+  const staffDomain = isStaffDomain();
+
   return (
     <div className="min-h-screen relative flex flex-col p-6">
       <div className="fixed inset-0 bg-cover bg-center -z-10" style={{ backgroundImage: "url('/background.jpg')" }} />
@@ -208,31 +211,43 @@ const Shell: React.FC = () => {
       <div className="flex-1 flex items-center justify-center">
         <div className="max-w-md w-full text-center bg-[var(--surface)]/90 backdrop-blur border border-[var(--border)] rounded-3xl p-8">
           <div className="w-16 h-16 mx-auto mb-5 rounded-2xl bg-[#F2B705] flex items-center justify-center">
-            <Users className="w-8 h-8 text-[#0B0F14]" />
+            {staffDomain ? <ShieldCheck className="w-8 h-8 text-[#0B0F14]" /> : <Users className="w-8 h-8 text-[#0B0F14]" />}
           </div>
           <h1 className="text-2xl font-bold mb-2" style={{ fontFamily: 'var(--font-display)' }}>
             {t('welcome')} <span className="text-[#F2B705]">SPORTSVIEWTZ</span>
           </h1>
           <p className="text-[var(--text-muted)] mb-8">{t('chooseAccess')}</p>
 
-          <button
-            onClick={() => setView('user')}
-            className="w-full bg-[#F2B705] hover:brightness-110 text-[#0B0F14] font-bold py-4 rounded-2xl transition flex items-center justify-center gap-2 text-lg"
-          >
-            <Users className="w-5 h-5" /> {t('fan')}
-          </button>
-          <p className="text-sm text-[var(--text-muted)] mt-3">{t('fanDesc')}</p>
+          {staffDomain ? (
+            <>
+              <button
+                onClick={() => setView('staff')}
+                className="w-full bg-[#F2B705] hover:brightness-110 text-[#0B0F14] font-bold py-4 rounded-2xl transition flex items-center justify-center gap-2 text-lg"
+              >
+                <ShieldCheck className="w-5 h-5" /> {t('staffButtonLabel')}
+              </button>
+              <p className="text-sm text-[var(--text-muted)] mt-3">{t('staffButtonDesc')}</p>
+
+              <button
+                onClick={() => setView('user')}
+                className="mt-6 text-xs text-[var(--text-muted)] hover:text-[var(--text)] transition flex items-center justify-center gap-1.5 mx-auto"
+              >
+                <Users className="w-3 h-3" /> {t('fan')}
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={() => setView('user')}
+                className="w-full bg-[#F2B705] hover:brightness-110 text-[#0B0F14] font-bold py-4 rounded-2xl transition flex items-center justify-center gap-2 text-lg"
+              >
+                <Users className="w-5 h-5" /> {t('fan')}
+              </button>
+              <p className="text-sm text-[var(--text-muted)] mt-3">{t('fanDesc')}</p>
+            </>
+          )}
         </div>
       </div>
-
-      {isStaffDomain() && (
-        <button
-          onClick={() => setView('staff')}
-          className="mt-16 mx-auto text-xs text-[var(--text-muted)] hover:text-[var(--text)] transition flex items-center gap-1.5"
-        >
-          <Lock className="w-3 h-3" /> {t('staffLink')}
-        </button>
-      )}
     </div>
   );
 };

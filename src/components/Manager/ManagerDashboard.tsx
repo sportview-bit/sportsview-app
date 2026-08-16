@@ -1,6 +1,6 @@
 // src/components/Manager/ManagerDashboard.tsx
 import React, { useCallback, useEffect, useState } from 'react';
-import { Users, Wallet, ScanLine, LogOut, RefreshCw } from 'lucide-react';
+import { Users, Wallet, Landmark, Crown, TrendingUp, ScanLine, LogOut, RefreshCw } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { api } from '../../services/api';
@@ -9,9 +9,15 @@ import { Brand } from '../Shared/Brand';
 import type { Match } from '../../types';
 
 interface RoomDetail {
-  id: string; roomName: string; location: string; todayEntries: number; todayRevenue: number;
+  id: string; roomName: string; location: string;
+  todayEntries: number; todayRevenue: number; monthlyRevenue: number;
   recentEntries: { id: string; userName: string; amount: number; match: string; scannedAt: string }[];
 }
+
+// The fixed 3-way split every 1,000 TZS entry is broken into.
+const VAT_SHARE = 0.18;
+const PLATFORM_SHARE = 0.32;
+const OWNER_SHARE = 0.50;
 
 export const ManagerDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => {
   const { session, logout } = useAuth();
@@ -51,6 +57,12 @@ export const ManagerDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) =
 
   if (!room) return <div className="min-h-screen bg-[var(--bg)] text-[var(--text-muted)] flex items-center justify-center">Loading your room…</div>;
 
+  const totalCash = room.todayRevenue;
+  const vat = Math.round(totalCash * VAT_SHARE);
+  const platform = Math.round(totalCash * PLATFORM_SHARE);
+  const owner = Math.round(totalCash * OWNER_SHARE);
+  const myTotalCashMonth = Math.round(room.monthlyRevenue * OWNER_SHARE);
+
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] p-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b border-[var(--border)] pb-5 gap-4">
@@ -69,42 +81,80 @@ export const ManagerDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) =
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6 mb-6">
-        <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl flex items-center gap-4">
-          <div className="p-4 bg-[#F2B705]/10 text-[#F2B705] rounded-xl"><Users className="w-8 h-8" /></div>
-          <div>
-            <p className="text-sm text-[var(--text-muted)]">People in today</p>
-            <h3 className="text-3xl font-bold font-mono">{room.todayEntries}</h3>
-          </div>
+      {/* People in today */}
+      <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl flex items-center gap-4 mb-6">
+        <div className="p-4 bg-[#F2B705]/10 text-[#F2B705] rounded-xl"><Users className="w-8 h-8" /></div>
+        <div>
+          <p className="text-sm text-[var(--text-muted)]">{t('peopleInToday')}</p>
+          <h3 className="text-3xl font-bold font-mono">{room.todayEntries}</h3>
         </div>
-        <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl flex items-center gap-4">
-          <div className="p-4 bg-[#34D399]/10 text-[#34D399] rounded-xl"><Wallet className="w-8 h-8" /></div>
-          <div>
-            <p className="text-sm text-[var(--text-muted)]">Collected today</p>
-            <h3 className="text-3xl font-bold text-[#34D399] font-mono">{room.todayRevenue.toLocaleString()} TZS</h3>
+      </div>
+
+      {/* The 4 revenue-split blocks */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="bg-[var(--surface)] border border-[var(--border)] p-5 rounded-2xl">
+          <div className="w-10 h-10 rounded-xl bg-[#F2B705]/10 text-[#F2B705] flex items-center justify-center mb-3">
+            <Wallet className="w-5 h-5" />
           </div>
+          <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)]">{t('totalCash')}</p>
+          <p className="text-xl font-bold font-mono mt-1">{totalCash.toLocaleString()} TZS</p>
+          <p className="text-[10px] text-[var(--text-muted)] mt-1">100%</p>
+        </div>
+
+        <div className="bg-[var(--surface)] border border-[var(--border)] p-5 rounded-2xl">
+          <div className="w-10 h-10 rounded-xl bg-[#60A5FA]/10 text-[#60A5FA] flex items-center justify-center mb-3">
+            <Landmark className="w-5 h-5" />
+          </div>
+          <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)]">{t('vat')}</p>
+          <p className="text-xl font-bold font-mono mt-1 text-[#60A5FA]">{vat.toLocaleString()} TZS</p>
+          <p className="text-[10px] text-[var(--text-muted)] mt-1">18%</p>
+        </div>
+
+        <div className="bg-[var(--surface)] border border-[var(--border)] p-5 rounded-2xl">
+          <img src="/logo.jpg" alt="SportsViewTZ" className="w-10 h-10 rounded-xl object-cover mb-3 border border-[var(--border)]" />
+          <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)]">{t('platformShare')}</p>
+          <p className="text-xl font-bold font-mono mt-1 text-[#F2B705]">{platform.toLocaleString()} TZS</p>
+          <p className="text-[10px] text-[var(--text-muted)] mt-1">32%</p>
+        </div>
+
+        <div className="bg-[var(--surface)] border border-[var(--border)] p-5 rounded-2xl">
+          <div className="w-10 h-10 rounded-xl bg-[#34D399]/10 text-[#34D399] flex items-center justify-center mb-3">
+            <Crown className="w-5 h-5" />
+          </div>
+          <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)]">{t('ownerShare')}</p>
+          <p className="text-xl font-bold font-mono mt-1 text-[#34D399]">{owner.toLocaleString()} TZS</p>
+          <p className="text-[10px] text-[var(--text-muted)] mt-1">50%</p>
+        </div>
+      </div>
+
+      {/* Owner's monthly total */}
+      <div className="bg-gradient-to-br from-[var(--surface)] to-[var(--surface-2)] border border-[#34D399]/40 p-6 rounded-2xl flex items-center gap-4 mb-6">
+        <div className="p-4 bg-[#34D399]/10 text-[#34D399] rounded-xl"><TrendingUp className="w-8 h-8" /></div>
+        <div>
+          <p className="text-sm text-[var(--text-muted)]">{t('myTotalCashMonth')}</p>
+          <h3 className="text-3xl font-bold text-[#34D399] font-mono">{myTotalCashMonth.toLocaleString()} TZS</h3>
         </div>
       </div>
 
       <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 mb-6">
-        <h2 className="text-lg font-bold mb-1 flex items-center gap-2"><ScanLine className="w-5 h-5 text-[#34D399]" /> Door scanner</h2>
-        <p className="text-xs text-[var(--text-muted)] mb-4">Hardware scanner not connected yet — enter a card ID to simulate a scan.</p>
+        <h2 className="text-lg font-bold mb-1 flex items-center gap-2"><ScanLine className="w-5 h-5 text-[#34D399]" /> {t('doorScanner')}</h2>
+        <p className="text-xs text-[var(--text-muted)] mb-4">{t('scannerHelp')}</p>
         <form onSubmit={handleScan} className="flex flex-col sm:flex-row gap-3">
-          <input required placeholder="Card ID (e.g. SVTZ-A1B2C3D4)" value={cardHash} onChange={e => setCardHash(e.target.value)}
+          <input required placeholder={t('cardIdPlaceholder')} value={cardHash} onChange={e => setCardHash(e.target.value)}
             className="flex-1 bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 outline-none focus:border-[#34D399] font-mono text-[var(--text)]" />
           <select value={matchId} onChange={e => setMatchId(e.target.value)}
             className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 outline-none focus:border-[#34D399] text-[var(--text)]">
             {matches.map(m => <option key={m.id} value={m.id}>{m.homeTeam} vs {m.awayTeam}</option>)}
           </select>
-          <button className="bg-[#34D399] text-[#0B0F14] font-bold px-6 py-2 rounded-lg hover:brightness-110 transition">Scan</button>
+          <button className="bg-[#34D399] text-[#0B0F14] font-bold px-6 py-2 rounded-lg hover:brightness-110 transition">{t('scanButton')}</button>
         </form>
         {scanMsg && <p className={`text-sm mt-3 ${scanMsg.ok ? 'text-[#34D399]' : 'text-[#FF5468]'}`}>{scanMsg.text}</p>}
       </div>
 
       <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6">
-        <h2 className="text-lg font-bold mb-4">Live entries today</h2>
+        <h2 className="text-lg font-bold mb-4">{t('liveEntries')}</h2>
         <div className="space-y-2 max-h-[400px] overflow-y-auto pr-1">
-          {room.recentEntries.length === 0 && <p className="text-sm text-[var(--text-muted)]">No one has scanned in yet today.</p>}
+          {room.recentEntries.length === 0 && <p className="text-sm text-[var(--text-muted)]">{t('noEntriesYet')}</p>}
           {room.recentEntries.map(e => (
             <div key={e.id} className="flex justify-between items-center bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3">
               <div>
