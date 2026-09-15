@@ -142,50 +142,50 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
   };
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-      <header className="border-b border-[var(--border)] px-6 py-4 flex items-center justify-between sticky top-0 bg-[var(--bg)]/90 backdrop-blur z-10">
+    <div className="min-h-screen bg-[var(--bg)] text-white">
+      <header className="border-b border-emerald-800 px-6 py-4 flex items-center justify-between sticky top-0 bg-[var(--bg)]/90 backdrop-blur z-10">
         <div>
           <Brand size="sm" />
-          <h1 className="text-xl font-bold mt-2" style={{ fontFamily: 'var(--font-display)' }}>Admin Dashboard</h1>
+          <h1 className="text-xl font-bold mt-2 text-white" style={{ fontFamily: 'var(--font-display)' }}>Admin Dashboard</h1>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={onExit} className="text-sm text-[var(--text-muted)] hover:text-red-800 transition">{t('signOut')}</button>
+          <button onClick={onExit} className="text-sm text-white hover:text-white transition">{t('signOut')}</button>
         </div>
       </header>
 
       <div className="px-6 py-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-6 gap-3 mb-8">
-          <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl px-5 py-4">
-            <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider">Rooms</p>
+          <div className="bg-[var(--surface)] border border-emerald-800 rounded-xl px-5 py-4">
+            <p className="text-xs text-white uppercase tracking-wider">Rooms</p>
             <p className="text-2xl font-bold font-mono mt-1 text-white">{overview?.totalRooms ?? '—'}</p>
           </div>
-          <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl px-5 py-4">
-            <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider">Managers</p>
-            <p className="text-2xl font-bold font-mono mt-1 text-emerald-500">{overview?.totalManagers ?? '—'}</p>
+          <div className="bg-[var(--surface)] border border-emerald-800 rounded-xl px-5 py-4">
+            <p className="text-xs text-white uppercase tracking-wider">Managers</p>
+            <p className="text-2xl font-bold font-mono mt-1 text-white">{overview?.totalManagers ?? '—'}</p>
           </div>
-          <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl px-5 py-4">
-            <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider">Pending</p>
-            <p className="text-2xl font-bold font-mono mt-1 text-emerald-500">{pending.length}</p>
+          <div className="bg-[var(--surface)] border border-emerald-800 rounded-xl px-5 py-4">
+            <p className="text-xs text-white uppercase tracking-wider">Pending</p>
+            <p className="text-2xl font-bold font-mono mt-1 text-white">{pending.length}</p>
           </div>
-          <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl px-5 py-4">
-            <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider">Sponsors</p>
-            <p className="text-2xl font-bold font-mono mt-1 text-emerald-500">{overview?.totalSponsors ?? '—'}</p>
+          <div className="bg-[var(--surface)] border border-emerald-800 rounded-xl px-5 py-4">
+            <p className="text-xs text-white uppercase tracking-wider">Sponsors</p>
+            <p className="text-2xl font-bold font-mono mt-1 text-white">{overview?.totalSponsors ?? '—'}</p>
           </div>
-          <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl px-5 py-4">
-            <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider">Entries Today</p>
+          <div className="bg-[var(--surface)] border border-emerald-800 rounded-xl px-5 py-4">
+            <p className="text-xs text-white uppercase tracking-wider">Entries Today</p>
             <p className="text-2xl font-bold font-mono mt-1 text-white">{overview?.totalEntriesToday ?? '—'}</p>
           </div>
-          <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl px-5 py-4">
-            <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider">Revenue Today</p>
-            <p className="text-2xl font-bold font-mono mt-1 text-emerald-500">{(overview?.totalRevenueToday ?? 0).toLocaleString()} TZS</p>
+          <div className="bg-[var(--surface)] border border-emerald-800 rounded-xl px-5 py-4">
+            <p className="text-xs text-white uppercase tracking-wider">Revenue Today</p>
+            <p className="text-2xl font-bold font-mono mt-1 text-white">{(overview?.totalRevenueToday ?? 0).toLocaleString()} TZS</p>
           </div>
         </div>
 
-        <div className="flex gap-2 mb-6 border-b border-[var(--border)] overflow-x-auto">
+        <div className="flex gap-2 mb-6 border-b border-emerald-800 overflow-x-auto">
           {(['overview', 'matches', 'rooms', 'sponsors'] as const).map(t2 => (
             <button key={t2} onClick={() => setTab(t2)}
               className={`px-4 py-2 text-sm font-semibold capitalize border-b-2 -mb-px transition whitespace-nowrap ${
-                tab === t2 ? 'border-emerald-700 text-emerald-500' : 'border-transparent text-[var(--text-muted)] hover:text-white'
+                tab === t2 ? 'border-emerald-700 text-white' : 'border-transparent text-white hover:text-white'
               }`}>
               {t2 === 'rooms' ? 'Rooms & Managers' : t2}
               {t2 === 'rooms' && pending.length > 0 && (
@@ -194,6 +194,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
             </button>
           ))}
         </div>
+...
 
         {tab === 'overview' && (
           <div className="grid lg:grid-cols-2 gap-6">

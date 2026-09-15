@@ -108,7 +108,7 @@ const Shell: React.FC = () => {
             }
           }}
           footer={
-            <button onClick={() => setManagerScreen('register')} className="text-sm text-emerald-600 hover:underline">
+            <button onClick={() => setManagerScreen('register')} className="text-sm text-white hover:underline">
               {t('newManagerQuestion')} {t('registerAsManager')}
             </button>
           }
@@ -124,7 +124,7 @@ const Shell: React.FC = () => {
         <LoginScreen
           title={t('sponsorLoginTitle')}
           subtitle={t('sponsorLoginSubtitle')}
-          accentColor="#991b1b" // Red-800
+          accentColor="#7f1d1d" // Red-900
           onBack={() => setView('staff')}
           onSubmit={async (u, p) => {
             try {
@@ -154,32 +154,32 @@ const Shell: React.FC = () => {
 
   if (view === 'staff' && isStaffDomain()) {
     return (
-      <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col p-6">
+      <div className="min-h-screen bg-[var(--bg)] text-white flex flex-col p-6">
         <div className="flex items-center justify-between mb-10">
           <Brand size="sm" />
           <SettingsMenu />
         </div>
         <div className="flex-1 flex items-center justify-center">
           <div className="max-w-3xl w-full text-center">
-            <button onClick={goHome} className="text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition mx-auto mb-8">
+            <button onClick={goHome} className="text-sm text-white hover:text-white transition mx-auto mb-8">
               {t('back')}
             </button>
-            <p className="uppercase tracking-[0.25em] text-xs text-[var(--text-muted)] mb-2">
+            <p className="uppercase tracking-[0.25em] text-xs text-white mb-2">
               {t('staffPortal')}
             </p>
             <h2 className="text-2xl font-bold mb-8" style={{ fontFamily: 'var(--font-display)' }}>{t('staffPortalDesc')}</h2>
             <div className="grid sm:grid-cols-3 gap-4">
-              <button onClick={() => setView('manager')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-emerald-700 transition text-left">
-                <div className="font-bold">{t('manager')}</div>
-                <div className="text-sm text-[var(--text-muted)]">{t('managerDesc')}</div>
+              <button onClick={() => setView('manager')} className="bg-emerald-900 border border-emerald-800 rounded-2xl p-6 hover:bg-emerald-800 transition text-left">
+                <div className="font-bold text-white">{t('manager')}</div>
+                <div className="text-sm text-white">{t('managerDesc')}</div>
               </button>
-              <button onClick={() => setView('sponsor')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-emerald-700 transition text-left">
-                <div className="font-bold">{t('sponsor')}</div>
-                <div className="text-sm text-[var(--text-muted)]">{t('sponsorDesc')}</div>
+              <button onClick={() => setView('sponsor')} className="bg-emerald-900 border border-emerald-800 rounded-2xl p-6 hover:bg-emerald-800 transition text-left">
+                <div className="font-bold text-white">{t('sponsor')}</div>
+                <div className="text-sm text-white">{t('sponsorDesc')}</div>
               </button>
-              <button onClick={() => setView('admin')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-emerald-700 transition text-left">
-                <div className="font-bold">{t('admin')}</div>
-                <div className="text-sm text-[var(--text-muted)]">{t('adminDesc')}</div>
+              <button onClick={() => setView('admin')} className="bg-emerald-900 border border-emerald-800 rounded-2xl p-6 hover:bg-emerald-800 transition text-left">
+                <div className="font-bold text-white">{t('admin')}</div>
+                <div className="text-sm text-white">{t('adminDesc')}</div>
               </button>
             </div>
           </div>
@@ -200,11 +200,11 @@ const Shell: React.FC = () => {
       </div>
 
       <div className="flex-1 flex items-center justify-center">
-        <div className="max-w-md w-full text-center bg-[var(--surface)]/90 backdrop-blur border border-[var(--border)] rounded-3xl p-8 shadow-2xl">
+        <div className="max-w-md w-full text-center bg-[var(--surface)]/90 backdrop-blur border border-emerald-800 rounded-3xl p-8 shadow-2xl">
           <h1 className="text-2xl font-bold mb-2 pt-4" style={{ fontFamily: 'var(--font-display)' }}>
-            {t('welcome')} <span className="text-emerald-500">SPORTSVIEWTZ</span>
+            {t('welcome')} <span className="text-white">SPORTSVIEWTZ</span>
           </h1>
-          <p className="text-[var(--text-muted)] mb-8 text-sm">{t('chooseAccess')}</p>
+          <p className="text-white mb-8 text-sm">{t('chooseAccess')}</p>
 
           <button
             onClick={() => setView('staff')}
@@ -212,11 +212,11 @@ const Shell: React.FC = () => {
           >
             {t('staffButtonLabel')}
           </button>
-          <p className="text-sm text-[var(--text-muted)] mt-4 mb-8">{t('staffButtonDesc')}</p>
+          <p className="text-sm text-white mt-4 mb-8">{t('staffButtonDesc')}</p>
 
           <button
             onClick={() => setView('user')}
-            className="text-xs text-[var(--text-muted)] hover:text-[var(--text)] transition mx-auto"
+            className="text-xs text-white hover:text-white transition mx-auto"
           >
             {t('fan')}
           </button>
