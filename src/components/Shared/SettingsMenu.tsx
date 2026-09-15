@@ -1,6 +1,5 @@
 // src/components/Shared/SettingsMenu.tsx
 import React, { useState } from 'react';
-import { Settings, Sun, Moon, Globe, X } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import { useLanguage } from '../../context/LanguageContext';
 
@@ -14,9 +13,9 @@ export const SettingsMenu: React.FC = () => {
       <button
         onClick={() => setOpen(o => !o)}
         aria-label={t('settings')}
-        className="p-2 rounded-lg border border-[var(--border)] hover:border-[#F2B705] transition text-[var(--text)] bg-[var(--surface)]"
+        className="px-3 py-2 rounded-lg border border-[var(--border)] hover:border-[#F2B705] transition text-[var(--text)] bg-[var(--surface)] text-sm font-semibold"
       >
-        <Settings className="w-5 h-5" />
+        {t('settings')}
       </button>
 
       {open && (
@@ -34,14 +33,14 @@ export const SettingsMenu: React.FC = () => {
           >
             <div className="flex justify-between items-center mb-5">
               <h3 className="font-bold" style={{ fontFamily: 'var(--font-display)' }}>{t('settings')}</h3>
-              <button onClick={() => setOpen(false)} aria-label={t('close')} className="text-[var(--text-muted)] hover:text-[var(--text)] transition">
-                <X className="w-4 h-4" />
+              <button onClick={() => setOpen(false)} aria-label={t('close')} className="text-[var(--text-muted)] hover:text-[var(--text)] text-sm font-semibold transition">
+                {t('close')}
               </button>
             </div>
 
             <div className="mb-5">
-              <p className="text-xs uppercase tracking-wider text-[var(--text-muted)] mb-2 flex items-center gap-1.5">
-                <Globe className="w-3.5 h-3.5" /> {t('language')}
+              <p className="text-xs uppercase tracking-wider text-[var(--text-muted)] mb-2">
+                {t('language')}
               </p>
               <div className="grid grid-cols-2 gap-2">
                 <button
@@ -72,7 +71,7 @@ export const SettingsMenu: React.FC = () => {
                     theme === 'dark' ? 'bg-[#34D399] text-[#0B0F14] border-[#34D399]' : 'border-[var(--border)] text-[var(--text)] hover:border-[#34D399]'
                   }`}
                 >
-                  <Moon className="w-4 h-4" /> {t('dark')}
+                  {t('dark')}
                 </button>
                 <button
                   onClick={() => setTheme('light')}
@@ -80,7 +79,7 @@ export const SettingsMenu: React.FC = () => {
                     theme === 'light' ? 'bg-[#34D399] text-[#0B0F14] border-[#34D399]' : 'border-[var(--border)] text-[var(--text)] hover:border-[#34D399]'
                   }`}
                 >
-                  <Sun className="w-4 h-4" /> {t('light')}
+                  {t('light')}
                 </button>
               </div>
             </div>

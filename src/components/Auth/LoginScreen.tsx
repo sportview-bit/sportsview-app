@@ -1,6 +1,5 @@
 // src/components/Auth/LoginScreen.tsx
 import React, { useState } from 'react';
-import { ArrowLeft } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { SettingsMenu } from '../Shared/SettingsMenu';
 import { PasswordInput } from '../Shared/PasswordInput';
@@ -9,13 +8,12 @@ interface LoginScreenProps {
   title: string;
   subtitle: string;
   accentColor: string;
-  icon: React.ReactNode;
   onBack: () => void;
   onSubmit: (username: string, password: string) => Promise<string | null> | string | null;
   footer?: React.ReactNode;
 }
 
-export const LoginScreen: React.FC<LoginScreenProps> = ({ title, subtitle, accentColor, icon, onBack, onSubmit, footer }) => {
+export const LoginScreen: React.FC<LoginScreenProps> = ({ title, subtitle, accentColor, onBack, onSubmit, footer }) => {
   const { t } = useLanguage();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -35,12 +33,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ title, subtitle, accen
       <div className="w-full max-w-sm">
         <div className="flex items-center justify-between mb-6">
           <button onClick={onBack} className="flex items-center gap-2 text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition">
-            <ArrowLeft className="w-4 h-4" /> {t('back')}
+            {t('back')}
           </button>
           <SettingsMenu />
         </div>
         <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-8">
-          <div className="mb-4" style={{ color: accentColor }}>{icon}</div>
           <h2 className="text-xl font-bold mb-1" style={{ fontFamily: 'var(--font-display)' }}>{title}</h2>
           <p className="text-sm text-[var(--text-muted)] mb-6">{subtitle}</p>
           <form onSubmit={handleSubmit} className="space-y-4">

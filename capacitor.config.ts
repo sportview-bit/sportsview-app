@@ -5,8 +5,9 @@ const config: CapacitorConfig = {
   appName: 'SportsViewTZ',
   webDir: 'dist',
   server: {
-    url: 'https://sportsviewtz.com',
+    url: 'https://sportsview-app.onrender.com',
     cleartext: false,
+    allowNavigation: ['sportsview-app.onrender.com'],
   },
 };
 

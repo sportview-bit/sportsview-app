@@ -1,6 +1,5 @@
 // src/components/Manager/ManagerRegisterScreen.tsx
 import React, { useState } from 'react';
-import { ArrowLeft, Building2, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { SettingsMenu } from '../Shared/SettingsMenu';
 import { PasswordInput } from '../Shared/PasswordInput';
@@ -44,7 +43,6 @@ export const ManagerRegisterScreen: React.FC<ManagerRegisterScreenProps> = ({ on
     return (
       <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] flex items-center justify-center p-6">
         <div className="w-full max-w-sm text-center bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-8">
-          <CheckCircle2 className="w-10 h-10 text-[#34D399] mx-auto mb-4" />
           <h2 className="text-xl font-bold mb-2" style={{ fontFamily: 'var(--font-display)' }}>{t('applicationSubmittedTitle')}</h2>
           <p className="text-sm text-[var(--text-muted)] mb-6">{t('applicationSubmittedDesc')}</p>
           <button onClick={onBack} className="w-full bg-[#34D399] hover:brightness-110 text-[#0B0F14] font-bold py-3 rounded-lg transition">
@@ -60,12 +58,11 @@ export const ManagerRegisterScreen: React.FC<ManagerRegisterScreenProps> = ({ on
       <div className="w-full max-w-sm">
         <div className="flex items-center justify-between mb-6">
           <button onClick={onBack} className="flex items-center gap-2 text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition">
-            <ArrowLeft className="w-4 h-4" /> {t('back')}
+            {t('back')}
           </button>
           <SettingsMenu />
         </div>
         <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-8">
-          <Building2 className="w-8 h-8 mb-4 text-[#34D399]" />
           <h2 className="text-xl font-bold mb-1" style={{ fontFamily: 'var(--font-display)' }}>{t('managerRegisterTitle')}</h2>
           <p className="text-sm text-[var(--text-muted)] mb-6">{t('managerRegisterSubtitle')}</p>
           <form onSubmit={handleSubmit} className="space-y-3">

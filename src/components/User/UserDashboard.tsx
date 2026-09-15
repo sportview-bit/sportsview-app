@@ -1,7 +1,6 @@
 // src/components/User/UserDashboard.tsx
 import React, { useEffect, useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import { Wallet, Smartphone, CalendarDays, ScanLine, ArrowLeft, LogOut } from 'lucide-react';
 import type { Match, User } from '../../types';
 import { api } from '../../services/api';
 import { SettingsMenu } from '../Shared/SettingsMenu';
@@ -95,8 +94,8 @@ export const UserDashboard: React.FC<UserProps> = ({ user, setUser, onBack, onLo
         <PageBackground />
         <div className="w-full max-w-md">
           <div className="flex items-center justify-between mb-6">
-            <button onClick={onBack} className="flex items-center gap-2 text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition">
-              <ArrowLeft className="w-4 h-4" /> Back
+            <button onClick={onBack} className="text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition">
+              Back
             </button>
             <SettingsMenu />
           </div>
@@ -120,8 +119,8 @@ export const UserDashboard: React.FC<UserProps> = ({ user, setUser, onBack, onLo
 
             {mode === 'register' ? (
               <>
-                <h2 className="text-2xl font-bold mb-2" style={{ fontFamily: 'var(--font-display)' }}>Join SportsView</h2>
-                <p className="text-[var(--text-muted)] text-sm mb-6">Create your account to get your digital stadium card.</p>
+                <h2 className="text-2xl font-bold mb-2" style={{ fontFamily: 'var(--font-display)' }}>Staff Registration</h2>
+                <p className="text-[var(--text-muted)] text-sm mb-6">Create your account to get your digital staff ID.</p>
                 <form onSubmit={handleRegister} className="space-y-4">
                   <div>
                     <label className="text-sm text-[var(--text-muted)]">Full Name</label>
@@ -140,14 +139,14 @@ export const UserDashboard: React.FC<UserProps> = ({ user, setUser, onBack, onLo
                   </div>
                   {error && <p className="text-sm text-[#FF5468]">{error}</p>}
                   <button disabled={busy} type="submit" className="w-full bg-[#F2B705] hover:brightness-110 text-[#0B0F14] font-bold py-3 rounded-lg transition mt-4 disabled:opacity-50">
-                    {busy ? 'Creating…' : 'Create Account & Get Card'}
+                    {busy ? 'Creating…' : 'Create Staff Account'}
                   </button>
                 </form>
               </>
             ) : (
               <>
                 <h2 className="text-2xl font-bold mb-2" style={{ fontFamily: 'var(--font-display)' }}>Welcome back</h2>
-                <p className="text-[var(--text-muted)] text-sm mb-6">Enter your phone number to access your card.</p>
+                <p className="text-[var(--text-muted)] text-sm mb-6">Enter your phone number to access your staff ID.</p>
                 <form onSubmit={handleLogin} className="space-y-4">
                   <div>
                     <label className="text-sm text-[var(--text-muted)]">Phone Number (10 digits)</label>
@@ -178,8 +177,8 @@ export const UserDashboard: React.FC<UserProps> = ({ user, setUser, onBack, onLo
         </div>
         <div className="flex items-center gap-3 shrink-0">
           <SettingsMenu />
-          <button onClick={onLogout} className="flex items-center gap-2 text-sm text-[var(--text-muted)] hover:text-[#FF5468] transition">
-            <LogOut className="w-4 h-4" /> Log out
+          <button onClick={onLogout} className="text-sm text-[var(--text-muted)] hover:text-[#FF5468] transition">
+            Log out
           </button>
         </div>
       </div>
@@ -187,12 +186,11 @@ export const UserDashboard: React.FC<UserProps> = ({ user, setUser, onBack, onLo
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="space-y-6">
           <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-4 opacity-10"><Wallet className="w-24 h-24" /></div>
             <p className="text-sm font-semibold text-[var(--text-muted)]">Available Balance</p>
             <h3 className="text-4xl font-bold text-[#F2B705] mt-2 font-mono">{user.balance.toLocaleString()} TZS</h3>
           </div>
           <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl">
-            <h3 className="font-bold mb-4 flex items-center gap-2"><Smartphone className="w-5 h-5 text-[#34D399]" /> Add Money</h3>
+            <h3 className="font-bold mb-4">Add Money</h3>
             <form onSubmit={handleTopUp} className="flex gap-2">
               <input type="number" required value={topupAmount} onChange={e => setTopupAmount(e.target.value)} placeholder="Amount (TZS)"
                 className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 outline-none focus:border-[#34D399] transition text-[var(--text)]" />
@@ -204,18 +202,18 @@ export const UserDashboard: React.FC<UserProps> = ({ user, setUser, onBack, onLo
         </div>
 
         <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl flex flex-col items-center justify-center">
-          <h3 className="font-bold mb-2 flex items-center gap-2"><ScanLine className="w-5 h-5" /> Your Access Card</h3>
-          <p className="text-xs text-[var(--text-muted)] mb-6 text-center">Scan at the door. Entry costs 1,000 TZS.</p>
+          <h3 className="font-bold mb-2">Staff ID Card</h3>
+          <p className="text-xs text-[var(--text-muted)] mb-6 text-center">Scan at the door for entry verification.</p>
           <div className="bg-white p-3 rounded-xl">
             <QRCodeSVG value={JSON.stringify({ uid: user.id, card: user.cardHash })} size={180} level="H" />
           </div>
           <div className="mt-6 text-center w-full bg-[var(--bg)] py-2 rounded-lg font-mono text-xs text-[var(--text-muted)]">
-            Physical Hash: {user.cardHash}
+            Staff Hash: {user.cardHash}
           </div>
         </div>
 
         <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl">
-          <h3 className="font-bold mb-4 flex items-center gap-2 text-[#F2B705]"><CalendarDays className="w-5 h-5" /> Upcoming Matches</h3>
+          <h3 className="font-bold mb-4 text-[#F2B705]">Schedule</h3>
           {matches.length === 0 ? (
             <p className="text-sm text-[var(--text-muted)]">No matches posted yet.</p>
           ) : (

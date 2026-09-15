@@ -1,10 +1,8 @@
 // src/components/Admin/AdminDashboard.tsx
 import React, { useCallback, useEffect, useState } from 'react';
-import { CalendarPlus, Trash2, Building2, ShieldCheck, Radio, Handshake, Clock, Check, X, KeyRound } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { api } from '../../services/api';
-import { SettingsMenu } from '../Shared/SettingsMenu';
 import { Brand } from '../Shared/Brand';
 import { PasswordInput } from '../Shared/PasswordInput';
 import type { Match, Room } from '../../types';
@@ -148,13 +146,9 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
       <header className="border-b border-[var(--border)] px-6 py-4 flex items-center justify-between sticky top-0 bg-[var(--bg)]/90 backdrop-blur z-10">
         <div>
           <Brand size="sm" />
-          <p className="text-xs uppercase tracking-[0.25em] text-[#F2B705] flex items-center gap-2 mt-2">
-            <ShieldCheck className="w-4 h-4" /> Super Admin
-          </p>
-          <h1 className="text-xl font-bold" style={{ fontFamily: 'var(--font-display)' }}>Admin Dashboard</h1>
+          <h1 className="text-xl font-bold mt-2" style={{ fontFamily: 'var(--font-display)' }}>Admin Dashboard</h1>
         </div>
         <div className="flex items-center gap-3">
-          <SettingsMenu />
           <button onClick={onExit} className="text-sm text-[var(--text-muted)] hover:text-[#FF5468] transition">{t('signOut')}</button>
         </div>
       </header>
@@ -187,6 +181,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
           </div>
         </div>
 
+
         <div className="flex gap-2 mb-6 border-b border-[var(--border)] overflow-x-auto">
           {(['overview', 'matches', 'rooms', 'sponsors'] as const).map(t2 => (
             <button key={t2} onClick={() => setTab(t2)}
@@ -204,7 +199,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
         {tab === 'overview' && (
           <div className="grid lg:grid-cols-2 gap-6">
             <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6">
-              <h3 className="font-bold mb-4 flex items-center gap-2"><Radio className="w-4 h-4 text-[#FF5468]" /> Top rooms today</h3>
+              <h3 className="font-bold mb-4">Top rooms today</h3>
               <div className="space-y-2">
                 {[...rooms].sort((a, b) => b.todayRevenue - a.todayRevenue).slice(0, 8).map(r => (
                   <div key={r.id} className="flex justify-between items-center bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3">
@@ -236,7 +231,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
         {tab === 'matches' && (
           <div className="grid lg:grid-cols-2 gap-6">
             <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl">
-              <h2 className="text-lg font-bold mb-4 flex items-center gap-2 text-[#F2B705]"><CalendarPlus className="w-5 h-5" /> Add a Match</h2>
+              <h2 className="text-lg font-bold mb-4 text-[#F2B705]">Add a Match</h2>
               <form onSubmit={handlePostMatch} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <input type="text" placeholder="Home Team" required value={homeTeam} onChange={e => setHomeTeam(e.target.value)}
@@ -261,8 +256,8 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                       <span className="font-bold">{m.homeTeam} vs {m.awayTeam}</span>
                       <div className="text-xs text-[var(--text-muted)]">{m.matchTime} • Fee: {m.entryFee} TZS</div>
                     </div>
-                    <button onClick={() => deleteMatch(m.id)} className="p-2 text-[#FF5468] hover:bg-[#FF5468]/10 rounded-lg transition">
-                      <Trash2 className="w-4 h-4" />
+                    <button onClick={() => deleteMatch(m.id)} className="px-3 py-1 text-[#FF5468] border border-[#FF5468] rounded-lg transition hover:bg-[#FF5468]/10 text-sm font-bold">
+                      Delete
                     </button>
                   </div>
                 ))}
@@ -275,8 +270,8 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
           <div className="space-y-6">
             {pending.length > 0 && (
               <div className="bg-[var(--surface)] border border-[#F2B705]/40 p-6 rounded-2xl">
-                <h2 className="text-lg font-bold mb-4 flex items-center gap-2 text-[#F2B705]">
-                  <Clock className="w-5 h-5" /> {t('pendingApplications')} ({pending.length})
+                <h2 className="text-lg font-bold mb-4 text-[#F2B705]">
+                  {t('pendingApplications')} ({pending.length})
                 </h2>
                 <div className="space-y-4">
                   {pending.map(m => (
@@ -285,11 +280,11 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                       <p className="text-xs text-[var(--text-muted)]">{m.phone} • {m.email}</p>
                       {m.room && <p className="text-xs text-[var(--text-muted)] mt-1">{m.room.name} • {m.room.location}</p>}
                       <div className="flex gap-2 mt-3">
-                        <button onClick={() => approve(m.id)} className="flex items-center gap-1.5 bg-[#34D399] text-[#0B0F14] font-bold text-sm px-4 py-2 rounded-lg hover:brightness-110 transition">
-                          <Check className="w-4 h-4" /> {t('approve')}
+                        <button onClick={() => approve(m.id)} className="bg-[#34D399] text-[#0B0F14] font-bold text-sm px-4 py-2 rounded-lg hover:brightness-110 transition">
+                          {t('approve')}
                         </button>
-                        <button onClick={() => reject(m.id)} className="flex items-center gap-1.5 border border-[#FF5468] text-[#FF5468] font-bold text-sm px-4 py-2 rounded-lg hover:bg-[#FF5468]/10 transition">
-                          <X className="w-4 h-4" /> {t('reject')}
+                        <button onClick={() => reject(m.id)} className="border border-[#FF5468] text-[#FF5468] font-bold text-sm px-4 py-2 rounded-lg hover:bg-[#FF5468]/10 transition">
+                          {t('reject')}
                         </button>
                       </div>
                     </div>
@@ -300,7 +295,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
 
             <div className="grid lg:grid-cols-2 gap-6">
               <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl">
-                <h2 className="text-lg font-bold mb-4 flex items-center gap-2 text-[#34D399]"><Building2 className="w-5 h-5" /> Add Room & Manager</h2>
+                <h2 className="text-lg font-bold mb-4 text-[#34D399]">Add Room & Manager</h2>
                 <form onSubmit={handleCreateRoom} className="space-y-3">
                   <input type="text" placeholder="Room Name (e.g. VIP Area)" required value={roomName} onChange={e => setRoomName(e.target.value)}
                     className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#34D399] transition" />
@@ -341,12 +336,12 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                         </div>
                         <div className="flex gap-1">
                           {r.managerId && (
-                            <button onClick={() => openReset('manager', r.managerId!)} title="Reset manager password" className="p-2 text-[var(--text-muted)] hover:text-[#F2B705] hover:bg-[#F2B705]/10 rounded-lg transition">
-                              <KeyRound className="w-4 h-4" />
+                            <button onClick={() => openReset('manager', r.managerId!)} className="px-2 py-1 text-[var(--text-muted)] hover:text-[#F2B705] border border-transparent hover:border-[#F2B705] rounded-lg text-xs transition">
+                              Reset
                             </button>
                           )}
-                          <button onClick={() => deleteRoom(r.id)} className="p-2 text-[#FF5468] hover:bg-[#FF5468]/10 rounded-lg transition">
-                            <Trash2 className="w-4 h-4" />
+                          <button onClick={() => deleteRoom(r.id)} className="px-2 py-1 text-[#FF5468] border border-[#FF5468] rounded-lg text-xs transition hover:bg-[#FF5468]/10">
+                            Delete
                           </button>
                         </div>
                       </div>
@@ -372,7 +367,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
         {tab === 'sponsors' && (
           <div className="grid lg:grid-cols-2 gap-6">
             <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl">
-              <h2 className="text-lg font-bold mb-4 flex items-center gap-2 text-[#A78BFA]"><Handshake className="w-5 h-5" /> Add Sponsor</h2>
+              <h2 className="text-lg font-bold mb-4 text-[#A78BFA]">Add Sponsor</h2>
               <form onSubmit={handleCreateSponsor} className="space-y-3">
                 <input type="text" placeholder="Sponsor / company name" required value={sponsorName} onChange={e => setSponsorName(e.target.value)}
                   className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#A78BFA] transition" />
@@ -408,11 +403,11 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                         <div className="text-xs font-mono text-[var(--text-muted)] mt-1">{s.amountSponsored.toLocaleString()} TZS sponsored</div>
                       </div>
                       <div className="flex gap-1">
-                        <button onClick={() => openReset('sponsor', s.id)} title="Reset sponsor password" className="p-2 text-[var(--text-muted)] hover:text-[#A78BFA] hover:bg-[#A78BFA]/10 rounded-lg transition">
-                          <KeyRound className="w-4 h-4" />
+                        <button onClick={() => openReset('sponsor', s.id)} className="px-2 py-1 text-[var(--text-muted)] hover:text-[#A78BFA] border border-transparent hover:border-[#A78BFA] rounded-lg text-xs transition">
+                          Reset
                         </button>
-                        <button onClick={() => deleteSponsor(s.id)} className="p-2 text-[#FF5468] hover:bg-[#FF5468]/10 rounded-lg transition">
-                          <Trash2 className="w-4 h-4" />
+                        <button onClick={() => deleteSponsor(s.id)} className="px-2 py-1 text-[#FF5468] border border-[#FF5468] rounded-lg text-xs transition hover:bg-[#FF5468]/10">
+                          Delete
                         </button>
                       </div>
                     </div>

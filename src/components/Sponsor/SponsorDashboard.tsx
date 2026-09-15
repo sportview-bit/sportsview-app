@@ -1,6 +1,5 @@
 // src/components/Sponsor/SponsorDashboard.tsx
 import React, { useCallback, useEffect, useState } from 'react';
-import { Handshake, TrendingUp, Wallet, LogOut, Radio, RefreshCw } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { api } from '../../services/api';
@@ -40,42 +39,33 @@ export const SponsorDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) =
       <div className="flex justify-between items-start mb-8 border-b border-[var(--border)] pb-5 gap-4">
         <div>
           <Brand size="sm" />
-          <p className="text-xs uppercase tracking-[0.25em] text-[#A78BFA] flex items-center gap-2 mt-2 mb-1">
-            <Handshake className="w-4 h-4" /> Sponsor
+          <p className="text-xs uppercase tracking-[0.25em] text-[#A78BFA] mt-2 mb-1">
+            Sponsor
           </p>
           <h1 className="text-2xl sm:text-3xl font-bold" style={{ fontFamily: 'var(--font-display)' }}>{data.name}</h1>
           <p className="text-[var(--text-muted)] mt-1 text-sm">Here's how the platform is performing.</p>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={refresh} className="p-2 rounded-lg border border-[var(--border)] hover:border-[#A78BFA] transition"><RefreshCw className="w-4 h-4" /></button>
+          <button onClick={refresh} className="text-sm border border-[var(--border)] rounded-lg px-3 py-2 hover:border-[#A78BFA] transition">Refresh</button>
           <SettingsMenu />
-          <button onClick={() => { logout(); onExit(); }} className="flex items-center gap-2 text-sm text-[var(--text-muted)] hover:text-[#FF5468] transition">
-            <LogOut className="w-4 h-4" /> {t('signOut')}
+          <button onClick={() => { logout(); onExit(); }} className="text-sm text-[var(--text-muted)] hover:text-[#FF5468] transition">
+            {t('signOut')}
           </button>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl flex items-center gap-4">
-          <div className="p-4 bg-[#A78BFA]/10 text-[#A78BFA] rounded-xl"><Wallet className="w-8 h-8" /></div>
-          <div>
-            <p className="text-sm text-[var(--text-muted)]">Amount You've Sponsored</p>
-            <h3 className="text-2xl font-bold font-mono">{data.amountSponsored.toLocaleString()} TZS</h3>
-          </div>
+        <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl">
+          <p className="text-sm text-[var(--text-muted)]">Amount You've Sponsored</p>
+          <h3 className="text-2xl font-bold font-mono">{data.amountSponsored.toLocaleString()} TZS</h3>
         </div>
-        <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl flex items-center gap-4">
-          <div className="p-4 bg-[#34D399]/10 text-[#34D399] rounded-xl"><TrendingUp className="w-8 h-8" /></div>
-          <div>
-            <p className="text-sm text-[var(--text-muted)]">Your Profit Today ({data.profitSharePercent}%)</p>
-            <h3 className="text-2xl font-bold text-[#34D399] font-mono">{currentProfit.toLocaleString()} TZS</h3>
-          </div>
+        <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl">
+          <p className="text-sm text-[var(--text-muted)]">Your Profit Today ({data.profitSharePercent}%)</p>
+          <h3 className="text-2xl font-bold text-[#34D399] font-mono">{currentProfit.toLocaleString()} TZS</h3>
         </div>
-        <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl flex items-center gap-4">
-          <div className="p-4 bg-[#F2B705]/10 text-[#F2B705] rounded-xl"><Radio className="w-8 h-8" /></div>
-          <div>
-            <p className="text-sm text-[var(--text-muted)]">Platform Revenue Today</p>
-            <h3 className="text-2xl font-bold font-mono">{platformRevenueToday.toLocaleString()} TZS</h3>
-          </div>
+        <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl">
+          <p className="text-sm text-[var(--text-muted)]">Platform Revenue Today</p>
+          <h3 className="text-2xl font-bold font-mono">{platformRevenueToday.toLocaleString()} TZS</h3>
         </div>
       </div>
 
