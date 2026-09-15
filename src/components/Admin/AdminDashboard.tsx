@@ -149,7 +149,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
           <h1 className="text-xl font-bold mt-2" style={{ fontFamily: 'var(--font-display)' }}>Admin Dashboard</h1>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={onExit} className="text-sm text-[var(--text-muted)] hover:text-[#FF5468] transition">{t('signOut')}</button>
+          <button onClick={onExit} className="text-sm text-[var(--text-muted)] hover:text-red-800 transition">{t('signOut')}</button>
         </div>
       </header>
 
@@ -157,40 +157,39 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
         <div className="grid grid-cols-2 md:grid-cols-6 gap-3 mb-8">
           <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl px-5 py-4">
             <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider">Rooms</p>
-            <p className="text-2xl font-bold font-mono mt-1">{overview?.totalRooms ?? '—'}</p>
+            <p className="text-2xl font-bold font-mono mt-1 text-white">{overview?.totalRooms ?? '—'}</p>
           </div>
           <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl px-5 py-4">
             <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider">Managers</p>
-            <p className="text-2xl font-bold font-mono mt-1 text-[#34D399]">{overview?.totalManagers ?? '—'}</p>
+            <p className="text-2xl font-bold font-mono mt-1 text-emerald-500">{overview?.totalManagers ?? '—'}</p>
           </div>
           <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl px-5 py-4">
             <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider">Pending</p>
-            <p className="text-2xl font-bold font-mono mt-1 text-[#F2B705]">{pending.length}</p>
+            <p className="text-2xl font-bold font-mono mt-1 text-emerald-500">{pending.length}</p>
           </div>
           <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl px-5 py-4">
             <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider">Sponsors</p>
-            <p className="text-2xl font-bold font-mono mt-1 text-[#A78BFA]">{overview?.totalSponsors ?? '—'}</p>
+            <p className="text-2xl font-bold font-mono mt-1 text-emerald-500">{overview?.totalSponsors ?? '—'}</p>
           </div>
           <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl px-5 py-4">
             <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider">Entries Today</p>
-            <p className="text-2xl font-bold font-mono mt-1">{overview?.totalEntriesToday ?? '—'}</p>
+            <p className="text-2xl font-bold font-mono mt-1 text-white">{overview?.totalEntriesToday ?? '—'}</p>
           </div>
           <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl px-5 py-4">
             <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider">Revenue Today</p>
-            <p className="text-2xl font-bold font-mono mt-1 text-[#34D399]">{(overview?.totalRevenueToday ?? 0).toLocaleString()} TZS</p>
+            <p className="text-2xl font-bold font-mono mt-1 text-emerald-500">{(overview?.totalRevenueToday ?? 0).toLocaleString()} TZS</p>
           </div>
         </div>
-
 
         <div className="flex gap-2 mb-6 border-b border-[var(--border)] overflow-x-auto">
           {(['overview', 'matches', 'rooms', 'sponsors'] as const).map(t2 => (
             <button key={t2} onClick={() => setTab(t2)}
               className={`px-4 py-2 text-sm font-semibold capitalize border-b-2 -mb-px transition whitespace-nowrap ${
-                tab === t2 ? 'border-[#F2B705] text-[#F2B705]' : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text)]'
+                tab === t2 ? 'border-emerald-700 text-emerald-500' : 'border-transparent text-[var(--text-muted)] hover:text-white'
               }`}>
               {t2 === 'rooms' ? 'Rooms & Managers' : t2}
               {t2 === 'rooms' && pending.length > 0 && (
-                <span className="ml-1.5 inline-flex items-center justify-center w-4 h-4 text-[10px] rounded-full bg-[#F2B705] text-[#0B0F14]">{pending.length}</span>
+                <span className="ml-1.5 inline-flex items-center justify-center w-4 h-4 text-[10px] rounded-full bg-emerald-900 text-white">{pending.length}</span>
               )}
             </button>
           ))}

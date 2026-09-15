@@ -70,7 +70,7 @@ const Shell: React.FC = () => {
         <LoginScreen
           title={t('adminLoginTitle')}
           subtitle={t('adminLoginSubtitle')}
-          accentColor="#F2B705"
+          accentColor="#065f46" // Emerald-800
           onBack={() => setView('staff')}
           onSubmit={async (u, p) => {
             try {
@@ -96,7 +96,7 @@ const Shell: React.FC = () => {
         <LoginScreen
           title={t('managerLoginTitle')}
           subtitle={t('managerLoginSubtitle')}
-          accentColor="#34D399"
+          accentColor="#065f46" // Emerald-800
           onBack={() => setView('staff')}
           onSubmit={async (u, p) => {
             try {
@@ -108,7 +108,7 @@ const Shell: React.FC = () => {
             }
           }}
           footer={
-            <button onClick={() => setManagerScreen('register')} className="text-sm text-[#34D399] hover:underline">
+            <button onClick={() => setManagerScreen('register')} className="text-sm text-emerald-600 hover:underline">
               {t('newManagerQuestion')} {t('registerAsManager')}
             </button>
           }
@@ -124,7 +124,7 @@ const Shell: React.FC = () => {
         <LoginScreen
           title={t('sponsorLoginTitle')}
           subtitle={t('sponsorLoginSubtitle')}
-          accentColor="#A78BFA"
+          accentColor="#991b1b" // Red-800
           onBack={() => setView('staff')}
           onSubmit={async (u, p) => {
             try {
@@ -169,15 +169,15 @@ const Shell: React.FC = () => {
             </p>
             <h2 className="text-2xl font-bold mb-8" style={{ fontFamily: 'var(--font-display)' }}>{t('staffPortalDesc')}</h2>
             <div className="grid sm:grid-cols-3 gap-4">
-              <button onClick={() => setView('manager')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-[#34D399] transition text-left">
+              <button onClick={() => setView('manager')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-emerald-700 transition text-left">
                 <div className="font-bold">{t('manager')}</div>
                 <div className="text-sm text-[var(--text-muted)]">{t('managerDesc')}</div>
               </button>
-              <button onClick={() => setView('sponsor')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-[#A78BFA] transition text-left">
+              <button onClick={() => setView('sponsor')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-emerald-700 transition text-left">
                 <div className="font-bold">{t('sponsor')}</div>
                 <div className="text-sm text-[var(--text-muted)]">{t('sponsorDesc')}</div>
               </button>
-              <button onClick={() => setView('admin')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-[#F2B705] transition text-left">
+              <button onClick={() => setView('admin')} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 hover:border-emerald-700 transition text-left">
                 <div className="font-bold">{t('admin')}</div>
                 <div className="text-sm text-[var(--text-muted)]">{t('adminDesc')}</div>
               </button>
@@ -202,13 +202,13 @@ const Shell: React.FC = () => {
       <div className="flex-1 flex items-center justify-center">
         <div className="max-w-md w-full text-center bg-[var(--surface)]/90 backdrop-blur border border-[var(--border)] rounded-3xl p-8 shadow-2xl">
           <h1 className="text-2xl font-bold mb-2 pt-4" style={{ fontFamily: 'var(--font-display)' }}>
-            {t('welcome')} <span className="text-[#F2B705]">SPORTSVIEWTZ</span>
+            {t('welcome')} <span className="text-emerald-500">SPORTSVIEWTZ</span>
           </h1>
           <p className="text-[var(--text-muted)] mb-8 text-sm">{t('chooseAccess')}</p>
 
           <button
             onClick={() => setView('staff')}
-            className="w-full bg-[#F2B705] hover:brightness-110 text-[#0B0F14] font-bold py-4 rounded-2xl transition text-lg shadow-lg"
+            className="w-full bg-emerald-900 hover:bg-emerald-800 text-white font-bold py-4 rounded-2xl transition text-lg shadow-lg"
           >
             {t('staffButtonLabel')}
           </button>
