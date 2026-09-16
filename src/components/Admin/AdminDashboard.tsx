@@ -142,288 +142,271 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
   };
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-white">
-      <header className="border-b border-emerald-800 px-6 py-4 flex items-center justify-between sticky top-0 bg-[var(--bg)]/90 backdrop-blur z-10">
+    <div className="min-h-screen bg-[#0a0f1d] text-white">
+      <header className="sticky top-0 z-30 bg-[#0a0f1d]/90 backdrop-blur-md border-b border-emerald-500/20 px-6 py-4 flex items-center justify-between">
         <div>
           <Brand size="sm" />
-          <h1 className="text-xl font-bold mt-2 text-white" style={{ fontFamily: 'var(--font-display)' }}>Admin Dashboard</h1>
+          <h1 className="text-xl font-bold mt-2 font-display tracking-tight text-white">Admin Dashboard</h1>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={onExit} className="text-sm text-white hover:text-white transition">{t('signOut')}</button>
+          <button onClick={onExit} className="text-xs font-bold uppercase tracking-widest text-white hover:text-emerald-400 transition">Sign Out</button>
         </div>
       </header>
 
-      <div className="px-6 py-6 max-w-7xl mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-3 mb-8">
-          <div className="bg-[var(--surface)] border border-emerald-800 rounded-xl px-5 py-4">
-            <p className="text-xs text-white uppercase tracking-wider">Rooms</p>
-            <p className="text-2xl font-bold font-mono mt-1 text-white">{overview?.totalRooms ?? '—'}</p>
-          </div>
-          <div className="bg-[var(--surface)] border border-emerald-800 rounded-xl px-5 py-4">
-            <p className="text-xs text-white uppercase tracking-wider">Managers</p>
-            <p className="text-2xl font-bold font-mono mt-1 text-white">{overview?.totalManagers ?? '—'}</p>
-          </div>
-          <div className="bg-[var(--surface)] border border-emerald-800 rounded-xl px-5 py-4">
-            <p className="text-xs text-white uppercase tracking-wider">Pending</p>
-            <p className="text-2xl font-bold font-mono mt-1 text-white">{pending.length}</p>
-          </div>
-          <div className="bg-[var(--surface)] border border-emerald-800 rounded-xl px-5 py-4">
-            <p className="text-xs text-white uppercase tracking-wider">Sponsors</p>
-            <p className="text-2xl font-bold font-mono mt-1 text-white">{overview?.totalSponsors ?? '—'}</p>
-          </div>
-          <div className="bg-[var(--surface)] border border-emerald-800 rounded-xl px-5 py-4">
-            <p className="text-xs text-white uppercase tracking-wider">Entries Today</p>
-            <p className="text-2xl font-bold font-mono mt-1 text-white">{overview?.totalEntriesToday ?? '—'}</p>
-          </div>
-          <div className="bg-[var(--surface)] border border-emerald-800 rounded-xl px-5 py-4">
-            <p className="text-xs text-white uppercase tracking-wider">Revenue Today</p>
-            <p className="text-2xl font-bold font-mono mt-1 text-white">{(overview?.totalRevenueToday ?? 0).toLocaleString()} TZS</p>
-          </div>
-        </div>
-
-        <div className="flex gap-2 mb-6 border-b border-emerald-800 overflow-x-auto">
-          {(['overview', 'matches', 'rooms', 'sponsors'] as const).map(t2 => (
-            <button key={t2} onClick={() => setTab(t2)}
-              className={`px-4 py-2 text-sm font-semibold capitalize border-b-2 -mb-px transition whitespace-nowrap ${
-                tab === t2 ? 'border-emerald-700 text-white' : 'border-transparent text-white hover:text-white'
-              }`}>
-              {t2 === 'rooms' ? 'Rooms & Managers' : t2}
-              {t2 === 'rooms' && pending.length > 0 && (
-                <span className="ml-1.5 inline-flex items-center justify-center w-4 h-4 text-[10px] rounded-full bg-emerald-900 text-white">{pending.length}</span>
-              )}
-            </button>
-          ))}
-        </div>
-...
-
-        {tab === 'overview' && (
-          <div className="grid lg:grid-cols-2 gap-6">
-            <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6">
-              <h3 className="font-bold mb-4">Top rooms today</h3>
-              <div className="space-y-2">
-                {[...rooms].sort((a, b) => b.todayRevenue - a.todayRevenue).slice(0, 8).map(r => (
-                  <div key={r.id} className="flex justify-between items-center bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3">
-                    <div>
-                      <p className="font-semibold text-sm">{r.roomName}</p>
-                      <p className="text-xs text-[var(--text-muted)]">{r.location} • {r.managerName}</p>
-                    </div>
-                    <p className="font-mono text-[#065f46] font-bold">{r.todayRevenue.toLocaleString()} TZS</p>
-                  </div>
-                ))}
-                {rooms.length === 0 && <p className="text-sm text-[var(--text-muted)]">No approved rooms yet.</p>}
-              </div>
+      <div className="px-6 py-8 max-w-[1600px] mx-auto grid grid-cols-12 gap-8">
+        <div className="col-span-12 xl:col-span-7">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+            <div className="bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">Rooms</p>
+              <p className="text-3xl font-display mt-1 text-white">{overview?.totalRooms ?? '—'}</p>
             </div>
-            <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6">
-              <h3 className="font-bold mb-4">Upcoming matches</h3>
-              <div className="space-y-2">
-                {matches.slice(0, 8).map(m => (
-                  <div key={m.id} className="flex justify-between items-center bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3">
-                    <p className="font-semibold text-sm">{m.homeTeam} vs {m.awayTeam}</p>
-                    <p className="text-xs text-[var(--text-muted)]">{m.matchTime}</p>
-                  </div>
-                ))}
-                {matches.length === 0 && <p className="text-sm text-[var(--text-muted)]">No matches posted yet.</p>}
-              </div>
+            <div className="bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">Managers</p>
+              <p className="text-3xl font-display mt-1 text-emerald-400">{overview?.totalManagers ?? '—'}</p>
+            </div>
+            <div className="bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">Revenue</p>
+              <p className="text-3xl font-display mt-1 text-emerald-400">{(overview?.totalRevenueToday ?? 0).toLocaleString()} TZS</p>
             </div>
           </div>
-        )}
-
-        {tab === 'matches' && (
-          <div className="grid lg:grid-cols-2 gap-6">
-            <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl">
-              <h2 className="text-lg font-bold mb-4 text-[#065f46]">Add a Match</h2>
-              <form onSubmit={handlePostMatch} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <input type="text" placeholder="Home Team" required value={homeTeam} onChange={e => setHomeTeam(e.target.value)}
-                    className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#065f46] transition" />
-                  <input type="text" placeholder="Away Team" required value={awayTeam} onChange={e => setAwayTeam(e.target.value)}
-                    className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#065f46] transition" />
-                </div>
-                <input type="text" placeholder="Time (e.g. Sat, 16:00)" required value={matchTime} onChange={e => setMatchTime(e.target.value)}
-                  className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#065f46] transition" />
-                <button type="submit" className="w-full bg-[#065f46] hover:brightness-110 text-[#0B0F14] font-bold py-2.5 rounded-lg transition">
-                  Post Match to Users
-                </button>
-              </form>
-            </div>
-            <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl">
-              <h2 className="text-lg font-bold mb-4">Live Matches</h2>
-              <div className="space-y-2 max-h-[360px] overflow-y-auto pr-1">
-                {matches.length === 0 && <p className="text-[var(--text-muted)] text-sm">No matches added yet.</p>}
-                {matches.map(m => (
-                  <div key={m.id} className="flex justify-between items-center bg-[var(--bg)] p-3 rounded-lg border border-[var(--border)]">
-                    <div>
-                      <span className="font-bold">{m.homeTeam} vs {m.awayTeam}</span>
-                      <div className="text-xs text-[var(--text-muted)]">{m.matchTime} • Fee: {m.entryFee} TZS</div>
-                    </div>
-                    <button onClick={() => deleteMatch(m.id)} className="px-3 py-1 text-[#991b1b] border border-[#991b1b] rounded-lg transition hover:bg-[#991b1b]/10 text-sm font-bold">
-                      Delete
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
+          
+          <div className="sticky top-0 z-20 flex gap-1 mb-6 border-b border-emerald-500/20 bg-[#0a0f1d]/90 backdrop-blur">
+            {(['overview', 'matches', 'rooms', 'sponsors'] as const).map(t2 => (
+              <button key={t2} onClick={() => setTab(t2)}
+                className={`px-6 py-3 text-xs font-bold uppercase tracking-widest border-b-2 transition ${
+                  tab === t2 ? 'border-emerald-500 text-white' : 'border-transparent text-white/60 hover:text-white'
+                }`}>
+                {t2}
+              </button>
+            ))}
           </div>
-        )}
 
-        {tab === 'rooms' && (
-          <div className="space-y-6">
-            {pending.length > 0 && (
-              <div className="bg-[var(--surface)] border border-[#065f46]/40 p-6 rounded-2xl">
-                <h2 className="text-lg font-bold mb-4 text-[#065f46]">
-                  {t('pendingApplications')} ({pending.length})
-                </h2>
-                <div className="space-y-4">
-                  {pending.map(m => (
-                    <div key={m.id} className="bg-[var(--bg)] border border-[var(--border)] rounded-xl p-4">
-                      <p className="font-semibold">{m.name} <span className="text-[var(--text-muted)] font-normal">@{m.username}</span></p>
-                      <p className="text-xs text-[var(--text-muted)]">{m.phone} • {m.email}</p>
-                      {m.room && <p className="text-xs text-[var(--text-muted)] mt-1">{m.room.name} • {m.room.location}</p>}
-                      <div className="flex gap-2 mt-3">
-                        <button onClick={() => approve(m.id)} className="bg-[#065f46] text-[#0B0F14] font-bold text-sm px-4 py-2 rounded-lg hover:brightness-110 transition">
-                          {t('approve')}
-                        </button>
-                        <button onClick={() => reject(m.id)} className="border border-[#991b1b] text-[#991b1b] font-bold text-sm px-4 py-2 rounded-lg hover:bg-[#991b1b]/10 transition">
-                          {t('reject')}
-                        </button>
+          {tab === 'overview' && (
+            <div className="grid lg:grid-cols-2 gap-6">
+              <div className="bg-[#0e1726] border border-white/10 rounded-sm p-6">
+                <h3 className="font-display font-bold mb-4 tracking-tight">Top rooms today</h3>
+                <div className="space-y-2">
+                  {[...rooms].sort((a, b) => b.todayRevenue - a.todayRevenue).slice(0, 8).map(r => (
+                    <div key={r.id} className="flex justify-between items-center bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3">
+                      <div>
+                        <p className="font-semibold text-sm">{r.roomName}</p>
+                        <p className="text-xs text-white/60">{r.location} • {r.managerName}</p>
                       </div>
+                      <p className="font-mono text-emerald-500 font-bold">{r.todayRevenue.toLocaleString()} TZS</p>
+                    </div>
+                  ))}
+                  {rooms.length === 0 && <p className="text-sm text-white/60">No approved rooms yet.</p>}
+                </div>
+              </div>
+              <div className="bg-[#0e1726] border border-white/10 rounded-sm p-6">
+                <h3 className="font-display font-bold mb-4 tracking-tight">Upcoming matches</h3>
+                <div className="space-y-2">
+                  {matches.slice(0, 8).map(m => (
+                    <div key={m.id} className="flex justify-between items-center bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3">
+                      <p className="font-semibold text-sm">{m.homeTeam} vs {m.awayTeam}</p>
+                      <p className="text-xs text-white/60">{m.matchTime}</p>
+                    </div>
+                  ))}
+                  {matches.length === 0 && <p className="text-sm text-white/60">No matches posted yet.</p>}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {tab === 'matches' && (
+            <div className="grid lg:grid-cols-2 gap-6">
+              <div className="bg-[#0e1726] border border-white/10 p-6 rounded-sm">
+                <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-emerald-400 font-display">Post Match</h2>
+                <form onSubmit={handlePostMatch} className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <input type="text" placeholder="Home Team" required value={homeTeam} onChange={e => setHomeTeam(e.target.value)}
+                      className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                    <input type="text" placeholder="Away Team" required value={awayTeam} onChange={e => setAwayTeam(e.target.value)}
+                      className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                  </div>
+                  <input type="text" placeholder="Time (e.g. Sat, 16:00)" required value={matchTime} onChange={e => setMatchTime(e.target.value)}
+                    className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                  <button type="submit" className="w-full btn-emerald font-sans font-bold text-xs uppercase tracking-widest text-white py-3 rounded-md transition">
+                    Post Match to Users
+                  </button>
+                </form>
+              </div>
+              <div className="bg-[#0e1726] border border-white/10 p-6 rounded-sm">
+                <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-white font-display">Live Matches</h2>
+                <div className="space-y-2 max-h-[360px] overflow-y-auto pr-1">
+                  {matches.length === 0 && <p className="text-white/60 text-sm">No matches added yet.</p>}
+                  {matches.map(m => (
+                    <div key={m.id} className="flex justify-between items-center bg-[#0a0f1d] p-3 rounded-sm border border-white/10">
+                      <div>
+                        <span className="font-bold">{m.homeTeam} vs {m.awayTeam}</span>
+                        <div className="text-xs text-white/60">{m.matchTime} • Fee: {m.entryFee} TZS</div>
+                      </div>
+                      <button onClick={() => deleteMatch(m.id)} className="px-3 py-1 text-white border border-rose-800 rounded-sm transition hover:bg-rose-900 text-sm font-bold">
+                        Delete
+                      </button>
                     </div>
                   ))}
                 </div>
               </div>
-            )}
+            </div>
+          )}
 
+          {tab === 'rooms' && (
+            <div className="space-y-6">
+              {pending.length > 0 && (
+                <div className="bg-[#0e1726] border border-emerald-500/20 p-6 rounded-sm">
+                  <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-emerald-400 font-display">
+                    {t('pendingApplications')} ({pending.length})
+                  </h2>
+                  <div className="space-y-4">
+                    {pending.map(m => (
+                      <div key={m.id} className="bg-[#0a0f1d] border border-white/10 rounded-sm p-4">
+                        <p className="font-semibold">{m.name} <span className="text-white/60 font-normal">@{m.username}</span></p>
+                        <p className="text-xs text-white/60">{m.phone} • {m.email}</p>
+                        {m.room && <p className="text-xs text-white/60 mt-1">{m.room.name} • {m.room.location}</p>}
+                        <div className="flex gap-2 mt-3">
+                          <button onClick={() => approve(m.id)} className="bg-emerald-900 text-white font-bold text-xs uppercase tracking-widest px-4 py-2 rounded-sm transition">
+                            {t('approve')}
+                          </button>
+                          <button onClick={() => reject(m.id)} className="border border-rose-800 text-white font-bold text-xs uppercase tracking-widest px-4 py-2 rounded-sm hover:bg-rose-900 transition">
+                            {t('reject')}
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="grid lg:grid-cols-2 gap-6">
+                <div className="bg-[#0e1726] border border-white/10 p-6 rounded-sm">
+                  <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-emerald-400 font-display">Add Room & Manager</h2>
+                  <form onSubmit={handleCreateRoom} className="space-y-3">
+                    <input type="text" placeholder="Room Name (e.g. VIP Area)" required value={roomName} onChange={e => setRoomName(e.target.value)}
+                      className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                    <input type="text" placeholder="Location" required value={location} onChange={e => setLocation(e.target.value)}
+                      className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                    <div className="grid grid-cols-2 gap-3">
+                      <input type="text" placeholder="Manager Name" required value={managerName} onChange={e => setManagerName(e.target.value)}
+                        className="bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                      <input type="text" placeholder="Manager Phone" required value={managerPhone} onChange={e => setManagerPhone(e.target.value)}
+                        className="bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                    </div>
+                    <input type="email" placeholder="Manager Email" required value={managerEmail} onChange={e => setManagerEmail(e.target.value)}
+                      className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                    <p className="text-xs text-white/60 pt-1">Login the manager will use to sign in:</p>
+                    <div className="grid grid-cols-2 gap-3">
+                      <input type="text" placeholder="Username" required value={managerUsername} onChange={e => setManagerUsername(e.target.value)}
+                        className="bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                      <PasswordInput placeholder="Temporary password" required value={managerPassword} onChange={e => setManagerPassword(e.target.value)}
+                        className="bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                    </div>
+                    {roomFormError && <p className="text-sm text-rose-800">{roomFormError}</p>}
+                    <button type="submit" className="w-full btn-emerald font-sans font-bold text-xs uppercase tracking-widest text-white py-3 rounded-md transition">
+                      Register Room & Manager
+                    </button>
+                  </form>
+                </div>
+                <div className="bg-[#0e1726] border border-white/10 p-6 rounded-sm">
+                  <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-white font-display">All Rooms & Managers</h2>
+                  <div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
+                    {rooms.length === 0 && <p className="text-white/60 text-sm">No rooms registered yet.</p>}
+                    {rooms.map(r => (
+                      <div key={r.id} className="bg-[#0a0f1d] p-3 rounded-sm border border-white/10">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <span className="font-bold text-emerald-500">{r.roomName}</span>
+                            <div className="text-xs text-white/60">Manager: {r.managerName} • {r.location}</div>
+                            <div className="text-xs font-mono text-white/60 mt-1">{r.todayEntries} entries • {r.todayRevenue.toLocaleString()} TZS today</div>
+                          </div>
+                          <div className="flex gap-1">
+                            {r.managerId && (
+                              <button onClick={() => openReset('manager', r.managerId!)} className="px-2 py-1 text-white/60 hover:text-emerald-500 border border-transparent hover:border-emerald-500 rounded-sm text-xs transition">
+                                Reset
+                              </button>
+                            )}
+                            <button onClick={() => deleteRoom(r.id)} className="px-2 py-1 text-white border border-rose-800 rounded-sm text-xs transition hover:bg-rose-900">
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                        {resetTarget?.type === 'manager' && resetTarget.id === r.managerId && (
+                          <div className="mt-3 pt-3 border-t border-emerald-500/20 flex gap-2">
+                            <PasswordInput placeholder="New password" value={resetValue} onChange={e => setResetValue(e.target.value)}
+                              className="flex-1 bg-[#0a0f1d] border border-white/10 rounded-sm px-3 py-2 text-sm text-white outline-none focus:border-emerald-500" />
+                            <button onClick={submitReset} disabled={resetBusy} className="bg-emerald-900 text-white font-bold text-sm px-4 rounded-sm disabled:opacity-50">Save</button>
+                            <button onClick={() => setResetTarget(null)} className="text-white/60 text-sm px-2">Cancel</button>
+                          </div>
+                        )}
+                        {resetTarget?.type === 'manager' && resetTarget.id === r.managerId && resetError && (
+                          <p className="text-xs text-rose-800 mt-1">{resetError}</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {tab === 'sponsors' && (
             <div className="grid lg:grid-cols-2 gap-6">
-              <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl">
-                <h2 className="text-lg font-bold mb-4 text-[#065f46]">Add Room & Manager</h2>
-                <form onSubmit={handleCreateRoom} className="space-y-3">
-                  <input type="text" placeholder="Room Name (e.g. VIP Area)" required value={roomName} onChange={e => setRoomName(e.target.value)}
-                    className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#065f46] transition" />
-                  <input type="text" placeholder="Location" required value={location} onChange={e => setLocation(e.target.value)}
-                    className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#065f46] transition" />
+              <div className="bg-[#0e1726] border border-white/10 p-6 rounded-sm">
+                <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-emerald-400 font-display">Add Sponsor</h2>
+                <form onSubmit={handleCreateSponsor} className="space-y-3">
+                  <input type="text" placeholder="Sponsor / company name" required value={sponsorName} onChange={e => setSponsorName(e.target.value)}
+                    className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
                   <div className="grid grid-cols-2 gap-3">
-                    <input type="text" placeholder="Manager Name" required value={managerName} onChange={e => setManagerName(e.target.value)}
-                      className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#065f46] transition" />
-                    <input type="text" placeholder="Manager Phone" required value={managerPhone} onChange={e => setManagerPhone(e.target.value)}
-                      className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#065f46] transition" />
+                    <input type="number" placeholder="Amount sponsored (TZS)" required value={sponsorAmount} onChange={e => setSponsorAmount(e.target.value)}
+                      className="bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                    <input type="number" placeholder="Profit share %" required value={sponsorShare} onChange={e => setSponsorShare(e.target.value)}
+                      className="bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
                   </div>
-                  <input type="email" placeholder="Manager Email" required value={managerEmail} onChange={e => setManagerEmail(e.target.value)}
-                    className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#065f46] transition" />
-                  <p className="text-xs text-[var(--text-muted)] pt-1">Login the manager will use to sign in:</p>
-                  <div className="grid grid-cols-2 gap-3">
-                    <input type="text" placeholder="Username" required value={managerUsername} onChange={e => setManagerUsername(e.target.value)}
-                      className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#065f46] transition" />
-                    <PasswordInput placeholder="Temporary password" required value={managerPassword} onChange={e => setManagerPassword(e.target.value)}
-                      className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#065f46] transition" />
-                  </div>
-                  {roomFormError && <p className="text-sm text-[#991b1b]">{roomFormError}</p>}
-                  <button type="submit" className="w-full bg-[#065f46] hover:brightness-110 text-[#0B0F14] font-bold py-2.5 rounded-lg transition">
-                    Register Room & Manager
+                  <input type="text" placeholder="Username" required value={sponsorUsername} onChange={e => setSponsorUsername(e.target.value)}
+                    className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                  <PasswordInput placeholder="Temporary password" required value={sponsorPassword} onChange={e => setSponsorPassword(e.target.value)}
+                    className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                  {sponsorFormError && <p className="text-sm text-rose-800">{sponsorFormError}</p>}
+                  <button type="submit" className="w-full btn-emerald font-sans font-bold text-xs uppercase tracking-widest text-white py-3 rounded-md transition">
+                    Create Sponsor Account
                   </button>
                 </form>
               </div>
-              <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl">
-                <h2 className="text-lg font-bold mb-4">All Rooms & Managers</h2>
+              <div className="bg-[#0e1726] border border-emerald-800 p-6 rounded-sm">
+                <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-white font-display">All Sponsors</h2>
                 <div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
-                  {rooms.length === 0 && <p className="text-[var(--text-muted)] text-sm">No rooms registered yet.</p>}
-                  {rooms.map(r => (
-                    <div key={r.id} className="bg-[var(--bg)] p-3 rounded-lg border border-[var(--border)]">
+                  {sponsors.length === 0 && <p className="text-white/60 text-sm">No sponsors registered yet.</p>}
+                  {sponsors.map(s => (
+                    <div key={s.id} className="bg-[#0a0f1d] p-3 rounded-sm border border-emerald-800">
                       <div className="flex justify-between items-center">
                         <div>
-                          <span className="font-bold text-[#065f46]">{r.roomName}</span>
-                          <div className="text-xs text-[var(--text-muted)]">Manager: {r.managerName} • {r.location}</div>
-                          <div className="text-xs font-mono text-[var(--text-muted)] mt-1">{r.todayEntries} entries • {r.todayRevenue.toLocaleString()} TZS today</div>
+                          <span className="font-bold text-emerald-500">{s.name}</span>
+                          <div className="text-xs text-white/60">@{s.username} • {s.profitSharePercent}% profit share</div>
+                          <div className="text-xs font-mono text-white/60 mt-1">{s.amountSponsored.toLocaleString()} TZS sponsored</div>
                         </div>
                         <div className="flex gap-1">
-                          {r.managerId && (
-                            <button onClick={() => openReset('manager', r.managerId!)} className="px-2 py-1 text-[var(--text-muted)] hover:text-[#065f46] border border-transparent hover:border-[#065f46] rounded-lg text-xs transition">
-                              Reset
-                            </button>
-                          )}
-                          <button onClick={() => deleteRoom(r.id)} className="px-2 py-1 text-[#991b1b] border border-[#991b1b] rounded-lg text-xs transition hover:bg-[#991b1b]/10">
+                          <button onClick={() => openReset('sponsor', s.id)} className="px-2 py-1 text-white/60 hover:text-emerald-500 border border-transparent hover:border-emerald-500 rounded-sm text-xs transition">
+                            Reset
+                          </button>
+                          <button onClick={() => deleteSponsor(s.id)} className="px-2 py-1 text-white border border-rose-800 rounded-sm text-xs transition hover:bg-rose-900">
                             Delete
                           </button>
                         </div>
                       </div>
-                      {resetTarget?.type === 'manager' && resetTarget.id === r.managerId && (
-                        <div className="mt-3 pt-3 border-t border-[var(--border)] flex gap-2">
+                      {resetTarget?.type === 'sponsor' && resetTarget.id === s.id && (
+                        <div className="mt-3 pt-3 border-t border-emerald-500/20 flex gap-2">
                           <PasswordInput placeholder="New password" value={resetValue} onChange={e => setResetValue(e.target.value)}
-                            className="flex-1 bg-[var(--surface)] border border-[var(--border)] rounded-lg px-3 py-2 text-sm text-[var(--text)] outline-none focus:border-[#065f46]" />
-                          <button onClick={submitReset} disabled={resetBusy} className="bg-[#065f46] text-[#0B0F14] font-bold text-sm px-4 rounded-lg disabled:opacity-50">Save</button>
-                          <button onClick={() => setResetTarget(null)} className="text-[var(--text-muted)] text-sm px-2">Cancel</button>
+                            className="flex-1 bg-[#0a0f1d] border border-white/10 rounded-sm px-3 py-2 text-sm text-white outline-none focus:border-emerald-500" />
+                          <button onClick={submitReset} disabled={resetBusy} className="bg-emerald-900 text-white font-bold text-sm px-4 rounded-sm disabled:opacity-50">Save</button>
+                          <button onClick={() => setResetTarget(null)} className="text-white/60 text-sm px-2">Cancel</button>
                         </div>
                       )}
-                      {resetTarget?.type === 'manager' && resetTarget.id === r.managerId && resetError && (
-                        <p className="text-xs text-[#991b1b] mt-1">{resetError}</p>
+                      {resetTarget?.type === 'sponsor' && resetTarget.id === s.id && resetError && (
+                        <p className="text-xs text-rose-800 mt-1">{resetError}</p>
                       )}
                     </div>
                   ))}
                 </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {tab === 'sponsors' && (
-          <div className="grid lg:grid-cols-2 gap-6">
-            <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl">
-              <h2 className="text-lg font-bold mb-4 text-[#065f46]">Add Sponsor</h2>
-              <form onSubmit={handleCreateSponsor} className="space-y-3">
-                <input type="text" placeholder="Sponsor / company name" required value={sponsorName} onChange={e => setSponsorName(e.target.value)}
-                  className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#065f46] transition" />
-                <div className="grid grid-cols-2 gap-3">
-                  <input type="number" placeholder="Amount sponsored (TZS)" required value={sponsorAmount} onChange={e => setSponsorAmount(e.target.value)}
-                    className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#065f46] transition" />
-                  <input type="number" placeholder="Profit share %" required value={sponsorShare} onChange={e => setSponsorShare(e.target.value)}
-                    className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#065f46] transition" />
-                </div>
-                <p className="text-xs text-[var(--text-muted)] pt-1">Login the sponsor will use to sign in:</p>
-                <div className="grid grid-cols-2 gap-3">
-                  <input type="text" placeholder="Username" required value={sponsorUsername} onChange={e => setSponsorUsername(e.target.value)}
-                    className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#065f46] transition" />
-                  <PasswordInput placeholder="Temporary password" required value={sponsorPassword} onChange={e => setSponsorPassword(e.target.value)}
-                    className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#065f46] transition" />
-                </div>
-                {sponsorFormError && <p className="text-sm text-[#991b1b]">{sponsorFormError}</p>}
-                <button type="submit" className="w-full bg-emerald-900 hover:bg-emerald-800 text-white font-bold py-2.5 rounded-lg transition">
-                  Create Sponsor Account
-                </button>
-              </form>
-            </div>
-            <div className="bg-[var(--surface)] border border-emerald-800 p-6 rounded-2xl">
-              <h2 className="text-lg font-bold mb-4 text-white">All Sponsors</h2>
-              <div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
-                {sponsors.length === 0 && <p className="text-white text-sm">No sponsors registered yet.</p>}
-                {sponsors.map(s => (
-                  <div key={s.id} className="bg-[var(--bg)] p-3 rounded-lg border border-emerald-800">
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <span className="font-bold text-emerald-500">{s.name}</span>
-                        <div className="text-xs text-white">@{s.username} • {s.profitSharePercent}% profit share</div>
-                        <div className="text-xs font-mono text-white mt-1">{s.amountSponsored.toLocaleString()} TZS sponsored</div>
-                      </div>
-                      <div className="flex gap-1">
-                        <button onClick={() => openReset('sponsor', s.id)} className="px-2 py-1 text-white hover:text-emerald-500 border border-transparent hover:border-emerald-500 rounded-lg text-xs transition">
-                          Reset
-                        </button>
-                        <button onClick={() => deleteSponsor(s.id)} className="px-2 py-1 text-white border border-rose-800 rounded-lg text-xs transition hover:bg-rose-900">
-                          Delete
-                        </button>
-                      </div>
-                    </div>
-                    {resetTarget?.type === 'sponsor' && resetTarget.id === s.id && (
-                      <div className="mt-3 pt-3 border-t border-emerald-800 flex gap-2">
-                        <PasswordInput placeholder="New password" value={resetValue} onChange={e => setResetValue(e.target.value)}
-                          className="flex-1 bg-[var(--surface)] border border-emerald-800 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-emerald-600" />
-                        <button onClick={submitReset} disabled={resetBusy} className="bg-emerald-900 text-white font-bold text-sm px-4 rounded-lg disabled:opacity-50">Save</button>
-                        <button onClick={() => setResetTarget(null)} className="text-white text-sm px-2">Cancel</button>
-                      </div>
-                    )}
-                    {resetTarget?.type === 'sponsor' && resetTarget.id === s.id && resetError && (
-                      <p className="text-xs text-rose-800 mt-1">{resetError}</p>
-                    )}
-                  </div>
-                ))}
               </div>
             </div>
           </div>
