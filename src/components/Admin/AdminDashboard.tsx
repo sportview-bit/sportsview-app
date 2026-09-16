@@ -385,42 +385,42 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                     className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 text-[var(--text)] outline-none focus:border-[#A78BFA] transition" />
                 </div>
                 {sponsorFormError && <p className="text-sm text-[#FF5468]">{sponsorFormError}</p>}
-                <button type="submit" className="w-full bg-[#A78BFA] hover:brightness-110 text-[#0B0F14] font-bold py-2.5 rounded-lg transition">
+                <button type="submit" className="w-full bg-emerald-900 hover:bg-emerald-800 text-white font-bold py-2.5 rounded-lg transition">
                   Create Sponsor Account
                 </button>
               </form>
             </div>
-            <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl">
-              <h2 className="text-lg font-bold mb-4">All Sponsors</h2>
+            <div className="bg-[var(--surface)] border border-emerald-800 p-6 rounded-2xl">
+              <h2 className="text-lg font-bold mb-4 text-white">All Sponsors</h2>
               <div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
-                {sponsors.length === 0 && <p className="text-[var(--text-muted)] text-sm">No sponsors registered yet.</p>}
+                {sponsors.length === 0 && <p className="text-white text-sm">No sponsors registered yet.</p>}
                 {sponsors.map(s => (
-                  <div key={s.id} className="bg-[var(--bg)] p-3 rounded-lg border border-[var(--border)]">
+                  <div key={s.id} className="bg-[var(--bg)] p-3 rounded-lg border border-emerald-800">
                     <div className="flex justify-between items-center">
                       <div>
-                        <span className="font-bold text-[#A78BFA]">{s.name}</span>
-                        <div className="text-xs text-[var(--text-muted)]">@{s.username} • {s.profitSharePercent}% profit share</div>
-                        <div className="text-xs font-mono text-[var(--text-muted)] mt-1">{s.amountSponsored.toLocaleString()} TZS sponsored</div>
+                        <span className="font-bold text-emerald-500">{s.name}</span>
+                        <div className="text-xs text-white">@{s.username} • {s.profitSharePercent}% profit share</div>
+                        <div className="text-xs font-mono text-white mt-1">{s.amountSponsored.toLocaleString()} TZS sponsored</div>
                       </div>
                       <div className="flex gap-1">
-                        <button onClick={() => openReset('sponsor', s.id)} className="px-2 py-1 text-[var(--text-muted)] hover:text-[#A78BFA] border border-transparent hover:border-[#A78BFA] rounded-lg text-xs transition">
+                        <button onClick={() => openReset('sponsor', s.id)} className="px-2 py-1 text-white hover:text-emerald-500 border border-transparent hover:border-emerald-500 rounded-lg text-xs transition">
                           Reset
                         </button>
-                        <button onClick={() => deleteSponsor(s.id)} className="px-2 py-1 text-[#FF5468] border border-[#FF5468] rounded-lg text-xs transition hover:bg-[#FF5468]/10">
+                        <button onClick={() => deleteSponsor(s.id)} className="px-2 py-1 text-white border border-rose-800 rounded-lg text-xs transition hover:bg-rose-900">
                           Delete
                         </button>
                       </div>
                     </div>
                     {resetTarget?.type === 'sponsor' && resetTarget.id === s.id && (
-                      <div className="mt-3 pt-3 border-t border-[var(--border)] flex gap-2">
+                      <div className="mt-3 pt-3 border-t border-emerald-800 flex gap-2">
                         <PasswordInput placeholder="New password" value={resetValue} onChange={e => setResetValue(e.target.value)}
-                          className="flex-1 bg-[var(--surface)] border border-[var(--border)] rounded-lg px-3 py-2 text-sm text-[var(--text)] outline-none focus:border-[#A78BFA]" />
-                        <button onClick={submitReset} disabled={resetBusy} className="bg-[#A78BFA] text-[#0B0F14] font-bold text-sm px-4 rounded-lg disabled:opacity-50">Save</button>
-                        <button onClick={() => setResetTarget(null)} className="text-[var(--text-muted)] text-sm px-2">Cancel</button>
+                          className="flex-1 bg-[var(--surface)] border border-emerald-800 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-emerald-600" />
+                        <button onClick={submitReset} disabled={resetBusy} className="bg-emerald-900 text-white font-bold text-sm px-4 rounded-lg disabled:opacity-50">Save</button>
+                        <button onClick={() => setResetTarget(null)} className="text-white text-sm px-2">Cancel</button>
                       </div>
                     )}
                     {resetTarget?.type === 'sponsor' && resetTarget.id === s.id && resetError && (
-                      <p className="text-xs text-[#FF5468] mt-1">{resetError}</p>
+                      <p className="text-xs text-rose-800 mt-1">{resetError}</p>
                     )}
                   </div>
                 ))}
