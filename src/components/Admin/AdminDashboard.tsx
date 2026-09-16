@@ -163,7 +163,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
             </div>
             <div className="bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4">
               <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">Revenue</p>
-              <p className="text-3xl font-sans font-bold mt-1 text-emerald-400">{(overview?.totalRevenueToday ?? 0).toLocaleString()} TZS</p>
+              <p className="text-3xl font-display mt-1 text-emerald-400">{(overview?.totalRevenueToday ?? 0).toLocaleString()} 0 TZS</p>
             </div>
           </div>
           
