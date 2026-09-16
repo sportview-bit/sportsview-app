@@ -143,11 +143,9 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
   return (
     <div className="min-h-screen bg-[#0a0f1d] text-white">
       <header className="sticky top-0 z-30 bg-[#0a0f1d]/90 backdrop-blur-md border-b border-emerald-500/20 px-6 py-4 flex items-center justify-between">
-        <div>
+        <div className="max-w-7xl mx-auto px-4 w-full flex items-center justify-between">
           <Brand size="sm" />
           <h1 className="text-xl font-bold mt-2 font-display tracking-tight text-white">Admin Dashboard</h1>
-        </div>
-        <div className="flex items-center gap-3">
           <button onClick={onExit} className="text-xs font-bold uppercase tracking-widest text-white hover:text-emerald-400 transition">Sign Out</button>
         </div>
       </header>
