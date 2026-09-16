@@ -146,31 +146,31 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
         <div className="max-w-7xl mx-auto px-4 w-full flex items-center justify-between">
           <Brand size="sm" />
           <h1 className="text-xl font-bold mt-2 font-display tracking-tight text-white">Admin Dashboard</h1>
-          <button onClick={onExit} className="text-xs font-bold uppercase tracking-widest text-white hover:text-emerald-400 transition">Sign Out</button>
+          <button onClick={onExit} className="text-xs font-bold uppercase tracking-widest text-white hover:text-emerald-400 transition transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">Sign Out</button>
         </div>
       </header>
 
       <div className="max-w-7xl mx-auto px-4 w-full py-8 grid grid-cols-12 gap-8">
         <div className="col-span-12 xl:col-span-7">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-            <div className="bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4">
+            <div className="bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
               <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">Rooms</p>
               <p className="text-3xl font-display mt-1 text-white">{overview?.totalRooms ?? '—'}</p>
             </div>
-            <div className="bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4">
+            <div className="bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
               <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">Managers</p>
               <p className="text-3xl font-display mt-1 text-emerald-400">{overview?.totalManagers ?? '—'}</p>
             </div>
-            <div className="bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4">
+            <div className="bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
               <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">Revenue</p>
-              <p className="text-3xl font-display mt-1 text-emerald-400">{(overview?.totalRevenueToday ?? 0).toLocaleString()} 0 TZS</p>
+              <p className="text-3xl font-sans font-bold mt-1 text-emerald-400">{(overview?.totalRevenueToday ?? 0).toLocaleString()} TZS</p>
             </div>
           </div>
           
           <div className="sticky top-0 z-20 flex gap-1 mb-6 border-b border-emerald-500/20 bg-[#0a0f1d]/90 backdrop-blur">
             {(['overview', 'matches', 'rooms', 'sponsors'] as const).map(t2 => (
               <button key={t2} onClick={() => setTab(t2)}
-                className={`px-6 py-3 text-xs font-bold uppercase tracking-widest border-b-2 transition ${
+                className={`px-6 py-3 text-xs font-bold uppercase tracking-widest border-b-2 transition transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer ${
                   tab === t2 ? 'border-emerald-500 text-white' : 'border-transparent text-white/60 hover:text-white'
                 }`}>
                 {t2}
@@ -184,7 +184,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                 <h3 className="font-display font-bold mb-4 tracking-tight">Top rooms today</h3>
                 <div className="space-y-2">
                   {[...rooms].sort((a, b) => b.todayRevenue - a.todayRevenue).slice(0, 8).map(r => (
-                    <div key={r.id} className="flex justify-between items-center bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3">
+                    <div key={r.id} className="flex justify-between items-center bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                       <div>
                         <p className="font-semibold text-sm">{r.roomName}</p>
                         <p className="text-xs text-white/60">{r.location} • {r.managerName}</p>
@@ -199,7 +199,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                 <h3 className="font-display font-bold mb-4 tracking-tight">Upcoming matches</h3>
                 <div className="space-y-2">
                   {matches.slice(0, 8).map(m => (
-                    <div key={m.id} className="flex justify-between items-center bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3">
+                    <div key={m.id} className="flex justify-between items-center bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                       <p className="font-semibold text-sm">{m.homeTeam} vs {m.awayTeam}</p>
                       <p className="text-xs text-white/60">{m.matchTime}</p>
                     </div>
@@ -223,7 +223,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                   </div>
                   <input type="text" placeholder="Time (e.g. Sat, 16:00)" required value={matchTime} onChange={e => setMatchTime(e.target.value)}
                     className="w-full bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
-                  <button type="submit" className="w-full btn-emerald font-sans font-bold text-xs uppercase tracking-widest text-white py-3 rounded-md transition">
+                  <button type="submit" className="w-full btn-emerald font-sans font-bold text-xs uppercase tracking-widest text-white py-3 rounded-md transition transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                     Post Match to Users
                   </button>
                 </form>
@@ -233,12 +233,12 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                 <div className="space-y-2 max-h-[360px] overflow-y-auto pr-1">
                   {matches.length === 0 && <p className="text-white/60 text-sm">No matches added yet.</p>}
                   {matches.map(m => (
-                    <div key={m.id} className="flex justify-between items-center bg-[#0a0f1d] p-3 rounded-sm border border-white/10">
+                    <div key={m.id} className="flex justify-between items-center bg-[#0a0f1d] p-3 rounded-sm border border-white/10 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                       <div>
                         <span className="font-bold">{m.homeTeam} vs {m.awayTeam}</span>
                         <div className="text-xs text-white/60">{m.matchTime} • Fee: {m.entryFee} TZS</div>
                       </div>
-                      <button onClick={() => deleteMatch(m.id)} className="px-3 py-1 text-white border border-rose-800 rounded-sm transition hover:bg-rose-900 text-sm font-bold">
+                      <button onClick={() => deleteMatch(m.id)} className="px-3 py-1 text-white border border-rose-800 rounded-sm transition hover:bg-rose-900 text-sm font-bold transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                         Delete
                       </button>
                     </div>
@@ -257,15 +257,15 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                   </h2>
                   <div className="space-y-4">
                     {pending.map(m => (
-                      <div key={m.id} className="bg-[#0a0f1d] border border-white/10 rounded-sm p-4">
+                      <div key={m.id} className="bg-[#0a0f1d] border border-white/10 rounded-sm p-4 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                         <p className="font-semibold">{m.name} <span className="text-white/60 font-normal">@{m.username}</span></p>
                         <p className="text-xs text-white/60">{m.phone} • {m.email}</p>
                         {m.room && <p className="text-xs text-white/60 mt-1">{m.room.name} • {m.room.location}</p>}
                         <div className="flex gap-2 mt-3">
-                          <button onClick={() => approve(m.id)} className="bg-emerald-900 text-white font-bold text-xs uppercase tracking-widest px-4 py-2 rounded-sm transition">
+                          <button onClick={() => approve(m.id)} className="bg-emerald-900 text-white font-bold text-xs uppercase tracking-widest px-4 py-2 rounded-sm transition transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                             {t('approve')}
                           </button>
-                          <button onClick={() => reject(m.id)} className="border border-rose-800 text-white font-bold text-xs uppercase tracking-widest px-4 py-2 rounded-sm hover:bg-rose-900 transition">
+                          <button onClick={() => reject(m.id)} className="border border-rose-800 text-white font-bold text-xs uppercase tracking-widest px-4 py-2 rounded-sm hover:bg-rose-900 transition transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                             {t('reject')}
                           </button>
                         </div>
@@ -299,20 +299,20 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                         className="w-full pr-16 bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                     </div>
                     {roomFormError && <p className="text-sm text-rose-800">{roomFormError}</p>}
-                    <button type="submit" className="w-full btn-emerald font-sans font-bold text-xs uppercase tracking-widest text-white py-3 rounded-md transition">
+                    <button type="submit" className="w-full btn-emerald font-sans font-bold text-xs uppercase tracking-widest text-white py-3 rounded-md transition transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                       Register Room & Manager
                     </button>
                   </form>
                 </div>
                 
                 <div className="h-[580px] flex flex-col bg-[#0e1726] rounded-xl border border-white/10 overflow-hidden">
-                  <h2 className="sticky top-0 z-10 bg-[#0e1726] p-4 border-b border-white/10 font-display font-bold text-sm tracking-wider uppercase text-emerald-400">
+                  <h2 className="sticky top-0 z-10 bg-[#0e1726]/80 backdrop-blur-md p-4 border-b border-white/10 font-display font-bold text-sm tracking-wider uppercase text-emerald-400">
                     All Rooms & Managers
                   </h2>
                   <div className="flex-1 overflow-y-auto p-4 space-y-3">
                     {rooms.length === 0 && <p className="text-white/60 text-sm">No rooms registered yet.</p>}
                     {rooms.map(r => (
-                      <div key={r.id} className="bg-[#0a0f1d] p-3 rounded-sm border border-white/10">
+                      <div key={r.id} className="bg-[#0a0f1d] p-3 rounded-sm border border-white/10 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                         <div className="flex justify-between items-center">
                           <div>
                             <span className="font-bold text-emerald-500">{r.roomName}</span>
@@ -321,11 +321,11 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                           </div>
                           <div className="flex gap-1">
                             {r.managerId && (
-                              <button onClick={() => openReset('manager', r.managerId!)} className="px-2 py-1 text-white/60 hover:text-emerald-500 border border-transparent hover:border-emerald-500 rounded-sm text-xs transition">
+                              <button onClick={() => openReset('manager', r.managerId!)} className="px-2 py-1 text-white/60 hover:text-emerald-500 border border-transparent hover:border-emerald-500 rounded-sm text-xs transition transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                                 Reset
                               </button>
                             )}
-                            <button onClick={() => deleteRoom(r.id)} className="px-2 py-1 text-white border border-rose-800 rounded-sm text-xs transition hover:bg-rose-900">
+                            <button onClick={() => deleteRoom(r.id)} className="px-2 py-1 text-white border border-rose-800 rounded-sm text-xs transition hover:bg-rose-900 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                               Delete
                             </button>
                           </div>
@@ -334,8 +334,8 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                           <div className="mt-3 pt-3 border-t border-emerald-500/20 flex gap-2">
                             <PasswordInput placeholder="New password" value={resetValue} onChange={e => setResetValue(e.target.value)}
                               className="flex-1 pr-16 bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
-                            <button onClick={submitReset} disabled={resetBusy} className="bg-emerald-900 text-white font-bold text-sm px-4 rounded-sm disabled:opacity-50">Save</button>
-                            <button onClick={() => setResetTarget(null)} className="text-white/60 text-sm px-2">Cancel</button>
+                            <button onClick={submitReset} disabled={resetBusy} className="bg-emerald-900 text-white font-bold text-sm px-4 rounded-sm disabled:opacity-50 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">Save</button>
+                            <button onClick={() => setResetTarget(null)} className="text-white/60 text-sm px-2 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">Cancel</button>
                           </div>
                         )}
                         {resetTarget?.type === 'manager' && resetTarget.id === r.managerId && resetError && (
@@ -367,7 +367,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                   <PasswordInput placeholder="Temporary password" required value={sponsorPassword} onChange={e => setSponsorPassword(e.target.value)}
                     className="w-full pr-16 bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                   {sponsorFormError && <p className="text-sm text-rose-800">{sponsorFormError}</p>}
-                  <button type="submit" className="w-full btn-emerald font-sans font-bold text-xs uppercase tracking-widest text-white py-3 rounded-md transition">
+                  <button type="submit" className="w-full btn-emerald font-sans font-bold text-xs uppercase tracking-widest text-white py-3 rounded-md transition transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                     Create Sponsor Account
                   </button>
                 </form>
@@ -377,7 +377,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                 <div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
                   {sponsors.length === 0 && <p className="text-white/60 text-sm">No sponsors registered yet.</p>}
                   {sponsors.map(s => (
-                    <div key={s.id} className="bg-[#0a0f1d] p-3 rounded-sm border border-emerald-800">
+                    <div key={s.id} className="bg-[#0a0f1d] p-3 rounded-sm border border-emerald-800 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                       <div className="flex justify-between items-center">
                         <div>
                           <span className="font-bold text-emerald-500">{s.name}</span>
@@ -385,10 +385,10 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                           <div className="text-xs font-mono text-white/60 mt-1">{s.amountSponsored.toLocaleString()} TZS sponsored</div>
                         </div>
                         <div className="flex gap-1">
-                          <button onClick={() => openReset('sponsor', s.id)} className="px-2 py-1 text-white/60 hover:text-emerald-500 border border-transparent hover:border-emerald-500 rounded-sm text-xs transition">
+                          <button onClick={() => openReset('sponsor', s.id)} className="px-2 py-1 text-white/60 hover:text-emerald-500 border border-transparent hover:border-emerald-500 rounded-sm text-xs transition transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                             Reset
                           </button>
-                          <button onClick={() => deleteSponsor(s.id)} className="px-2 py-1 text-white border border-rose-800 rounded-sm text-xs transition hover:bg-rose-900">
+                          <button onClick={() => deleteSponsor(s.id)} className="px-2 py-1 text-white border border-rose-800 rounded-sm text-xs transition hover:bg-rose-900 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                             Delete
                           </button>
                         </div>
@@ -397,8 +397,8 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                         <div className="mt-3 pt-3 border-t border-emerald-500/20 flex gap-2">
                           <PasswordInput placeholder="New password" value={resetValue} onChange={e => setResetValue(e.target.value)}
                             className="flex-1 pr-16 bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
-                          <button onClick={submitReset} disabled={resetBusy} className="bg-emerald-900 text-white font-bold text-sm px-4 rounded-sm disabled:opacity-50">Save</button>
-                          <button onClick={() => setResetTarget(null)} className="text-white/60 text-sm px-2">Cancel</button>
+                          <button onClick={submitReset} disabled={resetBusy} className="bg-emerald-900 text-white font-bold text-sm px-4 rounded-sm disabled:opacity-50 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">Save</button>
+                          <button onClick={() => setResetTarget(null)} className="text-white/60 text-sm px-2 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">Cancel</button>
                         </div>
                       )}
                       {resetTarget?.type === 'sponsor' && resetTarget.id === s.id && resetError && (
