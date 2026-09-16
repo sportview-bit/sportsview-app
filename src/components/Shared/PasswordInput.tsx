@@ -5,7 +5,7 @@ export const PasswordInput: React.FC<React.InputHTMLAttributes<HTMLInputElement>
   const [visible, setVisible] = useState(false);
   return (
     <div className="relative">
-      <input {...rest} type={visible ? 'text' : 'password'} className={`${className} pr-16`} />
+      <input {...rest} type={visible ? 'text' : 'password'} className={`${className} pr-20`} />
       <button
         type="button"
         onClick={() => setVisible(v => !v)}
