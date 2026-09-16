@@ -53,7 +53,6 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
   const [sponsorShare, setSponsorShare] = useState('');
   const [sponsorFormError, setSponsorFormError] = useState('');
 
-  // password-reset UI state — which row (by manager/sponsor id) has its reset field open
   const [resetTarget, setResetTarget] = useState<{ type: 'manager' | 'sponsor'; id: string } | null>(null);
   const [resetValue, setResetValue] = useState('');
   const [resetError, setResetError] = useState('');
@@ -153,7 +152,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
         </div>
       </header>
 
-      <div className="px-6 py-8 max-w-[1600px] mx-auto grid grid-cols-12 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-12 gap-8">
         <div className="col-span-12 xl:col-span-7">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
             <div className="bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4">
@@ -166,7 +165,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
             </div>
             <div className="bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4">
               <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">Revenue</p>
-              <p className="text-3xl font-display mt-1 text-emerald-400">{(overview?.totalRevenueToday ?? 0).toLocaleString()} TZS</p>
+              <p className="text-3xl font-display mt-1 text-emerald-400">{(overview?.totalRevenueToday ?? 0).toLocaleString()} 0 TZS</p>
             </div>
           </div>
           
@@ -220,12 +219,12 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                 <form onSubmit={handlePostMatch} className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <input type="text" placeholder="Home Team" required value={homeTeam} onChange={e => setHomeTeam(e.target.value)}
-                      className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                      className="w-full bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                     <input type="text" placeholder="Away Team" required value={awayTeam} onChange={e => setAwayTeam(e.target.value)}
-                      className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                      className="w-full bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                   </div>
                   <input type="text" placeholder="Time (e.g. Sat, 16:00)" required value={matchTime} onChange={e => setMatchTime(e.target.value)}
-                    className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                    className="w-full bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                   <button type="submit" className="w-full btn-emerald font-sans font-bold text-xs uppercase tracking-widest text-white py-3 rounded-md transition">
                     Post Match to Users
                   </button>
@@ -283,23 +282,23 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                   <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-emerald-400 font-display">Add Room & Manager</h2>
                   <form onSubmit={handleCreateRoom} className="space-y-3">
                     <input type="text" placeholder="Room Name (e.g. VIP Area)" required value={roomName} onChange={e => setRoomName(e.target.value)}
-                      className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                      className="w-full bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                     <input type="text" placeholder="Location" required value={location} onChange={e => setLocation(e.target.value)}
-                      className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                      className="w-full bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                     <div className="grid grid-cols-2 gap-3">
                       <input type="text" placeholder="Manager Name" required value={managerName} onChange={e => setManagerName(e.target.value)}
-                        className="bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                        className="bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                       <input type="text" placeholder="Manager Phone" required value={managerPhone} onChange={e => setManagerPhone(e.target.value)}
-                        className="bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                        className="bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                     </div>
                     <input type="email" placeholder="Manager Email" required value={managerEmail} onChange={e => setManagerEmail(e.target.value)}
-                      className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                      className="w-full bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                     <p className="text-xs text-white/60 pt-1">Login the manager will use to sign in:</p>
                     <div className="grid grid-cols-2 gap-3">
                       <input type="text" placeholder="Username" required value={managerUsername} onChange={e => setManagerUsername(e.target.value)}
-                        className="bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                        className="bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                       <PasswordInput placeholder="Temporary password" required value={managerPassword} onChange={e => setManagerPassword(e.target.value)}
-                        className="bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                        className="w-full pr-12 bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                     </div>
                     {roomFormError && <p className="text-sm text-rose-800">{roomFormError}</p>}
                     <button type="submit" className="w-full btn-emerald font-sans font-bold text-xs uppercase tracking-widest text-white py-3 rounded-md transition">
@@ -307,9 +306,9 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                     </button>
                   </form>
                 </div>
-                <div className="bg-[#0e1726] border border-white/10 p-6 rounded-sm">
-                  <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-white font-display">All Rooms & Managers</h2>
-                  <div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
+                <div className="bg-[#0e1726] border border-emerald-800 p-0 rounded-sm">
+                  <h2 className="sticky top-0 z-10 bg-[#0e1726] pb-3 border-b border-white/10 text-sm font-bold uppercase tracking-widest mb-6 p-6 text-white font-display">All Rooms & Managers</h2>
+                  <div className="max-h-[calc(100vh-14rem)] overflow-y-auto pr-2 px-6 pb-6 space-y-2">
                     {rooms.length === 0 && <p className="text-white/60 text-sm">No rooms registered yet.</p>}
                     {rooms.map(r => (
                       <div key={r.id} className="bg-[#0a0f1d] p-3 rounded-sm border border-white/10">
@@ -333,7 +332,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                         {resetTarget?.type === 'manager' && resetTarget.id === r.managerId && (
                           <div className="mt-3 pt-3 border-t border-emerald-500/20 flex gap-2">
                             <PasswordInput placeholder="New password" value={resetValue} onChange={e => setResetValue(e.target.value)}
-                              className="flex-1 bg-[#0a0f1d] border border-white/10 rounded-sm px-3 py-2 text-sm text-white outline-none focus:border-emerald-500" />
+                              className="flex-1 pr-12 bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                             <button onClick={submitReset} disabled={resetBusy} className="bg-emerald-900 text-white font-bold text-sm px-4 rounded-sm disabled:opacity-50">Save</button>
                             <button onClick={() => setResetTarget(null)} className="text-white/60 text-sm px-2">Cancel</button>
                           </div>
@@ -355,17 +354,17 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                 <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-emerald-400 font-display">Add Sponsor</h2>
                 <form onSubmit={handleCreateSponsor} className="space-y-3">
                   <input type="text" placeholder="Sponsor / company name" required value={sponsorName} onChange={e => setSponsorName(e.target.value)}
-                    className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                    className="w-full bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                   <div className="grid grid-cols-2 gap-3">
                     <input type="number" placeholder="Amount sponsored (TZS)" required value={sponsorAmount} onChange={e => setSponsorAmount(e.target.value)}
-                      className="bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                      className="bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                     <input type="number" placeholder="Profit share %" required value={sponsorShare} onChange={e => setSponsorShare(e.target.value)}
-                      className="bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                      className="bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                   </div>
                   <input type="text" placeholder="Username" required value={sponsorUsername} onChange={e => setSponsorUsername(e.target.value)}
-                    className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                    className="w-full bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                   <PasswordInput placeholder="Temporary password" required value={sponsorPassword} onChange={e => setSponsorPassword(e.target.value)}
-                    className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:border-emerald-500 transition" />
+                    className="w-full pr-12 bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                   {sponsorFormError && <p className="text-sm text-rose-800">{sponsorFormError}</p>}
                   <button type="submit" className="w-full btn-emerald font-sans font-bold text-xs uppercase tracking-widest text-white py-3 rounded-md transition">
                     Create Sponsor Account
@@ -396,7 +395,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                       {resetTarget?.type === 'sponsor' && resetTarget.id === s.id && (
                         <div className="mt-3 pt-3 border-t border-emerald-500/20 flex gap-2">
                           <PasswordInput placeholder="New password" value={resetValue} onChange={e => setResetValue(e.target.value)}
-                            className="flex-1 bg-[#0a0f1d] border border-white/10 rounded-sm px-3 py-2 text-sm text-white outline-none focus:border-emerald-500" />
+                            className="flex-1 pr-12 bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                           <button onClick={submitReset} disabled={resetBusy} className="bg-emerald-900 text-white font-bold text-sm px-4 rounded-sm disabled:opacity-50">Save</button>
                           <button onClick={() => setResetTarget(null)} className="text-white/60 text-sm px-2">Cancel</button>
                         </div>
