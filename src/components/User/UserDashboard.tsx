@@ -105,13 +105,13 @@ export const UserDashboard: React.FC<UserProps> = ({ user, setUser, onBack, onLo
             <div className="flex gap-2 mb-6 border-b border-[var(--border)]">
               <button
                 onClick={() => { setMode('register'); setError(''); }}
-                className={`px-4 py-2 text-sm font-semibold border-b-2 -mb-px transition ${mode === 'register' ? 'border-[#F2B705] text-[#F2B705]' : 'border-transparent text-[var(--text-muted)]'}`}
+                className={`px-4 py-2 text-sm font-semibold border-b-2 -mb-px transition ${mode === 'register' ? 'border-[#065f46] text-[#065f46]' : 'border-transparent text-[var(--text-muted)]'}`}
               >
                 Join
               </button>
               <button
                 onClick={() => { setMode('login'); setError(''); }}
-                className={`px-4 py-2 text-sm font-semibold border-b-2 -mb-px transition ${mode === 'login' ? 'border-[#F2B705] text-[#F2B705]' : 'border-transparent text-[var(--text-muted)]'}`}
+                className={`px-4 py-2 text-sm font-semibold border-b-2 -mb-px transition ${mode === 'login' ? 'border-[#065f46] text-[#065f46]' : 'border-transparent text-[var(--text-muted)]'}`}
               >
                 Log In
               </button>
@@ -125,20 +125,20 @@ export const UserDashboard: React.FC<UserProps> = ({ user, setUser, onBack, onLo
                   <div>
                     <label className="text-sm text-[var(--text-muted)]">Full Name</label>
                     <input type="text" required value={regName} onChange={e => setRegName(e.target.value)}
-                      className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3 mt-1 text-[var(--text)] focus:border-[#F2B705] outline-none transition" placeholder="e.g. Juma Rashid" />
+                      className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3 mt-1 text-[var(--text)] focus:border-[#065f46] outline-none transition" placeholder="e.g. Juma Rashid" />
                   </div>
                   <div>
                     <label className="text-sm text-[var(--text-muted)]">Phone Number (10 digits)</label>
                     <input type="tel" required value={regPhone} onChange={e => setRegPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                      className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3 mt-1 text-[var(--text)] focus:border-[#F2B705] outline-none transition" placeholder="0712345678" />
+                      className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3 mt-1 text-[var(--text)] focus:border-[#065f46] outline-none transition" placeholder="0712345678" />
                   </div>
                   <div>
                     <label className="text-sm text-[var(--text-muted)]">Email</label>
                     <input type="email" required value={regEmail} onChange={e => setRegEmail(e.target.value)}
-                      className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3 mt-1 text-[var(--text)] focus:border-[#F2B705] outline-none transition" placeholder="you@example.com" />
+                      className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3 mt-1 text-[var(--text)] focus:border-[#065f46] outline-none transition" placeholder="you@example.com" />
                   </div>
-                  {error && <p className="text-sm text-[#FF5468]">{error}</p>}
-                  <button disabled={busy} type="submit" className="w-full bg-[#F2B705] hover:brightness-110 text-[#0B0F14] font-bold py-3 rounded-lg transition mt-4 disabled:opacity-50">
+                  {error && <p className="text-sm text-[#991b1b]">{error}</p>}
+                  <button disabled={busy} type="submit" className="w-full bg-[#065f46] hover:brightness-110 text-[#0B0F14] font-bold py-3 rounded-lg transition mt-4 disabled:opacity-50">
                     {busy ? 'Creating…' : 'Create Staff Account'}
                   </button>
                 </form>
@@ -151,10 +151,10 @@ export const UserDashboard: React.FC<UserProps> = ({ user, setUser, onBack, onLo
                   <div>
                     <label className="text-sm text-[var(--text-muted)]">Phone Number (10 digits)</label>
                     <input type="tel" required value={loginPhone} onChange={e => setLoginPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                      className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3 mt-1 text-[var(--text)] focus:border-[#F2B705] outline-none transition" placeholder="0712345678" />
+                      className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3 mt-1 text-[var(--text)] focus:border-[#065f46] outline-none transition" placeholder="0712345678" />
                   </div>
-                  {error && <p className="text-sm text-[#FF5468]">{error}</p>}
-                  <button disabled={busy} type="submit" className="w-full bg-[#F2B705] hover:brightness-110 text-[#0B0F14] font-bold py-3 rounded-lg transition mt-4 disabled:opacity-50">
+                  {error && <p className="text-sm text-[#991b1b]">{error}</p>}
+                  <button disabled={busy} type="submit" className="w-full bg-[#065f46] hover:brightness-110 text-[#0B0F14] font-bold py-3 rounded-lg transition mt-4 disabled:opacity-50">
                     {busy ? 'Checking…' : 'Log In'}
                   </button>
                 </form>
@@ -177,7 +177,7 @@ export const UserDashboard: React.FC<UserProps> = ({ user, setUser, onBack, onLo
         </div>
         <div className="flex items-center gap-3 shrink-0">
           <SettingsMenu />
-          <button onClick={onLogout} className="text-sm text-[var(--text-muted)] hover:text-[#FF5468] transition">
+          <button onClick={onLogout} className="text-sm text-[var(--text-muted)] hover:text-[#991b1b] transition">
             Log out
           </button>
         </div>
@@ -187,14 +187,14 @@ export const UserDashboard: React.FC<UserProps> = ({ user, setUser, onBack, onLo
         <div className="space-y-6">
           <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl relative overflow-hidden">
             <p className="text-sm font-semibold text-[var(--text-muted)]">Available Balance</p>
-            <h3 className="text-4xl font-bold text-[#F2B705] mt-2 font-mono">{user.balance.toLocaleString()} TZS</h3>
+            <h3 className="text-4xl font-bold text-[#065f46] mt-2 font-mono">{user.balance.toLocaleString()} TZS</h3>
           </div>
           <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl">
             <h3 className="font-bold mb-4">Add Money</h3>
             <form onSubmit={handleTopUp} className="flex gap-2">
               <input type="number" required value={topupAmount} onChange={e => setTopupAmount(e.target.value)} placeholder="Amount (TZS)"
-                className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 outline-none focus:border-[#34D399] transition text-[var(--text)]" />
-              <button type="submit" disabled={busy} className="bg-[#34D399] hover:brightness-110 disabled:opacity-50 px-4 py-2 rounded-lg font-bold text-[#0B0F14] transition">
+                className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 outline-none focus:border-[#065f46] transition text-[var(--text)]" />
+              <button type="submit" disabled={busy} className="bg-[#065f46] hover:brightness-110 disabled:opacity-50 px-4 py-2 rounded-lg font-bold text-[#0B0F14] transition">
                 {busy ? '...' : 'Pay'}
               </button>
             </form>
@@ -213,7 +213,7 @@ export const UserDashboard: React.FC<UserProps> = ({ user, setUser, onBack, onLo
         </div>
 
         <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl">
-          <h3 className="font-bold mb-4 text-[#F2B705]">Schedule</h3>
+          <h3 className="font-bold mb-4 text-[#065f46]">Schedule</h3>
           {matches.length === 0 ? (
             <p className="text-sm text-[var(--text-muted)]">No matches posted yet.</p>
           ) : (
@@ -222,7 +222,7 @@ export const UserDashboard: React.FC<UserProps> = ({ user, setUser, onBack, onLo
                 <div key={m.id} className="bg-[var(--bg)] p-4 rounded-lg border border-[var(--border)]">
                   <div className="flex justify-between items-center mb-2">
                     <span className="font-bold text-sm">{m.homeTeam} vs {m.awayTeam}</span>
-                    <span className="text-[#34D399] font-bold text-sm font-mono">{m.entryFee} TZS</span>
+                    <span className="text-[#065f46] font-bold text-sm font-mono">{m.entryFee} TZS</span>
                   </div>
                   <div className="text-xs text-[var(--text-muted)]">{m.matchTime}</div>
                 </div>

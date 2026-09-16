@@ -67,14 +67,14 @@ export const ManagerDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) =
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b border-[var(--border)] pb-5 gap-4">
         <div>
           <Brand size="sm" />
-          <p className="text-xs uppercase tracking-[0.25em] text-[#34D399] mt-2 mb-1">Room Manager • {session?.name}</p>
+          <p className="text-xs uppercase tracking-[0.25em] text-[#065f46] mt-2 mb-1">Room Manager • {session?.name}</p>
           <h1 className="text-2xl sm:text-3xl font-bold" style={{ fontFamily: 'var(--font-display)' }}>{room.roomName}</h1>
           <p className="text-[var(--text-muted)] mt-1 text-sm">{room.location}</p>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={refresh} className="text-sm border border-[var(--border)] rounded-lg px-3 py-2 hover:border-[#34D399] transition">Refresh</button>
+          <button onClick={refresh} className="text-sm border border-[var(--border)] rounded-lg px-3 py-2 hover:border-[#065f46] transition">Refresh</button>
           <SettingsMenu />
-          <button onClick={() => { logout(); onExit(); }} className="text-sm text-[var(--text-muted)] hover:text-[#FF5468] transition">
+          <button onClick={() => { logout(); onExit(); }} className="text-sm text-[var(--text-muted)] hover:text-[#991b1b] transition">
             {t('signOut')}
           </button>
         </div>
@@ -96,27 +96,27 @@ export const ManagerDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) =
 
         <div className="bg-[var(--surface)] border border-[var(--border)] p-5 rounded-2xl">
           <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)]">{t('vat')}</p>
-          <p className="text-xl font-bold font-mono mt-1 text-[#60A5FA]">{vat.toLocaleString()} TZS</p>
+          <p className="text-xl font-bold font-mono mt-1 text-[#065f46]">{vat.toLocaleString()} TZS</p>
           <p className="text-[10px] text-[var(--text-muted)] mt-1">18%</p>
         </div>
 
         <div className="bg-[var(--surface)] border border-[var(--border)] p-5 rounded-2xl">
           <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)]">{t('platformShare')}</p>
-          <p className="text-xl font-bold font-mono mt-1 text-[#F2B705]">{platform.toLocaleString()} TZS</p>
+          <p className="text-xl font-bold font-mono mt-1 text-[#065f46]">{platform.toLocaleString()} TZS</p>
           <p className="text-[10px] text-[var(--text-muted)] mt-1">32%</p>
         </div>
 
         <div className="bg-[var(--surface)] border border-[var(--border)] p-5 rounded-2xl">
           <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)]">{t('ownerShare')}</p>
-          <p className="text-xl font-bold font-mono mt-1 text-[#34D399]">{owner.toLocaleString()} TZS</p>
+          <p className="text-xl font-bold font-mono mt-1 text-[#065f46]">{owner.toLocaleString()} TZS</p>
           <p className="text-[10px] text-[var(--text-muted)] mt-1">50%</p>
         </div>
       </div>
 
       {/* Owner's monthly total */}
-      <div className="bg-gradient-to-br from-[var(--surface)] to-[var(--surface-2)] border border-[#34D399]/40 p-6 rounded-2xl mb-6">
+      <div className="bg-gradient-to-br from-[var(--surface)] to-[var(--surface-2)] border border-[#065f46]/40 p-6 rounded-2xl mb-6">
         <p className="text-sm text-[var(--text-muted)]">{t('myTotalCashMonth')}</p>
-        <h3 className="text-3xl font-bold text-[#34D399] font-mono">{myTotalCashMonth.toLocaleString()} TZS</h3>
+        <h3 className="text-3xl font-bold text-[#065f46] font-mono">{myTotalCashMonth.toLocaleString()} TZS</h3>
       </div>
 
       <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 mb-6">
@@ -124,14 +124,14 @@ export const ManagerDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) =
         <p className="text-xs text-[var(--text-muted)] mb-4">{t('scannerHelp')}</p>
         <form onSubmit={handleScan} className="flex flex-col sm:flex-row gap-3">
           <input required placeholder={t('cardIdPlaceholder')} value={cardHash} onChange={e => setCardHash(e.target.value)}
-            className="flex-1 bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 outline-none focus:border-[#34D399] font-mono text-[var(--text)]" />
+            className="flex-1 bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 outline-none focus:border-[#065f46] font-mono text-[var(--text)]" />
           <select value={matchId} onChange={e => setMatchId(e.target.value)}
-            className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 outline-none focus:border-[#34D399] text-[var(--text)]">
+            className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2 outline-none focus:border-[#065f46] text-[var(--text)]">
             {matches.map(m => <option key={m.id} value={m.id}>{m.homeTeam} vs {m.awayTeam}</option>)}
           </select>
-          <button className="bg-[#34D399] text-[#0B0F14] font-bold px-6 py-2 rounded-lg hover:brightness-110 transition">{t('scanButton')}</button>
+          <button className="bg-[#065f46] text-[#0B0F14] font-bold px-6 py-2 rounded-lg hover:brightness-110 transition">{t('scanButton')}</button>
         </form>
-        {scanMsg && <p className={`text-sm mt-3 ${scanMsg.ok ? 'text-[#34D399]' : 'text-[#FF5468]'}`}>{scanMsg.text}</p>}
+        {scanMsg && <p className={`text-sm mt-3 ${scanMsg.ok ? 'text-[#065f46]' : 'text-[#991b1b]'}`}>{scanMsg.text}</p>}
       </div>
 
       <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6">
@@ -144,7 +144,7 @@ export const ManagerDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) =
                 <p className="font-semibold text-sm">{e.userName}</p>
                 <p className="text-xs text-[var(--text-muted)]">{e.match}</p>
               </div>
-              <p className="font-mono text-[#34D399] font-bold">{e.amount.toLocaleString()} TZS</p>
+              <p className="font-mono text-[#065f46] font-bold">{e.amount.toLocaleString()} TZS</p>
             </div>
           ))}
         </div>

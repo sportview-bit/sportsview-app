@@ -61,7 +61,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ title, subtitle, accen
                 style={{ caretColor: accentColor }}
               />
             </div>
-            {error && <p className="text-sm text-[#FF5468]">{error}</p>}
+            {error && <p className="text-sm text-[#991b1b]">{error}</p>}
             <button disabled={loading} type="submit" className="w-full font-bold py-3 rounded-lg transition hover:brightness-110 disabled:opacity-50" style={{ background: accentColor, color: '#0B0F14' }}>
               {loading ? t('signingIn') : t('signIn')}
             </button>

@@ -39,16 +39,16 @@ export const SponsorDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) =
       <div className="flex justify-between items-start mb-8 border-b border-[var(--border)] pb-5 gap-4">
         <div>
           <Brand size="sm" />
-          <p className="text-xs uppercase tracking-[0.25em] text-[#A78BFA] mt-2 mb-1">
+          <p className="text-xs uppercase tracking-[0.25em] text-[#065f46] mt-2 mb-1">
             Sponsor
           </p>
           <h1 className="text-2xl sm:text-3xl font-bold" style={{ fontFamily: 'var(--font-display)' }}>{data.name}</h1>
           <p className="text-[var(--text-muted)] mt-1 text-sm">Here's how the platform is performing.</p>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={refresh} className="text-sm border border-[var(--border)] rounded-lg px-3 py-2 hover:border-[#A78BFA] transition">Refresh</button>
+          <button onClick={refresh} className="text-sm border border-[var(--border)] rounded-lg px-3 py-2 hover:border-[#065f46] transition">Refresh</button>
           <SettingsMenu />
-          <button onClick={() => { logout(); onExit(); }} className="text-sm text-[var(--text-muted)] hover:text-[#FF5468] transition">
+          <button onClick={() => { logout(); onExit(); }} className="text-sm text-[var(--text-muted)] hover:text-[#991b1b] transition">
             {t('signOut')}
           </button>
         </div>
@@ -61,7 +61,7 @@ export const SponsorDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) =
         </div>
         <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl">
           <p className="text-sm text-[var(--text-muted)]">Your Profit Today ({data.profitSharePercent}%)</p>
-          <h3 className="text-2xl font-bold text-[#34D399] font-mono">{currentProfit.toLocaleString()} TZS</h3>
+          <h3 className="text-2xl font-bold text-[#065f46] font-mono">{currentProfit.toLocaleString()} TZS</h3>
         </div>
         <div className="bg-[var(--surface)] border border-[var(--border)] p-6 rounded-2xl">
           <p className="text-sm text-[var(--text-muted)]">Platform Revenue Today</p>
@@ -80,7 +80,7 @@ export const SponsorDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) =
                 <p className="font-semibold text-sm">{r.roomName}</p>
                 <p className="text-xs text-[var(--text-muted)]">{r.location} • {r.todayEntries} entries</p>
               </div>
-              <p className="font-mono text-[#34D399] font-bold">{r.todayRevenue.toLocaleString()} TZS</p>
+              <p className="font-mono text-[#065f46] font-bold">{r.todayRevenue.toLocaleString()} TZS</p>
             </div>
           ))}
         </div>

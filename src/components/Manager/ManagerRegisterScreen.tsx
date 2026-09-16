@@ -45,7 +45,7 @@ export const ManagerRegisterScreen: React.FC<ManagerRegisterScreenProps> = ({ on
         <div className="w-full max-w-sm text-center bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-8">
           <h2 className="text-xl font-bold mb-2" style={{ fontFamily: 'var(--font-display)' }}>{t('applicationSubmittedTitle')}</h2>
           <p className="text-sm text-[var(--text-muted)] mb-6">{t('applicationSubmittedDesc')}</p>
-          <button onClick={onBack} className="w-full bg-[#34D399] hover:brightness-110 text-[#0B0F14] font-bold py-3 rounded-lg transition">
+          <button onClick={onBack} className="w-full bg-[#065f46] hover:brightness-110 text-[#0B0F14] font-bold py-3 rounded-lg transition">
             {t('backToLogin')}
           </button>
         </div>
@@ -67,25 +67,25 @@ export const ManagerRegisterScreen: React.FC<ManagerRegisterScreenProps> = ({ on
           <p className="text-sm text-[var(--text-muted)] mb-6">{t('managerRegisterSubtitle')}</p>
           <form onSubmit={handleSubmit} className="space-y-3">
             <input required placeholder={t('fullName')} value={form.name} onChange={e => update('name', e.target.value)}
-              className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2.5 outline-none focus:border-[#34D399] transition text-[var(--text)]" />
+              className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2.5 outline-none focus:border-[#065f46] transition text-[var(--text)]" />
             <div className="grid grid-cols-2 gap-3">
               <input required type="tel" placeholder="Phone" value={form.phone} onChange={e => update('phone', e.target.value)}
-                className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2.5 outline-none focus:border-[#34D399] transition text-[var(--text)]" />
+                className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2.5 outline-none focus:border-[#065f46] transition text-[var(--text)]" />
               <input required type="email" placeholder={t('email')} value={form.email} onChange={e => update('email', e.target.value)}
-                className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2.5 outline-none focus:border-[#34D399] transition text-[var(--text)]" />
+                className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2.5 outline-none focus:border-[#065f46] transition text-[var(--text)]" />
             </div>
             <input required placeholder={t('roomName')} value={form.roomName} onChange={e => update('roomName', e.target.value)}
-              className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2.5 outline-none focus:border-[#34D399] transition text-[var(--text)]" />
+              className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2.5 outline-none focus:border-[#065f46] transition text-[var(--text)]" />
             <input required placeholder={t('location')} value={form.location} onChange={e => update('location', e.target.value)}
-              className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2.5 outline-none focus:border-[#34D399] transition text-[var(--text)]" />
+              className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2.5 outline-none focus:border-[#065f46] transition text-[var(--text)]" />
             <div className="grid grid-cols-2 gap-3">
               <input required placeholder={t('username')} value={form.username} onChange={e => update('username', e.target.value)}
-                className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2.5 outline-none focus:border-[#34D399] transition text-[var(--text)]" />
+                className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2.5 outline-none focus:border-[#065f46] transition text-[var(--text)]" />
               <PasswordInput required placeholder={t('password')} value={form.password} onChange={e => update('password', e.target.value)}
-                className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2.5 outline-none focus:border-[#34D399] transition text-[var(--text)]" />
+                className="bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-2.5 outline-none focus:border-[#065f46] transition text-[var(--text)]" />
             </div>
-            {error && <p className="text-sm text-[#FF5468]">{error}</p>}
-            <button disabled={submitting} type="submit" className="w-full bg-[#34D399] hover:brightness-110 disabled:opacity-50 text-[#0B0F14] font-bold py-3 rounded-lg transition mt-2">
+            {error && <p className="text-sm text-[#991b1b]">{error}</p>}
+            <button disabled={submitting} type="submit" className="w-full bg-[#065f46] hover:brightness-110 disabled:opacity-50 text-[#0B0F14] font-bold py-3 rounded-lg transition mt-2">
               {submitting ? '...' : t('submitApplication')}
             </button>
           </form>
