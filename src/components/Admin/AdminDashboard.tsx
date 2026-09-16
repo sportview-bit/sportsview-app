@@ -409,8 +409,8 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
