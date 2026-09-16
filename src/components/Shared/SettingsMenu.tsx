@@ -9,52 +9,46 @@ export const SettingsMenu: React.FC = () => {
   const { lang, setLang, t } = useLanguage();
 
   return (
-    <div className="relative z-[60]">
+    <>
       <button
-        onClick={() => setOpen(o => !o)}
+        onClick={() => setOpen(true)}
         aria-label={t('settings')}
-        className="px-3 py-2 rounded-lg border border-[var(--border)] hover:border-[#065f46] transition text-[var(--text)] bg-[var(--surface)] text-sm font-semibold"
+        className="px-4 py-2 border border-emerald-500/30 hover:border-emerald-500 transition text-white bg-[#0a0f1d] text-xs font-bold uppercase tracking-widest rounded-md"
       >
         {t('settings')}
       </button>
 
       {open && (
         <>
-          <div className="fixed inset-0 z-[65]" onClick={() => setOpen(false)} />
+          <div className="fixed inset-0 z-40 bg-black/50" onClick={() => setOpen(false)} />
 
           <div
-            className="absolute right-0 mt-2 w-72 rounded-2xl p-5 z-[70] border-2"
-            style={{
-              backgroundColor: 'var(--surface)',
-              borderColor: 'var(--border)',
-              boxShadow: '0 20px 50px rgba(0,0,0,0.5)',
-              color: 'var(--text)',
-            }}
+            className="fixed inset-y-0 right-0 w-full max-w-md z-50 bg-[#0a0f1d] border-l border-white/10 p-8 shadow-2xl transition-transform"
           >
-            <div className="flex justify-between items-center mb-5">
-              <h3 className="font-bold" style={{ fontFamily: 'var(--font-display)' }}>{t('settings')}</h3>
-              <button onClick={() => setOpen(false)} aria-label={t('close')} className="text-[var(--text-muted)] hover:text-[var(--text)] text-sm font-semibold transition">
+            <div className="flex justify-between items-center mb-8">
+              <h3 className="text-xl font-bold font-display tracking-tight text-white">{t('settings')}</h3>
+              <button onClick={() => setOpen(false)} aria-label={t('close')} className="text-white hover:text-emerald-500 text-sm font-bold uppercase tracking-widest">
                 {t('close')}
               </button>
             </div>
 
-            <div className="mb-5">
-              <p className="text-xs uppercase tracking-wider text-[var(--text-muted)] mb-2">
+            <div className="mb-8">
+              <p className="text-xs uppercase tracking-widest text-white mb-4">
                 {t('language')}
               </p>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-3">
                 <button
                   onClick={() => setLang('sw')}
-                  className={`py-2 rounded-lg text-sm font-semibold border-2 transition ${
-                    lang === 'sw' ? 'bg-[#065f46] text-[#0B0F14] border-[#065f46]' : 'border-[var(--border)] text-[var(--text)] hover:border-[#065f46]'
+                  className={`px-4 py-3 rounded-md text-xs font-bold uppercase tracking-widest border transition ${
+                    lang === 'sw' ? 'bg-emerald-900 text-white border-emerald-500' : 'border-white/10 text-white hover:border-emerald-500'
                   }`}
                 >
                   Kiswahili
                 </button>
                 <button
                   onClick={() => setLang('en')}
-                  className={`py-2 rounded-lg text-sm font-semibold border-2 transition ${
-                    lang === 'en' ? 'bg-[#065f46] text-[#0B0F14] border-[#065f46]' : 'border-[var(--border)] text-[var(--text)] hover:border-[#065f46]'
+                  className={`px-4 py-3 rounded-md text-xs font-bold uppercase tracking-widest border transition ${
+                    lang === 'en' ? 'bg-emerald-900 text-white border-emerald-500' : 'border-white/10 text-white hover:border-emerald-500'
                   }`}
                 >
                   English
@@ -63,20 +57,20 @@ export const SettingsMenu: React.FC = () => {
             </div>
 
             <div>
-              <p className="text-xs uppercase tracking-wider text-[var(--text-muted)] mb-2">{t('theme')}</p>
-              <div className="grid grid-cols-2 gap-2">
+              <p className="text-xs uppercase tracking-widest text-white mb-4">{t('theme')}</p>
+              <div className="grid grid-cols-2 gap-3">
                 <button
                   onClick={() => setTheme('dark')}
-                  className={`py-2 rounded-lg text-sm font-semibold border-2 flex items-center justify-center gap-2 transition ${
-                    theme === 'dark' ? 'bg-[#065f46] text-[#0B0F14] border-[#065f46]' : 'border-[var(--border)] text-[var(--text)] hover:border-[#065f46]'
+                  className={`px-4 py-3 rounded-md text-xs font-bold uppercase tracking-widest border transition ${
+                    theme === 'dark' ? 'bg-emerald-900 text-white border-emerald-500' : 'border-white/10 text-white hover:border-emerald-500'
                   }`}
                 >
                   {t('dark')}
                 </button>
                 <button
                   onClick={() => setTheme('light')}
-                  className={`py-2 rounded-lg text-sm font-semibold border-2 flex items-center justify-center gap-2 transition ${
-                    theme === 'light' ? 'bg-[#065f46] text-[#0B0F14] border-[#065f46]' : 'border-[var(--border)] text-[var(--text)] hover:border-[#065f46]'
+                  className={`px-4 py-3 rounded-md text-xs font-bold uppercase tracking-widest border transition ${
+                    theme === 'light' ? 'bg-emerald-900 text-white border-emerald-500' : 'border-white/10 text-white hover:border-emerald-500'
                   }`}
                 >
                   {t('light')}
@@ -86,6 +80,6 @@ export const SettingsMenu: React.FC = () => {
           </div>
         </>
       )}
-    </div>
+    </>
   );
 };

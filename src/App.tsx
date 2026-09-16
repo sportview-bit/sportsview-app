@@ -167,7 +167,7 @@ const Shell: React.FC = () => {
             <p className="uppercase tracking-[0.25em] text-xs text-white mb-2">
               {t('staffPortal')}
             </p>
-            <h2 className="text-2xl font-bold mb-8" style={{ fontFamily: 'var(--font-display)' }}>{t('staffPortalDesc')}</h2>
+            <h2 className="text-2xl font-bold mb-8 font-display tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>{t('staffPortalDesc')}</h2>
             <div className="grid sm:grid-cols-3 gap-4">
               <button onClick={() => setView('manager')} className="bg-emerald-900 border border-emerald-800 rounded-2xl p-6 hover:bg-emerald-800 transition text-left">
                 <div className="font-bold text-white">{t('manager')}</div>
@@ -201,14 +201,14 @@ const Shell: React.FC = () => {
 
       <div className="flex-1 flex items-center justify-center">
         <div className="max-w-md w-full text-center bg-[var(--surface)]/90 backdrop-blur border border-emerald-800 rounded-3xl p-8 shadow-2xl">
-          <h1 className="text-2xl font-bold mb-2 pt-4" style={{ fontFamily: 'var(--font-display)' }}>
+          <h1 className="text-2xl font-bold mb-2 pt-4 font-display tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
             {t('welcome')} <span className="text-white">SPORTSVIEWTZ</span>
           </h1>
           <p className="text-white mb-8 text-sm">{t('chooseAccess')}</p>
 
           <button
             onClick={() => setView('staff')}
-            className="w-full bg-emerald-900 hover:bg-emerald-800 text-white font-bold py-4 rounded-2xl transition text-lg shadow-lg"
+            className="w-full bg-emerald-900 hover:bg-emerald-800 text-white font-bold py-4 rounded-md transition text-lg shadow-lg uppercase tracking-widest"
           >
             {t('staffButtonLabel')}
           </button>
@@ -216,7 +216,7 @@ const Shell: React.FC = () => {
 
           <button
             onClick={() => setView('user')}
-            className="text-xs text-white hover:text-white transition mx-auto"
+            className="text-xs text-white hover:text-white transition mx-auto uppercase tracking-widest"
           >
             {t('fan')}
           </button>
