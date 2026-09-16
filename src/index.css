@@ -14,8 +14,22 @@
   --text-muted: #94a3b8; /* Slate-400 */
 }
 
-body {
-  font-family: var(--font-body);
-  background: var(--bg);
-  color: var(--text);
+
+/* Safety override for buttons and active states */
+button[class*="bg-yellow"], 
+button[class*="bg-amber"], 
+button[class*="bg-purple"], 
+button[class*="bg-indigo"], 
+button[class*="bg-violet"],
+.bg-yellow-500, .bg-amber-500, .bg-purple-600, .bg-indigo-600 {
+  background-color: #065f46 !important;
+  color: #ffffff !important;
+}
+
+/* Safety override for text and active tab borders */
+[class*="text-yellow"], [class*="text-amber"], [class*="text-purple"] {
+  color: #ffffff !important;
+}
+[class*="border-yellow"], [class*="border-amber"] {
+  border-color: #059669 !important;
 }
