@@ -151,7 +151,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
       </header>
 
       <div className="max-w-7xl mx-auto px-4 w-full py-8 grid grid-cols-12 gap-8">
-        <div className="col-span-12">
+        <div className="col-span-12 xl:col-span-7">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
             <div className="bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4">
               <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">Rooms</p>
@@ -163,10 +163,10 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
             </div>
             <div className="bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4">
               <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">Revenue</p>
-              <p className="text-3xl font-display mt-1 text-emerald-400">{(overview?.totalRevenueToday ?? 0).toLocaleString()} TZS</p>
+              <p className="text-3xl font-sans font-bold mt-1 text-emerald-400">{(overview?.totalRevenueToday ?? 0).toLocaleString()} TZS</p>
             </div>
           </div>
-
+          
           <div className="sticky top-0 z-20 flex gap-1 mb-6 border-b border-emerald-500/20 bg-[#0a0f1d]/90 backdrop-blur">
             {(['overview', 'matches', 'rooms', 'sponsors'] as const).map(t2 => (
               <button key={t2} onClick={() => setTab(t2)}
@@ -304,45 +304,45 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                     </button>
                   </form>
                 </div>
-
+                
                 <div className="h-[580px] flex flex-col bg-[#0e1726] rounded-xl border border-white/10 overflow-hidden">
-                  <div className="flex-1 overflow-y-auto">
-                    <h2 className="sticky top-0 z-10 bg-[#0e1726] p-4 border-b border-white/10 font-display font-bold text-sm tracking-wider uppercase text-emerald-400">All Rooms & Managers</h2>
-                    <div className="p-4 space-y-3">
-                      {rooms.length === 0 && <p className="text-white/60 text-sm">No rooms registered yet.</p>}
-                      {rooms.map(r => (
-                        <div key={r.id} className="bg-[#0a0f1d] p-3 rounded-sm border border-white/10">
-                          <div className="flex justify-between items-center">
-                            <div>
-                              <span className="font-bold text-emerald-500">{r.roomName}</span>
-                              <div className="text-xs text-white/60">Manager: {r.managerName} • {r.location}</div>
-                              <div className="text-xs font-mono text-white/60 mt-1">{r.todayEntries} entries • {r.todayRevenue.toLocaleString()} TZS today</div>
-                            </div>
-                            <div className="flex gap-1">
-                              {r.managerId && (
-                                <button onClick={() => openReset('manager', r.managerId!)} className="px-2 py-1 text-white/60 hover:text-emerald-500 border border-transparent hover:border-emerald-500 rounded-sm text-xs transition">
-                                  Reset
-                                </button>
-                              )}
-                              <button onClick={() => deleteRoom(r.id)} className="px-2 py-1 text-white border border-rose-800 rounded-sm text-xs transition hover:bg-rose-900">
-                                Delete
-                              </button>
-                            </div>
+                  <h2 className="sticky top-0 z-10 bg-[#0e1726] p-4 border-b border-white/10 font-display font-bold text-sm tracking-wider uppercase text-emerald-400">
+                    All Rooms & Managers
+                  </h2>
+                  <div className="flex-1 overflow-y-auto p-4 space-y-3">
+                    {rooms.length === 0 && <p className="text-white/60 text-sm">No rooms registered yet.</p>}
+                    {rooms.map(r => (
+                      <div key={r.id} className="bg-[#0a0f1d] p-3 rounded-sm border border-white/10">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <span className="font-bold text-emerald-500">{r.roomName}</span>
+                            <div className="text-xs text-white/60">Manager: {r.managerName} • {r.location}</div>
+                            <div className="text-xs font-mono text-white/60 mt-1">{r.todayEntries} entries • {r.todayRevenue.toLocaleString()} TZS today</div>
                           </div>
-                          {resetTarget?.type === 'manager' && resetTarget.id === r.managerId && (
-                            <div className="mt-3 pt-3 border-t border-emerald-500/20 flex gap-2">
-                              <PasswordInput placeholder="New password" value={resetValue} onChange={e => setResetValue(e.target.value)}
-                                className="flex-1 pr-16 bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
-                              <button onClick={submitReset} disabled={resetBusy} className="bg-emerald-900 text-white font-bold text-sm px-4 rounded-sm disabled:opacity-50">Save</button>
-                              <button onClick={() => setResetTarget(null)} className="text-white/60 text-sm px-2">Cancel</button>
-                            </div>
-                          )}
-                          {resetTarget?.type === 'manager' && resetTarget.id === r.managerId && resetError && (
-                            <p className="text-xs text-rose-800 mt-1">{resetError}</p>
-                          )}
+                          <div className="flex gap-1">
+                            {r.managerId && (
+                              <button onClick={() => openReset('manager', r.managerId!)} className="px-2 py-1 text-white/60 hover:text-emerald-500 border border-transparent hover:border-emerald-500 rounded-sm text-xs transition">
+                                Reset
+                              </button>
+                            )}
+                            <button onClick={() => deleteRoom(r.id)} className="px-2 py-1 text-white border border-rose-800 rounded-sm text-xs transition hover:bg-rose-900">
+                              Delete
+                            </button>
+                          </div>
                         </div>
-                      ))}
-                    </div>
+                        {resetTarget?.type === 'manager' && resetTarget.id === r.managerId && (
+                          <div className="mt-3 pt-3 border-t border-emerald-500/20 flex gap-2">
+                            <PasswordInput placeholder="New password" value={resetValue} onChange={e => setResetValue(e.target.value)}
+                              className="flex-1 pr-16 bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
+                            <button onClick={submitReset} disabled={resetBusy} className="bg-emerald-900 text-white font-bold text-sm px-4 rounded-sm disabled:opacity-50">Save</button>
+                            <button onClick={() => setResetTarget(null)} className="text-white/60 text-sm px-2">Cancel</button>
+                          </div>
+                        )}
+                        {resetTarget?.type === 'manager' && resetTarget.id === r.managerId && resetError && (
+                          <p className="text-xs text-rose-800 mt-1">{resetError}</p>
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
