@@ -8,7 +8,7 @@
   --border-accent: rgba(16, 185, 129, 0.2);
   --text: #f1f5f9;
   --text-muted: #94a3b8;
-  
+
   --font-display: 'Syne', sans-serif;
   --font-sans: 'Plus Jakarta Sans', sans-serif;
 }
@@ -36,4 +36,77 @@ body {
 .btn-emerald:hover {
   border-color: rgba(52, 211, 153, 0.5);
   box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
+}
+
+/* ========================================================= */
+/* SCROLLBAR: Modern Thin Webkit Scrollbar                   */
+/* ========================================================= */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(10, 15, 29, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(16, 185, 129, 0.4);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.8);
+}
+
+/* ========================================================= */
+/* GLOBAL MICRO-INTERACTIONS (Human-Crafted Physics)         */
+/* ========================================================= */
+
+/* 1. Buttons: Spring Bounce & Tactile Press */
+button, .btn, [role="button"] {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.2s ease,
+              background-color 0.15s ease !important;
+  will-change: transform;
+}
+
+button:hover, .btn:hover, [role="button"]:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 8px 20px -4px rgba(16, 185, 129, 0.25);
+}
+
+button:active, .btn:active, [role="button"]:active {
+  transform: translateY(0) scale(0.97) !important;
+  box-shadow: 0 2px 5px -1px rgba(16, 185, 129, 0.2);
+}
+
+/* 2. Cards & Panels: Depth Lift on Hover */
+div[class*="border"]:not(input):not(button):hover,
+.card:hover,
+[class*="bg-"]:not(input):not(button):not(body):hover {
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 0.2s ease,
+              box-shadow 0.25s ease !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
+}
+
+/* 3. Links & Nav Items: Soft Zoom */
+a, nav button {
+  transition: transform 0.2s ease, color 0.15s ease !important;
+}
+
+a:hover, nav button:hover {
+  transform: scale(1.04) !important;
+}
+
+/* 4. Form Inputs: Focus Expansion */
+input, select, textarea {
+  transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  transform: scale(1.005) !important;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.15);
+  outline: none;
 }
