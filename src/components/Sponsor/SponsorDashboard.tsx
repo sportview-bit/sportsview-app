@@ -47,10 +47,10 @@ export const SponsorDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) =
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-[#0a0f1d] text-slate-400 flex items-center justify-center font-sans">
-        <div className="flex items-center gap-3 bg-[#0e1726] px-6 py-4 rounded-lg border border-white/10 animate-pulse">
-          <div className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-          <span className="text-sm font-semibold tracking-wider text-slate-300">Loading sponsor metrics…</span>
+      <div className="min-h-screen bg-slate-950 text-stone-300 flex items-center justify-center font-sans">
+        <div className="flex items-center gap-3 bg-stone-900/80 px-6 py-4 rounded-xl border border-stone-800 shadow-2xl backdrop-blur-sm animate-pulse">
+          <div className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-ping" />
+          <span className="text-sm font-medium tracking-wide text-stone-200">Retrieving partner metrics…</span>
         </div>
       </div>
     );
@@ -61,38 +61,42 @@ export const SponsorDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) =
   const currentProfit = Math.round(platformRevenueToday * (data.profitSharePercent / 100));
 
   return (
-    <div className="min-h-screen bg-[#0a0f1d] text-white">
+    <div className="min-h-screen bg-slate-950 text-stone-100 font-sans selection:bg-amber-500/30">
       <style>{`
         @keyframes motionFadeIn {
-          from { opacity: 0; transform: translateY(14px) scale(0.98); }
+          from { opacity: 0; transform: translateY(12px) scale(0.99); }
           to { opacity: 1; transform: translateY(0) scale(1); }
         }
         .animate-motion-view {
-          animation: motionFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation: motionFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
       `}</style>
 
-      {/* Sticky Top Header */}
-      <header className="sticky top-0 z-30 bg-[#0a0f1d]/90 backdrop-blur-md border-b border-emerald-500/20 px-6 py-4">
+      {/* Sticky Header */}
+      <header className="sticky top-0 z-30 bg-slate-950/85 backdrop-blur-xl border-b border-stone-800/80 px-6 py-4">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div>
+          <div className="flex items-center gap-4">
             <Brand size="sm" />
-            <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-400 mt-2 mb-0.5 font-display">
-              Sponsor Partner
-            </p>
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white font-display">
-              {data.name}
-            </h1>
-            <p className="text-xs text-slate-400 mt-0.5">
-              Here's how the platform is performing in real-time.
-            </p>
+            <div className="h-8 w-px bg-stone-800 hidden sm:block" />
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold tracking-wide uppercase bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                  Verified Sponsor
+                </span>
+                <span className="text-xs text-stone-400">• {data.profitSharePercent}% RevShare</span>
+              </div>
+              <h1 className="text-lg font-bold tracking-tight text-stone-100 mt-0.5">
+                {data.name}
+              </h1>
+            </div>
           </div>
+
           <div className="flex items-center gap-3">
             <button
               onClick={refresh}
-              className="text-xs font-bold uppercase tracking-wider px-4 py-2 border border-white/15 rounded-md hover:border-emerald-500/50 hover:text-emerald-400 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+              className="text-xs font-semibold px-3.5 py-1.5 rounded-lg bg-stone-900 border border-stone-800 hover:border-amber-500/40 hover:text-amber-400 text-stone-300 transition-all duration-200 active:scale-95 cursor-pointer shadow-sm"
             >
-              Refresh
+              Sync Live
             </button>
             <SettingsMenu />
             <button
@@ -100,7 +104,7 @@ export const SponsorDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) =
                 logout();
                 onExit();
               }}
-              className="text-xs font-bold uppercase tracking-widest text-rose-400 hover:text-rose-300 transition-all duration-200 hover:scale-105 cursor-pointer"
+              className="text-xs font-medium px-3 py-1.5 rounded-lg text-rose-400 hover:text-rose-300 hover:bg-rose-950/30 transition-all duration-200 cursor-pointer"
             >
               {t('signOut')}
             </button>
@@ -108,70 +112,157 @@ export const SponsorDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) =
         </div>
       </header>
 
-      {/* Main Content View */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-motion-view space-y-8">
-        {/* Metric Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-[#0e1726] border border-white/10 p-6 rounded-md transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:border-emerald-500/40 hover:shadow-xl hover:shadow-emerald-500/10 cursor-pointer">
-            <p className="text-xs font-bold uppercase tracking-widest text-slate-400">
-              Amount You've Sponsored
-            </p>
-            <h3 className="text-3xl font-display font-bold mt-2 text-white">
-              {data.amountSponsored.toLocaleString()} TZS
-            </h3>
+      {/* Main Container */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-motion-view space-y-8">
+
+        {/* Asymmetric Hero Highlights Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+          {/* Main Hero Card: Today's Profit */}
+          <div className="lg:col-span-7 relative overflow-hidden rounded-2xl bg-gradient-to-br from-stone-900 via-stone-900/90 to-slate-900 border border-amber-500/30 p-8 shadow-2xl shadow-amber-950/20">
+            <div className="absolute top-0 right-0 -mt-8 -mr-8 w-48 h-48 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
+
+            <div className="flex justify-between items-start mb-6">
+              <div>
+                <p className="text-xs font-semibold tracking-wider text-amber-400 uppercase">
+                  Your Net Earnings Today
+                </p>
+                <p className="text-xs text-stone-400 mt-0.5">
+                  Calculated dynamically from live venue entries ({data.profitSharePercent}% profit share).
+                </p>
+              </div>
+              <span className="px-3 py-1 text-xs font-semibold bg-amber-500/10 text-amber-300 rounded-full border border-amber-500/20">
+                Live Yield
+              </span>
+            </div>
+
+            <div className="flex items-baseline gap-2 my-2">
+              <span className="text-4xl sm:text-5xl font-black tracking-tight text-amber-400 font-mono">
+                {currentProfit.toLocaleString()}
+              </span>
+              <span className="text-lg font-bold text-amber-500/80">TZS</span>
+            </div>
+
+            <div className="mt-6 pt-6 border-t border-stone-800/80 flex items-center justify-between text-xs text-stone-400">
+              <span>Overall Capital Sponsored:</span>
+              <span className="font-semibold text-stone-200 font-mono text-sm">
+                {data.amountSponsored.toLocaleString()} TZS
+              </span>
+            </div>
           </div>
 
-          <div className="bg-[#0e1726] border border-white/10 p-6 rounded-md transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:border-emerald-500/40 hover:shadow-xl hover:shadow-emerald-500/10 cursor-pointer">
-            <p className="text-xs font-bold uppercase tracking-widest text-slate-400">
-              Your Profit Today ({data.profitSharePercent}%)
-            </p>
-            <h3 className="text-3xl font-display font-bold text-emerald-400 mt-2">
-              {currentProfit.toLocaleString()} TZS
-            </h3>
-          </div>
+          {/* Secondary Summary Stats */}
+          <div className="lg:col-span-5 flex flex-col gap-4">
 
-          <div className="bg-[#0e1726] border border-white/10 p-6 rounded-md transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:border-emerald-500/40 hover:shadow-xl hover:shadow-emerald-500/10 cursor-pointer">
-            <p className="text-xs font-bold uppercase tracking-widest text-slate-400">
-              Platform Revenue Today
-            </p>
-            <h3 className="text-3xl font-display font-bold mt-2 text-white">
-              {platformRevenueToday.toLocaleString()} TZS
-            </h3>
+            {/* Total Platform Revenue Card */}
+            <div className="flex-1 rounded-2xl bg-stone-900/70 border border-stone-800/80 p-6 backdrop-blur-md flex flex-col justify-between hover:border-stone-700 transition-all shadow-xl">
+              <div className="flex justify-between items-start">
+                <span className="text-xs font-medium uppercase tracking-wider text-stone-400">
+                  Gross Platform Revenue Today
+                </span>
+                <div className="w-2 h-2 rounded-full bg-indigo-400 shadow-sm shadow-indigo-400/50" />
+              </div>
+              <div className="my-3">
+                <span className="text-2xl sm:text-3xl font-bold text-stone-100 font-mono">
+                  {platformRevenueToday.toLocaleString()}
+                </span>
+                <span className="text-xs font-medium text-stone-400 ml-1.5">TZS</span>
+              </div>
+              <p className="text-[11px] text-stone-500">
+                Aggregated across all active match rooms and venues.
+              </p>
+            </div>
+
+            {/* Active Fans/Entries Metric */}
+            <div className="flex-1 rounded-2xl bg-stone-900/70 border border-stone-800/80 p-6 backdrop-blur-md flex flex-col justify-between hover:border-stone-700 transition-all shadow-xl">
+              <div className="flex justify-between items-start">
+                <span className="text-xs font-medium uppercase tracking-wider text-stone-400">
+                  Total Fan Attendance
+                </span>
+                <span className="text-xs text-indigo-400 font-semibold bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">
+                  {data.rooms.length} Active Venues
+                </span>
+              </div>
+              <div className="my-3">
+                <span className="text-2xl sm:text-3xl font-bold text-stone-100 font-mono">
+                  {platformEntriesToday.toLocaleString()}
+                </span>
+                <span className="text-xs font-medium text-stone-400 ml-1.5">Entries Today</span>
+              </div>
+              <p className="text-[11px] text-stone-500">
+                Real-time check-ins logged by room managers today.
+              </p>
+            </div>
+
           </div>
         </div>
 
-        {/* Room Performance Section */}
-        <div className="bg-[#0e1726] border border-white/10 rounded-md p-6 transition-all duration-300 hover:border-emerald-500/30">
-          <h2 className="text-sm font-bold uppercase tracking-widest text-emerald-400 font-display mb-1">
-            Room Performance Today
-          </h2>
-          <p className="text-xs text-slate-400 mb-5">
-            {platformEntriesToday} fans have entered across {data.rooms.length} rooms today.
-          </p>
-          <div className="space-y-3 max-h-[420px] overflow-y-auto pr-1 scroll-smooth">
+        {/* Room Performance Table Container */}
+        <div className="rounded-2xl bg-stone-900/50 border border-stone-800/90 p-6 shadow-2xl backdrop-blur-sm">
+          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 mb-6">
+            <div>
+              <h2 className="text-base font-bold text-stone-100">
+                Venue & Room Breakdown
+              </h2>
+              <p className="text-xs text-stone-400 mt-0.5">
+                Detailed real-time turnover listed by top performing locations.
+              </p>
+            </div>
+            <span className="self-start sm:self-auto text-xs font-mono text-stone-400 bg-stone-800/60 px-3 py-1 rounded-lg border border-stone-700/50">
+              Sorted by Gross Revenue
+            </span>
+          </div>
+
+          <div className="space-y-3 max-h-[460px] overflow-y-auto pr-1">
             {data.rooms.length === 0 && (
-              <p className="text-sm text-slate-400">No rooms are active yet.</p>
+              <div className="text-center py-12 text-stone-500 text-sm">
+                No active match rooms recorded for today.
+              </div>
             )}
             {[...data.rooms]
               .sort((a, b) => b.todayRevenue - a.todayRevenue)
-              .map((r) => (
-                <div
-                  key={r.id}
-                  className="flex justify-between items-center bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-0.5 hover:border-emerald-500/40 cursor-pointer"
-                >
-                  <div>
-                    <p className="font-semibold text-sm text-white">{r.roomName}</p>
-                    <p className="text-xs text-slate-400 mt-0.5">
-                      {r.location} • {r.todayEntries} entries
-                    </p>
+              .map((r) => {
+                const roomShare = platformRevenueToday > 0
+                  ? Math.round((r.todayRevenue / platformRevenueToday) * 100)
+                  : 0;
+
+                return (
+                  <div
+                    key={r.id}
+                    className="group flex flex-col sm:flex-row justify-between sm:items-center gap-4 bg-slate-900/80 hover:bg-slate-900 border border-stone-800/80 hover:border-amber-500/30 rounded-xl px-5 py-4 transition-all duration-200 shadow-md hover:shadow-lg hover:shadow-amber-950/10"
+                  >
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2.5">
+                        <span className="font-semibold text-sm text-stone-200 group-hover:text-amber-400 transition-colors">
+                          {r.roomName}
+                        </span>
+                        <span className="text-[10px] font-medium text-stone-400 bg-stone-800 px-2 py-0.5 rounded-full border border-stone-700/60">
+                          {r.location}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-3 text-xs text-stone-400">
+                        <span>{r.todayEntries} entries logged</span>
+                        <span>•</span>
+                        <span className="text-stone-500">{roomShare}% of daily total</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between sm:justify-end gap-4 border-t sm:border-t-0 border-stone-800/60 pt-2 sm:pt-0">
+                      <div className="text-right">
+                        <div className="font-mono text-amber-400 font-bold text-base">
+                          {r.todayRevenue.toLocaleString()} <span className="text-xs text-amber-500/80">TZS</span>
+                        </div>
+                        <div className="text-[10px] text-stone-500">
+                          Sponsor Share: Math.round(r.todayRevenue * (data.profitSharePercent / 100)).toLocaleString() TZS
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <p className="font-mono text-emerald-400 font-bold text-sm">
-                    {r.todayRevenue.toLocaleString()} TZS
-                  </p>
-                </div>
-              ))}
+                );
+              })}
           </div>
         </div>
+
       </main>
     </div>
   );
