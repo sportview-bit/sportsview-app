@@ -150,23 +150,26 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 w-full py-8 grid grid-cols-12 gap-8">
-        <div className="col-span-12 xl:col-span-7">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-            <div className="bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
+      {/* 1. GLOBAL CONTENT WRAPPER */}
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="w-full">
+
+          {/* 2. TOP STATS CARDS */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full mb-8">
+            <div className="w-full bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
               <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">Rooms</p>
               <p className="text-3xl font-display mt-1 text-white">{overview?.totalRooms ?? '—'}</p>
             </div>
-            <div className="bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
+            <div className="w-full bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
               <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">Managers</p>
               <p className="text-3xl font-display mt-1 text-emerald-400">{overview?.totalManagers ?? '—'}</p>
             </div>
-            <div className="bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
+            <div className="w-full bg-[#0e1726] border border-white/10 rounded-sm px-5 py-4 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
               <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">Revenue</p>
               <p className="text-3xl font-sans font-bold mt-1 text-emerald-400">{(overview?.totalRevenueToday ?? 0).toLocaleString()} TZS</p>
             </div>
           </div>
-          
+
           <div className="sticky top-0 z-20 flex gap-1 mb-6 border-b border-emerald-500/20 bg-[#0a0f1d]/90 backdrop-blur">
             {(['overview', 'matches', 'rooms', 'sponsors'] as const).map(t2 => (
               <button key={t2} onClick={() => setTab(t2)}
@@ -179,8 +182,9 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
           </div>
 
           {tab === 'overview' && (
-            <div className="grid lg:grid-cols-2 gap-6">
-              <div className="bg-[#0e1726] border border-white/10 rounded-sm p-6">
+            // 3. MAIN DASHBOARD CONTENT (Overview)
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-8 w-full">
+              <div className="w-full bg-[#0e1726] border border-white/10 rounded-sm p-6">
                 <h3 className="font-display font-bold mb-4 tracking-tight">Top rooms today</h3>
                 <div className="space-y-2">
                   {[...rooms].sort((a, b) => b.todayRevenue - a.todayRevenue).slice(0, 8).map(r => (
@@ -195,7 +199,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                   {rooms.length === 0 && <p className="text-sm text-white/60">No approved rooms yet.</p>}
                 </div>
               </div>
-              <div className="bg-[#0e1726] border border-white/10 rounded-sm p-6">
+              <div className="w-full bg-[#0e1726] border border-white/10 rounded-sm p-6">
                 <h3 className="font-display font-bold mb-4 tracking-tight">Upcoming matches</h3>
                 <div className="space-y-2">
                   {matches.slice(0, 8).map(m => (
@@ -211,8 +215,9 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
           )}
 
           {tab === 'matches' && (
-            <div className="grid lg:grid-cols-2 gap-6">
-              <div className="bg-[#0e1726] border border-white/10 p-6 rounded-sm">
+            // 3. MAIN DASHBOARD CONTENT (Matches)
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-8 w-full">
+              <div className="w-full bg-[#0e1726] border border-white/10 p-6 rounded-sm">
                 <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-emerald-400 font-display">Post Match</h2>
                 <form onSubmit={handlePostMatch} className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
@@ -228,7 +233,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                   </button>
                 </form>
               </div>
-              <div className="bg-[#0e1726] border border-white/10 p-6 rounded-sm">
+              <div className="w-full bg-[#0e1726] border border-white/10 p-6 rounded-sm">
                 <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-white font-display">Live Matches</h2>
                 <div className="space-y-2 max-h-[360px] overflow-y-auto pr-1">
                   {matches.length === 0 && <p className="text-white/60 text-sm">No matches added yet.</p>}
@@ -251,7 +256,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
           {tab === 'rooms' && (
             <div className="space-y-6">
               {pending.length > 0 && (
-                <div className="bg-[#0e1726] border border-emerald-500/20 p-6 rounded-sm">
+                <div className="w-full bg-[#0e1726] border border-emerald-500/20 p-6 rounded-sm">
                   <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-emerald-400 font-display">
                     {t('pendingApplications')} ({pending.length})
                   </h2>
@@ -275,8 +280,9 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                 </div>
               )}
 
-              <div className="grid lg:grid-cols-2 gap-6">
-                <div className="bg-[#0e1726] border border-white/10 p-6 rounded-sm">
+              {/* 3. MAIN DASHBOARD CONTENT (Rooms) */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-8 w-full">
+                <div className="w-full bg-[#0e1726] border border-white/10 p-6 rounded-sm">
                   <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-emerald-400 font-display">Add Room & Manager</h2>
                   <form onSubmit={handleCreateRoom} className="space-y-3">
                     <input type="text" placeholder="Room Name (e.g. VIP Area)" required value={roomName} onChange={e => setRoomName(e.target.value)}
@@ -304,8 +310,8 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                     </button>
                   </form>
                 </div>
-                
-                <div className="h-[580px] flex flex-col bg-[#0e1726] rounded-xl border border-white/10 overflow-hidden">
+
+                <div className="w-full h-[580px] flex flex-col bg-[#0e1726] rounded-xl border border-white/10 overflow-hidden">
                   <h2 className="sticky top-0 z-10 bg-[#0e1726]/80 backdrop-blur-md p-4 border-b border-white/10 font-display font-bold text-sm tracking-wider uppercase text-emerald-400">
                     All Rooms & Managers
                   </h2>
@@ -350,8 +356,9 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
           )}
 
           {tab === 'sponsors' && (
-            <div className="grid lg:grid-cols-2 gap-6">
-              <div className="bg-[#0e1726] border border-white/10 p-6 rounded-sm">
+            // 3. MAIN DASHBOARD CONTENT (Sponsors)
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-8 w-full">
+              <div className="w-full bg-[#0e1726] border border-white/10 p-6 rounded-sm">
                 <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-emerald-400 font-display">Add Sponsor</h2>
                 <form onSubmit={handleCreateSponsor} className="space-y-3">
                   <input type="text" placeholder="Sponsor / company name" required value={sponsorName} onChange={e => setSponsorName(e.target.value)}
@@ -372,7 +379,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                   </button>
                 </form>
               </div>
-              <div className="bg-[#0e1726] border border-emerald-800 p-6 rounded-sm">
+              <div className="w-full bg-[#0e1726] border border-emerald-800 p-6 rounded-sm">
                 <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-white font-display">All Sponsors</h2>
                 <div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
                   {sponsors.length === 0 && <p className="text-white/60 text-sm">No sponsors registered yet.</p>}
