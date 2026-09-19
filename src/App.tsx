@@ -206,20 +206,34 @@ const Shell: React.FC = () => {
           </h1>
           <p className="text-white mb-8 text-sm">{t('chooseAccess')}</p>
 
-          <button
-            onClick={() => setView('staff')}
-            className="w-full bg-emerald-900 hover:bg-emerald-800 text-white font-bold py-4 rounded-md transition text-lg shadow-lg uppercase tracking-widest"
-          >
-            {t('staffButtonLabel')}
-          </button>
-          <p className="text-sm text-white mt-4 mb-8">{t('staffButtonDesc')}</p>
+          {!isStaffDomain() ? (
+            <>
+              <button
+                onClick={() => setView('user')}
+                className="w-full bg-emerald-900 hover:bg-emerald-800 text-white font-bold py-4 rounded-md transition text-lg shadow-lg uppercase tracking-widest"
+              >
+                {t('fan')}
+              </button>
+              <p className="text-sm text-white mt-4 mb-8">Enter to watch matches</p>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={() => setView('staff')}
+                className="w-full bg-emerald-900 hover:bg-emerald-800 text-white font-bold py-4 rounded-md transition text-lg shadow-lg uppercase tracking-widest"
+              >
+                {t('staffButtonLabel')}
+              </button>
+              <p className="text-sm text-white mt-4 mb-8">{t('staffButtonDesc')}</p>
 
-          <button
-            onClick={() => setView('user')}
-            className="text-xs text-white hover:text-white transition mx-auto uppercase tracking-widest"
-          >
-            {t('fan')}
-          </button>
+              <button
+                onClick={() => setView('user')}
+                className="text-xs text-white hover:text-white transition mx-auto uppercase tracking-widest"
+              >
+                {t('fan')}
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>
