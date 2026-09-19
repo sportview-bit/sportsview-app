@@ -45,7 +45,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ title, subtitle, onBac
             required
             value={username}
             onChange={e => setUsername(e.target.value)}
-            className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 mt-1 outline-none focus:border-emerald-500 transition text-white"
+            className="w-full bg-[#0a0f1d] border border-slate-700 rounded-sm px-4 py-3 mt-1 outline-none focus:border-slate-500 transition text-white"
           />
         </div>
         <div>
@@ -54,7 +54,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ title, subtitle, onBac
             required
             value={password}
             onChange={e => setPassword(e.target.value)}
-            className="w-full bg-[#0a0f1d] border border-white/10 rounded-sm px-4 py-3 mt-1 outline-none focus:border-emerald-500 transition text-white"
+            className="w-full bg-[#0a0f1d] border border-slate-700 rounded-sm px-4 py-3 mt-1 outline-none focus:border-slate-500 transition text-white"
           />
         </div>
         {error && <p className="text-sm text-rose-800">{error}</p>}

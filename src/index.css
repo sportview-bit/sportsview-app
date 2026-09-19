@@ -51,12 +51,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(16, 185, 129, 0.4);
+  background: rgba(71, 85, 105, 0.4);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(16, 185, 129, 0.8);
+  background: rgba(71, 85, 105, 0.8);
 }
 
 /* ========================================================= */
@@ -73,12 +73,12 @@ button, .btn, [role="button"] {
 
 button:hover, .btn:hover, [role="button"]:hover {
   transform: translateY(-2px) scale(1.02) !important;
-  box-shadow: 0 8px 20px -4px rgba(16, 185, 129, 0.25);
+  box-shadow: 0 8px 20px -4px rgba(71, 85, 105, 0.25);
 }
 
 button:active, .btn:active, [role="button"]:active {
   transform: translateY(0) scale(0.97) !important;
-  box-shadow: 0 2px 5px -1px rgba(16, 185, 129, 0.2);
+  box-shadow: 0 2px 5px -1px rgba(71, 85, 105, 0.2);
 }
 
 /* 2. Cards & Panels: Depth Lift on Hover */
@@ -88,7 +88,7 @@ div[class*="border"]:not(input):not(button):hover,
   transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
               border-color 0.2s ease,
               box-shadow 0.25s ease !important;
-  border-color: rgba(16, 185, 129, 0.35) !important;
+  border-color: rgba(71, 85, 105, 0.35) !important;
 }
 
 /* 3. Links & Nav Items: Soft Zoom */
@@ -107,6 +107,6 @@ input, select, textarea {
 
 input:focus, select:focus, textarea:focus {
   transform: scale(1.005) !important;
-  box-shadow: 0 0 0 10px rgba(16, 185, 129, 0.15);
+  box-shadow: 0 0 0 2px rgba(71, 85, 105, 0.5);
   outline: none;
 }

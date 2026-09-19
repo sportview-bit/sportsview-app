@@ -169,15 +169,15 @@ const Shell: React.FC = () => {
             </p>
             <h2 className="text-2xl font-bold mb-8 font-display tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>{t('staffPortalDesc')}</h2>
             <div className="grid sm:grid-cols-3 gap-4">
-              <button onClick={() => setView('manager')} className="bg-emerald-900 border border-emerald-800 rounded-2xl p-6 hover:bg-emerald-800 transition text-left">
+              <button onClick={() => setView('manager')} className="bg-emerald-900 rounded-2xl p-6 hover:bg-emerald-800 transition text-left">
                 <div className="font-bold text-white">{t('manager')}</div>
                 <div className="text-sm text-white">{t('managerDesc')}</div>
               </button>
-              <button onClick={() => setView('sponsor')} className="bg-emerald-900 border border-emerald-800 rounded-2xl p-6 hover:bg-emerald-800 transition text-left">
+              <button onClick={() => setView('sponsor')} className="bg-emerald-900 rounded-2xl p-6 hover:bg-emerald-800 transition text-left">
                 <div className="font-bold text-white">{t('sponsor')}</div>
                 <div className="text-sm text-white">{t('sponsorDesc')}</div>
               </button>
-              <button onClick={() => setView('admin')} className="bg-emerald-900 border border-emerald-800 rounded-2xl p-6 hover:bg-emerald-800 transition text-left">
+              <button onClick={() => setView('admin')} className="bg-emerald-900 rounded-2xl p-6 hover:bg-emerald-800 transition text-left">
                 <div className="font-bold text-white">{t('admin')}</div>
                 <div className="text-sm text-white">{t('adminDesc')}</div>
               </button>
@@ -200,7 +200,7 @@ const Shell: React.FC = () => {
       </div>
 
       <div className="flex-1 flex items-center justify-center">
-        <div className="max-w-md w-full text-center bg-[var(--surface)]/90 backdrop-blur border border-emerald-800 rounded-3xl p-8 shadow-2xl">
+        <div className="max-w-md w-full text-center bg-[var(--surface)]/90 backdrop-blur rounded-3xl p-8 shadow-2xl">
           <h1 className="text-2xl font-bold mb-2 pt-4 font-display tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
             {t('welcome')} <span className="text-white">SPORTSVIEWTZ</span>
           </h1>

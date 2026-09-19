@@ -13,7 +13,7 @@ export const SettingsMenu: React.FC = () => {
       <button
         onClick={() => setOpen(true)}
         aria-label={t('settings')}
-        className="px-4 py-2 border border-emerald-500/30 hover:border-emerald-500 transition text-white bg-[#0a0f1d] text-xs font-bold uppercase tracking-widest rounded-md"
+        className="px-4 py-2 border border-slate-500/30 hover:border-slate-500 transition text-white bg-[#0a0f1d] text-xs font-bold uppercase tracking-widest rounded-md"
       >
         {t('settings')}
       </button>
@@ -40,7 +40,7 @@ export const SettingsMenu: React.FC = () => {
                 <button
                   onClick={() => setLang('sw')}
                   className={`px-4 py-3 rounded-md text-xs font-bold uppercase tracking-widest border transition ${
-                    lang === 'sw' ? 'bg-emerald-900 text-white border-emerald-500' : 'border-white/10 text-white hover:border-emerald-500'
+                    lang === 'sw' ? 'bg-emerald-900 text-white border-slate-500' : 'border-white/10 text-white hover:border-slate-500'
                   }`}
                 >
                   Kiswahili
@@ -48,7 +48,7 @@ export const SettingsMenu: React.FC = () => {
                 <button
                   onClick={() => setLang('en')}
                   className={`px-4 py-3 rounded-md text-xs font-bold uppercase tracking-widest border transition ${
-                    lang === 'en' ? 'bg-emerald-900 text-white border-emerald-500' : 'border-white/10 text-white hover:border-emerald-500'
+                    lang === 'en' ? 'bg-emerald-900 text-white border-slate-500' : 'border-white/10 text-white hover:border-slate-500'
                   }`}
                 >
                   English
@@ -62,7 +62,7 @@ export const SettingsMenu: React.FC = () => {
                 <button
                   onClick={() => setTheme('dark')}
                   className={`px-4 py-3 rounded-md text-xs font-bold uppercase tracking-widest border transition ${
-                    theme === 'dark' ? 'bg-emerald-900 text-white border-emerald-500' : 'border-white/10 text-white hover:border-emerald-500'
+                    theme === 'dark' ? 'bg-emerald-900 text-white border-slate-500' : 'border-white/10 text-white hover:border-slate-500'
                   }`}
                 >
                   {t('dark')}
@@ -70,7 +70,7 @@ export const SettingsMenu: React.FC = () => {
                 <button
                   onClick={() => setTheme('light')}
                   className={`px-4 py-3 rounded-md text-xs font-bold uppercase tracking-widest border transition ${
-                    theme === 'light' ? 'bg-emerald-900 text-white border-emerald-500' : 'border-white/10 text-white hover:border-emerald-500'
+                    theme === 'light' ? 'bg-emerald-900 text-white border-slate-500' : 'border-white/10 text-white hover:border-slate-500'
                   }`}
                 >
                   {t('light')}

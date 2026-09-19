@@ -142,7 +142,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
 
   return (
     <div className="min-h-screen bg-[#0a0f1d] text-white">
-      <header className="sticky top-0 z-30 bg-[#0a0f1d]/90 backdrop-blur-md border-b border-emerald-500/20 px-6 py-4 flex items-center justify-between">
+      <header className="sticky top-0 z-30 bg-[#0a0f1d]/90 backdrop-blur-md border-b border-white/10 px-6 py-4 flex items-center justify-between">
         <div className="max-w-7xl mx-auto px-4 w-full flex items-center justify-between">
           <Brand size="sm" />
           <h1 className="text-xl font-bold mt-2 font-display tracking-tight text-white">Admin Dashboard</h1>
@@ -170,11 +170,11 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
             </div>
           </div>
 
-          <div className="sticky top-0 z-20 flex gap-1 mb-6 border-b border-emerald-500/20 bg-[#0a0f1d]/90 backdrop-blur">
+          <div className="sticky top-0 z-20 flex gap-1 mb-6 border-b border-white/10 bg-[#0a0f1d]/90 backdrop-blur">
             {(['overview', 'matches', 'rooms', 'sponsors'] as const).map(t2 => (
               <button key={t2} onClick={() => setTab(t2)}
                 className={`px-6 py-3 text-xs font-bold uppercase tracking-widest border-b-2 transition transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer ${
-                  tab === t2 ? 'border-emerald-500 text-white' : 'border-transparent text-white/60 hover:text-white'
+                  tab === t2 ? 'border-white text-white' : 'border-transparent text-white/60 hover:text-white'
                 }`}>
                 {t2}
               </button>
@@ -222,12 +222,12 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                 <form onSubmit={handlePostMatch} className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <input type="text" placeholder="Home Team" required value={homeTeam} onChange={e => setHomeTeam(e.target.value)}
-                      className="w-full bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
+                      className="w-full bg-[#0a0f1d] border border-slate-700 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                     <input type="text" placeholder="Away Team" required value={awayTeam} onChange={e => setAwayTeam(e.target.value)}
-                      className="w-full bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
+                      className="w-full bg-[#0a0f1d] border border-slate-700 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                   </div>
                   <input type="text" placeholder="Time (e.g. Sat, 16:00)" required value={matchTime} onChange={e => setMatchTime(e.target.value)}
-                    className="w-full bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
+                    className="w-full bg-[#0a0f1d] border border-slate-700 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                   <button type="submit" className="w-full btn-emerald font-sans font-bold text-xs uppercase tracking-widest text-white py-3 rounded-md transition transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                     Post Match to Users
                   </button>
@@ -256,7 +256,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
           {tab === 'rooms' && (
             <div className="space-y-6">
               {pending.length > 0 && (
-                <div className="w-full bg-[#0e1726] border border-emerald-500/20 p-6 rounded-sm">
+                <div className="w-full bg-[#0e1726] border border-white/20 p-6 rounded-sm">
                   <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-emerald-400 font-display">
                     {t('pendingApplications')} ({pending.length})
                   </h2>
@@ -286,23 +286,23 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                   <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-emerald-400 font-display">Add Room & Manager</h2>
                   <form onSubmit={handleCreateRoom} className="space-y-3">
                     <input type="text" placeholder="Room Name (e.g. VIP Area)" required value={roomName} onChange={e => setRoomName(e.target.value)}
-                      className="w-full bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
+                      className="w-full bg-[#0a0f1d] border border-slate-700 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                     <input type="text" placeholder="Location" required value={location} onChange={e => setLocation(e.target.value)}
-                      className="w-full bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
+                      className="w-full bg-[#0a0f1d] border border-slate-700 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                     <div className="grid grid-cols-2 gap-3">
                       <input type="text" placeholder="Manager Name" required value={managerName} onChange={e => setManagerName(e.target.value)}
-                        className="bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
+                        className="bg-[#0a0f1d] border border-slate-700 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                       <input type="text" placeholder="Manager Phone" required value={managerPhone} onChange={e => setManagerPhone(e.target.value)}
-                        className="bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
+                        className="bg-[#0a0f1d] border border-slate-700 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                     </div>
                     <input type="email" placeholder="Manager Email" required value={managerEmail} onChange={e => setManagerEmail(e.target.value)}
-                      className="w-full bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
+                      className="w-full bg-[#0a0f1d] border border-slate-700 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                     <p className="text-xs text-white/60 pt-1">Login the manager will use to sign in:</p>
                     <div className="grid grid-cols-2 gap-3">
                       <input type="text" placeholder="Username" required value={managerUsername} onChange={e => setManagerUsername(e.target.value)}
-                        className="bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
+                        className="bg-[#0a0f1d] border border-slate-700 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                       <PasswordInput placeholder="Temporary password" required value={managerPassword} onChange={e => setManagerPassword(e.target.value)}
-                        className="w-full pr-16 bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
+                        className="w-full pr-16 bg-[#0a0f1d] border border-slate-700 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                     </div>
                     {roomFormError && <p className="text-sm text-rose-800">{roomFormError}</p>}
                     <button type="submit" className="w-full btn-emerald font-sans font-bold text-xs uppercase tracking-widest text-white py-3 rounded-md transition transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
@@ -327,7 +327,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                           </div>
                           <div className="flex gap-1">
                             {r.managerId && (
-                              <button onClick={() => openReset('manager', r.managerId!)} className="px-2 py-1 text-white/60 hover:text-emerald-500 border border-transparent hover:border-emerald-500 rounded-sm text-xs transition transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
+                              <button onClick={() => openReset('manager', r.managerId!)} className="px-2 py-1 text-white/60 hover:text-emerald-500 border border-transparent hover:border-white rounded-sm text-xs transition transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                                 Reset
                               </button>
                             )}
@@ -337,9 +337,9 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                           </div>
                         </div>
                         {resetTarget?.type === 'manager' && resetTarget.id === r.managerId && (
-                          <div className="mt-3 pt-3 border-t border-emerald-500/20 flex gap-2">
+                          <div className="mt-3 pt-3 border-t border-white/20 flex gap-2">
                             <PasswordInput placeholder="New password" value={resetValue} onChange={e => setResetValue(e.target.value)}
-                              className="flex-1 pr-16 bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
+                              className="flex-1 pr-16 bg-[#0a0f1d] border border-white/15 focus:border-white/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                             <button onClick={submitReset} disabled={resetBusy} className="bg-emerald-900 text-white font-bold text-sm px-4 rounded-sm disabled:opacity-50 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">Save</button>
                             <button onClick={() => setResetTarget(null)} className="text-white/60 text-sm px-2 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">Cancel</button>
                           </div>
@@ -362,29 +362,29 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                 <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-emerald-400 font-display">Add Sponsor</h2>
                 <form onSubmit={handleCreateSponsor} className="space-y-3">
                   <input type="text" placeholder="Sponsor / company name" required value={sponsorName} onChange={e => setSponsorName(e.target.value)}
-                    className="w-full bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
+                    className="w-full bg-[#0a0f1d] border border-slate-700 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                   <div className="grid grid-cols-2 gap-3">
                     <input type="number" placeholder="Amount sponsored (TZS)" required value={sponsorAmount} onChange={e => setSponsorAmount(e.target.value)}
-                      className="bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
+                      className="bg-[#0a0f1d] border border-slate-700 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                     <input type="number" placeholder="Profit share %" required value={sponsorShare} onChange={e => setSponsorShare(e.target.value)}
-                      className="bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
+                      className="bg-[#0a0f1d] border border-slate-700 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                   </div>
                   <input type="text" placeholder="Username" required value={sponsorUsername} onChange={e => setSponsorUsername(e.target.value)}
-                    className="w-full bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
+                    className="w-full bg-[#0a0f1d] border border-slate-700 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                   <PasswordInput placeholder="Temporary password" required value={sponsorPassword} onChange={e => setSponsorPassword(e.target.value)}
-                    className="w-full pr-16 bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
+                    className="w-full pr-16 bg-[#0a0f1d] border border-slate-700 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                   {sponsorFormError && <p className="text-sm text-rose-800">{sponsorFormError}</p>}
                   <button type="submit" className="w-full btn-emerald font-sans font-bold text-xs uppercase tracking-widest text-white py-3 rounded-md transition transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                     Create Sponsor Account
                   </button>
                 </form>
               </div>
-              <div className="w-full bg-[#0e1726] border border-emerald-800 p-6 rounded-sm">
+              <div className="w-full bg-[#0e1726] border border-transparent p-6 rounded-sm">
                 <h2 className="text-sm font-bold uppercase tracking-widest mb-6 text-white font-display">All Sponsors</h2>
                 <div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
                   {sponsors.length === 0 && <p className="text-white/60 text-sm">No sponsors registered yet.</p>}
                   {sponsors.map(s => (
-                    <div key={s.id} className="bg-[#0a0f1d] p-3 rounded-sm border border-emerald-800 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
+                    <div key={s.id} className="bg-[#0a0f1d] p-3 rounded-sm border border-transparent transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                       <div className="flex justify-between items-center">
                         <div>
                           <span className="font-bold text-emerald-500">{s.name}</span>
@@ -392,7 +392,7 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                           <div className="text-xs font-mono text-white/60 mt-1">{s.amountSponsored.toLocaleString()} TZS sponsored</div>
                         </div>
                         <div className="flex gap-1">
-                          <button onClick={() => openReset('sponsor', s.id)} className="px-2 py-1 text-white/60 hover:text-emerald-500 border border-transparent hover:border-emerald-500 rounded-sm text-xs transition transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
+                          <button onClick={() => openReset('sponsor', s.id)} className="px-2 py-1 text-white/60 hover:text-emerald-500 border border-transparent hover:border-white rounded-sm text-xs transition transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
                             Reset
                           </button>
                           <button onClick={() => deleteSponsor(s.id)} className="px-2 py-1 text-white border border-rose-800 rounded-sm text-xs transition hover:bg-rose-900 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">
@@ -401,9 +401,9 @@ export const AdminDashboard: React.FC<{ onExit: () => void }> = ({ onExit }) => 
                         </div>
                       </div>
                       {resetTarget?.type === 'sponsor' && resetTarget.id === s.id && (
-                        <div className="mt-3 pt-3 border-t border-emerald-500/20 flex gap-2">
+                        <div className="mt-3 pt-3 border-t border-white/20 flex gap-2">
                           <PasswordInput placeholder="New password" value={resetValue} onChange={e => setResetValue(e.target.value)}
-                            className="flex-1 pr-16 bg-[#0a0f1d] border border-white/15 focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
+                            className="flex-1 pr-16 bg-[#0a0f1d] border border-white/15 focus:border-white/60 focus:ring-1 focus:ring-emerald-500/60 rounded-md text-white placeholder-slate-500 px-4 py-3 text-sm transition" />
                           <button onClick={submitReset} disabled={resetBusy} className="bg-emerald-900 text-white font-bold text-sm px-4 rounded-sm disabled:opacity-50 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">Save</button>
                           <button onClick={() => setResetTarget(null)} className="text-white/60 text-sm px-2 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 active:scale-95 cursor-pointer">Cancel</button>
                         </div>
